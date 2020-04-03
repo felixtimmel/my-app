@@ -1,4 +1,5 @@
 import React from 'react';
+import LoginView from './login/LoginView'
 /* import logo from './logo.svg'; */
 import './App.css';
 import {
@@ -29,11 +30,11 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/login">
-            <Signup />
+          <Route path="/LoginView">
+            <LoginView />
           </Route>
           <Route path="/signup">
-            <Login />
+            <Signup />
           </Route>
           <Route path="/">
             <Home />
@@ -46,10 +47,6 @@ function App() {
 
 function Signup() {
   return <h2>Sign up</h2>;
-}
-
-function Login() {
-  return <h2>Login</h2>;
 }
 
 function Home() {
