@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginView from './login/LoginView'
+import LoginView from './login/LoginView';
 /* import logo from './logo.svg'; */
 import './App.css';
 import {
@@ -9,7 +9,7 @@ import {
   Link
 } from "react-router-dom";
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div>
@@ -30,8 +30,8 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/LoginView">
-            <LoginView />
+          <Route path="/login">
+            <LoginView firebase={props.firebase} />
           </Route>
           <Route path="/signup">
             <Signup />
