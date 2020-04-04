@@ -8,12 +8,12 @@ class Login extends React.Component {
     }
     componentDidMount() {
         console.log('ui:', this.ui)
-            this.ui.start('#firebaseui-auth-container', {
-                signInOptions: [
-                    this.props.firebase.firebase.auth.EmailAuthProvider.PROVIDER_ID
-                ],
-                // Other config options...
-            });
+        this.ui.start('#firebaseui-auth-container', {
+            signInOptions: [
+                this.props.firebase.firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Other config options...
+        });
     }
     render() {
         return (
