@@ -1,5 +1,7 @@
 import React from 'react';
-import LoginView from './login/LoginView';
+import Login from './login/Login'
+import LandingView from './landing/LandingView'
+
 /* import logo from './logo.svg'; */
 import './App.css';
 import {
@@ -16,13 +18,16 @@ function App(props) {
         <nav>
           <ul>
             <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
               <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/signup">Sign up</Link>
             </li>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/landing">Landing</Link>
             </li>
           </ul>
         </nav>
@@ -31,10 +36,13 @@ function App(props) {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/login">
-            <LoginView firebase={props.firebase} />
+            <Login firebase={props.firebase} />
           </Route>
           <Route path="/signup">
             <Signup />
+          </Route>
+          <Route path="/landing">
+            <LandingView />
           </Route>
           <Route path="/">
             <Home />
@@ -51,7 +59,7 @@ function Signup() {
 
 function Home() {
   return (
-    <h2>Homepage</h2>
+    <h2>Home</h2>
   );
 }
 
