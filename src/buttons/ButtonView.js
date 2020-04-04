@@ -12,7 +12,7 @@ class Button extends Component {
 
     render() {
         return (
-         <a href={this.props.link}>{this.props.content}</a>
+            <a href={this.props.link}>{this.props.content}</a>
         );
     }
 }
