@@ -19,7 +19,7 @@ function App(props) {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/LoginView">Login</Link>
             </li>
             <li>
               <Link to="/signup">Sign up</Link>
