@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginView from './login/LoginView'
+import LandingView from './landing/LandingView'
 /* import logo from './logo.svg'; */
 import './App.css';
 import {
@@ -39,6 +40,9 @@ function App() {
           <Route path="/">
             <Home />
           </Route>
+          <Route path="/LandingView">
+            <LandingView />
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -51,7 +55,7 @@ function Signup() {
 
 function Home() {
   return (
-    <h2>Homepage</h2>
+    <h2>Home</h2>
   );
 }
 
