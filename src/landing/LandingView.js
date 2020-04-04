@@ -14,8 +14,12 @@ const Landing = () => {
                 </div>
             </div>
             <div className="landing-btn">
-                <Button content="s'inscire" link='/login'/>
-                <Button content="se connecter" link='/signup'/>
+                <div>
+                    <Button content="s'inscire" link='/login'/>
+                </div>
+                <div>
+                    <Button content="se connecter" link='/signup'/>
+                </div>
             </div>
         </div>
     );
