@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 // const LoginView = (props) => {
 //     const ui = props.firebase.getFirebaseUi();
@@ -23,13 +23,12 @@ class LoginView extends React.Component {
         this.ui = this.props.firebase.getFirebaseUi();
     }
     componentDidMount() {
-        console.log('ui:', this.ui)
-            this.ui.start('#firebaseui-auth-container', {
-                signInOptions: [
-                    this.props.firebase.firebase.auth.EmailAuthProvider.PROVIDER_ID
-                ],
-                // Other config options...
-            });
+        this.ui.start('#firebaseui-auth-container', {
+            signInOptions: [
+                this.props.firebase.firebase.auth.EmailAuthProvider.PROVIDER_ID
+            ],
+            // Other config options...
+        });
     }
     render() {
         return (

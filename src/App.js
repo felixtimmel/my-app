@@ -16,13 +16,13 @@ function App(props) {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/LoginView">Login</Link>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/signup">Sign up</Link>
+            </li>
+            <li>
+              <Link to="/">Home</Link>
             </li>
           </ul>
         </nav>
