@@ -20,13 +20,13 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/LoginView">Login</Link>
+              <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/signup">Sign up</Link>
             </li>
             <li>
-              <Link to="/LandingView">Landing</Link>
+              <Link to="/landing">Landing</Link>
             </li>
           </ul>
         </nav>
@@ -34,17 +34,17 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/LoginView">
+          <Route path="/login">
             <LoginView />
           </Route>
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/landing">
+            <LandingView />
+          </Route>
           <Route path="/">
             <Home />
-          </Route>
-          <Route path="/LandingView">
-            <LandingView />
           </Route>
         </Switch>
       </div>
