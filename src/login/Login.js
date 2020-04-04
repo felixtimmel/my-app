@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
+import LoginView from './LoginView'
 
-class LoginView extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.ui = this.props.firebase.getFirebaseUi();
@@ -17,9 +18,11 @@ class LoginView extends React.Component {
     render() {
         return (
         <>
-            <h2>Test</h2>
-            {this.ui && <div id='firebaseui-auth-container'></div> }
+            <LoginView />
+            {/* {this.ui && <div id='firebaseui-auth-container'></div> } */}
         </>
         )
     }
 }
+
+export default Login

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginView from './login/LoginView'
+import Login from './login/Login'
 import LandingView from './landing/LandingView'
 
 /* import logo from './logo.svg'; */
@@ -36,7 +36,7 @@ function App(props) {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/login">
-            <LoginView firebase={props.firebase} />
+            <Login firebase={props.firebase} />
           </Route>
           <Route path="/signup">
             <Signup />
