@@ -4,12 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Firebase  from './_services/firebase.service';
-
-const firebase = new Firebase();
+const firebaseClass = new Firebase();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App firebase={firebase}/>
+    <App firebaseClass={firebaseClass}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
