@@ -48,9 +48,7 @@ class Home extends React.Component {
 
     recentTracks(){
         spotifyWebApi.getMyRecentlyPlayedTracks()
-            .then((response) => {
-                console.log(response)
-            })
+            .then((response) => { response.items })
     }
     
     render() {
