@@ -1,11 +1,11 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import 'firebase/database';
+// import 'firebase/database';
 import * as firebaseui from 'firebaseui';
 
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
+import 'firebase/analytics';
 
 let config;
 
@@ -41,16 +41,38 @@ class Firebase {
     // firebase.analytics();
     this.firebase = firebase;
     this.auth = firebase.auth();
+    this.currentUser = firebase.auth().currentUser;
+    this.db = firebase.firestore();
   }
   
   getFirebaseUi = () => firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(this.auth);
-  createUserWithEmail = (email, password) => 
+
+  createUserWithEmail = (email, password, firstName, lastName) =>
     this.auth.createUserWithEmailAndPassword(email, password)
+    .then(user => {
+      this.addNewUser(user.uid, firstName, lastName, email);
+    })
     .catch(err => {
       console.log('createUserWithEmailAndPassword error', err.code);
       console.log('createUserWithEmailAndPassword error', err.message);
     });
 
+    addNewUser = (uid, firstName, lastName, email, phoneNumber='', picture='') => {
+      this.db.collection('users').add({
+        firstName,
+        lastName,
+        email,
+        uid,
+        picture,
+        phoneNumber,
+      })
+      .then(docRef => console.log(`Document was created with the uid: ${docRef.id}`))
+      .catch(err => {console.log(`There was an error: ${err}`)})
+    }
+  
+    getCurrentUser = () => {
+      this.auth.onAuthStateChanged(user => user ? console.log('user is signed', user) : console.log('NO USER'))
+    }
 
     signOut = () => this.auth.signOut();
 }
