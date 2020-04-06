@@ -46,11 +46,9 @@ class Home extends React.Component {
             .catch(err => console.log(err))
     }
 
-    recentTracks(){
+    recentTracks() {
         spotifyWebApi.getMyRecentlyPlayedTracks()
-            .then((response) => {
-                console.log(response)
-            })
+            .then((response) => response.items )
     }
     
     render() {
@@ -62,4 +60,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home
+export default Home;
