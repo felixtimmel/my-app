@@ -14,7 +14,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
 var client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
-var client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your secret
+var client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 /**

@@ -8,7 +8,7 @@ const HomepageView = ({ nowPlaying, getNowPlaying, recentTracks }) => {
                 {recentTracks()}
             </div>
             <div>
-                <a href="http://localhost:8888">
+                <a href="http://localhost:8888/login">
                     <button>Login in with spotify</button>
                 </a>
             </div>
@@ -16,7 +16,7 @@ const HomepageView = ({ nowPlaying, getNowPlaying, recentTracks }) => {
                 Now playing : { nowPlaying.name }
             </div>
             <div>
-                <img src={ nowPlaying.image } style={{width: 100}}/>
+                <img src={nowPlaying.image} style={{width: 100}}/>
             </div>
             <button onClick={ () => getNowPlaying() }>
                 Check Now playing
