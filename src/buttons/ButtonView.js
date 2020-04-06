@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class Button extends Component {
     constructor (props) {
@@ -12,7 +13,7 @@ class Button extends Component {
 
     render() {
         return (
-            <a href={this.props.link}>{this.props.content}</a>
+            <Link to={this.props.link}>{this.props.content}</Link>
         );
     }
 }

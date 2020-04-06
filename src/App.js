@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './login/Login'
 import LandingView from './landing/LandingView'
+import Home from './home/Home'
 
 /* import logo from './logo.svg'; */
 import './App.css';
@@ -55,12 +56,6 @@ function App(props) {
 
 function Signup() {
   return <h2>Sign up</h2>;
-}
-
-function Home() {
-  return (
-    <h2>Home</h2>
-  );
 }
 
 export default App;
