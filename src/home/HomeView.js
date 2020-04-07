@@ -8,7 +8,7 @@ const HomepageView = ({ nowPlaying, getNowPlaying, recentTracks }) => {
                 {recentTracks()}
             </div>
             <div>
-                <a href="http://localhost:8888/login">
+                <a href="http://localhost:8888/spotify-login">
                     <button>Login in with spotify</button>
                 </a>
             </div>

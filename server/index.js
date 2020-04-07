@@ -3,11 +3,16 @@ const request = require('request'); // "Request" library
 const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 require('dotenv').config()
-
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+let clientUrl = 'http://localhost:8888';
+if(process.env.NODE_ENV === 'production') {
+  clientUrl = 'http://localhost:8888';
+}
+
 
 /**
  * Generates a random string containing numbers and letters
@@ -32,7 +37,16 @@ app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
 
-app.get('/login', function(req, res) {
+if (process.env.NODE_ENV === 'production') {
+  console.log('process.env.NODE_ENV:&&&&&&&&&&', process.env.NODE_ENV)
+  app.use(express.static(path.join(__dirname, '..', 'build')));
+  // Handle React routing, return all requests to React app
+  // app.get('/*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '..', 'build/index.html'));
+  // });
+}
+
+app.get('/spotify-login', function(req, res) {
 
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -96,7 +110,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect(`${clientUrl}/#` +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
