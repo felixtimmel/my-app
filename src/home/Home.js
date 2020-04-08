@@ -18,7 +18,8 @@ class Home extends React.Component {
             nowPlaying: {
                 name: 'Not Checked',
                 image: ''
-            }
+            },
+            lastSongs: []
         }
     }
 
@@ -35,7 +36,6 @@ class Home extends React.Component {
     getNowPlaying = () => {
         spotifyWebApi.getMyCurrentPlaybackState()
             .then((response) => {
-                console.log(response)
                 this.setState({
                     nowPlaying: {
                         name: response.item.name,
@@ -46,15 +46,22 @@ class Home extends React.Component {
             .catch(err => console.log(err))
     }
 
-    recentTracks() {
+    recentTracks = () => {
         spotifyWebApi.getMyRecentlyPlayedTracks()
-            .then((response) => response.items )
+        .then((response) => {
+            this.setState({
+                lastSongs: response.items
+            })
+        })
     }
-    
+    componentDidMount() {
+        this.recentTracks();
+    }
+
     render() {
         return (
             <>
-                <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} recentTracks={ this.recentTracks } />
+                <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} lastSongs={this.state.lastSongs} />
             </>
         );
     }

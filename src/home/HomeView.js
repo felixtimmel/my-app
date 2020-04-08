@@ -1,11 +1,12 @@
 import React from 'react';
+import MusicCardList from '../musiccard/MusicCardList';
 
-const HomepageView = ({ nowPlaying, getNowPlaying, recentTracks }) => {
+const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs }) => {
     return (
         <>
             <h2>Test</h2>
             <div>
-                {recentTracks()}
+                <MusicCardList lastSongs={lastSongs}/>
             </div>
             <div>
                 <a href="http://localhost:8888/login">
