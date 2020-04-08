@@ -2,7 +2,6 @@ import React from 'react';
 import MusicCard from './MusicCard';
 
 const MusicCardList = ({ lastSongs }) => {
-    console.log('&&&&&&&&&&&lastSongs:', lastSongs)
     return (
         <div className="music-card_list">
             {lastSongs && lastSongs.length

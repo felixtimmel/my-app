@@ -1,10 +1,15 @@
 import React from 'react';
 import MusicCardList from '../musiccard/MusicCardList';
+import SearchBar from '../searchbar/Searchbar';
 
-const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs }) => {
+const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs, searchFunction }) => {
+    
     return (
         <>
-            <h2>Test</h2>
+            <h2>Bonjour</h2>
+            <div>
+                {<SearchBar search={searchFunction} />}
+            </div>
             <div>
                 <MusicCardList lastSongs={lastSongs}/>
             </div>

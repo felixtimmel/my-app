@@ -8,18 +8,18 @@ class Home extends React.Component {
     constructor() {
         super();
         const params = this.getHashParams(); 
-        const token = params.access_token
-        console.log(token)
-        if (token) {
-            spotifyWebApi.setAccessToken(token)
+        this.token = params.access_token
+        if (this.token) {
+            spotifyWebApi.setAccessToken(this.token)
         }
         this.state ={
-            loggedIn: token ? true : false,
+            loggedIn: this.token ? true : false,
             nowPlaying: {
                 name: 'Not Checked',
                 image: ''
             },
-            lastSongs: []
+            lastSongs: [],
+            songsQuery: []
         }
     }
 
@@ -54,16 +54,31 @@ class Home extends React.Component {
             })
         })
     }
+
+    search = (query, types) => {
+        spotifyWebApi.search(query, types)
+            .then((response) => console.log(response))
+    }
+
     componentDidMount() {
         this.recentTracks();
     }
 
     render() {
+        if (this.token) {
+            return (
+                <>
+                    <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} lastSongs={this.state.lastSongs} searchFunction={this.search}/>
+                </>
+            );
+        }
         return (
-            <>
-                <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} lastSongs={this.state.lastSongs} />
-            </>
-        );
+            <div>
+                <a href="http://localhost:8888/spotify-login">
+                    <button>Login in with spotify</button>
+                </a>
+            </div>
+        )
     }
 }
 
