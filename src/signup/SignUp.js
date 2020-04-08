@@ -47,7 +47,7 @@ export default class SignUp extends React.Component {
 
   componentDidMount() {
     // const { currentUser, getCurrentUser } = this.props.firebaseClass;
-    this.initGoogleSignUpUi();
+    // this.initGoogleSignUpUi();
   }
 
   render() {

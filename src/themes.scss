@@ -1,0 +1,23 @@
+html.color-theme-in-transition,
+html.color-theme-in-transition *,
+html.color-theme-in-transition *:before,
+html.color-theme-in-transition *:after {
+  transition: all 750ms !important;
+  transition-delay: 0 !important;
+}
+
+html{
+  --btn-color: green;
+  --bg-color: #21201E;
+  --primary-color: #ED7E83;
+  --social-btn-bg: #343330;
+  --social-btn-color: #343330;
+  --grey-color: #707070;
+  --separator-color: #707070;
+}
+
+
+html[data-theme="light"] {
+  --btn-color: red;
+}
+
