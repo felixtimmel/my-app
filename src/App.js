@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from './login/Login'
+import Home from './home/Home'
 import LandingView from './landing/LandingView';
 import Signup from './signup/SignUp';
 
@@ -57,11 +58,5 @@ function App(props) {
 // function Signup() {
 //   return <h2>Sign up</h2>;
 // }
-
-function Home() {
-  return (
-    <h2>Home</h2>
-  );
-}
 
 export default App;

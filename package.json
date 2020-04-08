@@ -2,27 +2,38 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8888",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "firebase": "^7.13.1",
     "firebaseui": "^4.5.0",
     "formik": "^2.1.4",
     "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-spotify-login": "^0.9.1",
     "redux": "^4.0.5",
     "scss": "^0.2.4",
+    "spotify-web-api-js": "^0.22.1",
     "yup": "^0.28.3"
   },
   "scripts": {
+    "server": "node-env-run server --exec nodemon",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "NODE_ENV=development run-p server start",
+    "prod": "NODE_ENV=production run-s build server"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,5 +49,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "express-pino-logger": "^4.0.0",
+    "node-env-run": "^3.0.2",
+    "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.6.1"
   }
 }
