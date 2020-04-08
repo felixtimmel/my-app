@@ -8,7 +8,7 @@ require('dotenv').config()
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-let clientUrl = 'http://localhost:8888';
+let clientUrl = 'http://localhost:3000';
 if(process.env.NODE_ENV === 'production') {
   clientUrl = 'http://localhost:8888';
 }
