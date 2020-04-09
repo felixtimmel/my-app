@@ -2,16 +2,21 @@ import React from 'react';
 import MusicCardList from '../musiccard/MusicCardList';
 import SearchBar from '../searchbar/Searchbar';
 
-const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs, searchFunction }) => {
+const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs, searchFunction, isSearching, searchTracks/* , changingSearchingState */ }) => {
     
     return (
         <>
             <h2>Bonjour</h2>
             <div>
-                {<SearchBar search={searchFunction} />}
+                {<SearchBar search={searchFunction} /* changingSearchingState={changingSearchingState} */ isSearching={isSearching}/>}
             </div>
+            {isSearching && 
+                <div>
+                    <MusicCardList searchTracks={searchTracks} isSearching={isSearching}/>
+                </div>
+            }
             <div>
-                <MusicCardList lastSongs={lastSongs}/>
+                <MusicCardList lastSongs={lastSongs} isSearching={isSearching}/>
             </div>
             <div>
                 <a href="http://localhost:8888/spotify-login">

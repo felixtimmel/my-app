@@ -14,12 +14,13 @@ class Home extends React.Component {
         }
         this.state ={
             loggedIn: this.token ? true : false,
+            isSearching: false,
             nowPlaying: {
                 name: 'Not Checked',
                 image: ''
             },
             lastSongs: [],
-            songsQuery: []
+            searchTracks: [],
         }
     }
 
@@ -57,7 +58,13 @@ class Home extends React.Component {
 
     search = (query, types) => {
         spotifyWebApi.search(query, types)
-            .then((response) => console.log(response))
+            .then((response) => {
+                console.log(response.tracks.items.slice(0, 10))
+                this.setState({
+                    searchTracks: response.tracks.items.slice(0, 10),
+                    isSearching: true,
+                })
+            })
     }
 
     componentDidMount() {
@@ -68,7 +75,11 @@ class Home extends React.Component {
         if (this.token) {
             return (
                 <>
-                    <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} lastSongs={this.state.lastSongs} searchFunction={this.search}/>
+                    <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
+                                  lastSongs={this.state.lastSongs} searchFunction={this.search}
+                                  isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
+                                  /* changingSearchingState={this.changingSearchingState} */
+                                  />
                 </>
             );
         }
