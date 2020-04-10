@@ -12,16 +12,33 @@ class Home extends React.Component {
         if (this.token) {
             spotifyWebApi.setAccessToken(this.token)
         }
-        this.state ={
+        this.state = {
             loggedIn: this.token ? true : false,
-            isSearching: false,
             nowPlaying: {
                 name: 'Not Checked',
                 image: ''
             },
             lastSongs: [],
             searchTracks: [],
+            isSearching: false,
+            value: '',
         }
+    }
+
+    handleChange = (e) => {
+        /*  const types = ['album', 'artist', 'track', 'playlist']; */
+            const types = ['album', 'artist', 'track'];
+            this.search(e.target.value, types);
+            this.setState({
+                value: e.target.value,
+            });
+        }
+
+    clearInput = () => {
+        this.setState({
+            value: '',
+            isSearching: false,
+        });
     }
 
     getHashParams() {
@@ -76,10 +93,12 @@ class Home extends React.Component {
             return (
                 <>
                     <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
-                                  lastSongs={this.state.lastSongs} searchFunction={this.search}
-                                  isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
-                                  /* changingSearchingState={this.changingSearchingState} */
-                                  />
+                        lastSongs={this.state.lastSongs} searchFunction={this.search}
+                        isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
+                        handleChange={this.handleChange}
+                        value={this.state.value}
+                        clearInput={this.clearInput}
+                    />
                 </>
             );
         }

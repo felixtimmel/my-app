@@ -2,13 +2,21 @@ import React from 'react';
 import MusicCardList from '../musiccard/MusicCardList';
 import SearchBar from '../searchbar/Searchbar';
 
-const HomepageView = ({ nowPlaying, getNowPlaying, lastSongs, searchFunction, isSearching, searchTracks/* , changingSearchingState */ }) => {
-    
+const HomepageView = ({
+    nowPlaying,
+    getNowPlaying,
+    lastSongs,
+    searchFunction,
+    isSearching,
+    searchTracks,
+    handleChange,
+    clearInput
+    }) => {    
     return (
         <>
             <h2>Bonjour</h2>
             <div>
-                {<SearchBar search={searchFunction} /* changingSearchingState={changingSearchingState} */ isSearching={isSearching}/>}
+                {<SearchBar clearInput={clearInput} handleChange={handleChange} search={searchFunction} isSearching={isSearching}/>}
             </div>
             {isSearching && 
                 <div>
