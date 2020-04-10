@@ -25,7 +25,6 @@ export default class SignUp extends React.Component {
   }
 
   onShowPassword = (field) => {
-    console.log('field:', field)
     const { isPassVisible, isConfirmedPassVisible } = this.state;
     this.setState({
       isPassVisible: field.name === 'password' ? !isPassVisible : isPassVisible,
@@ -74,7 +73,6 @@ export default class SignUp extends React.Component {
       const token = result.credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      console.log('user:', user)
       // ...
     }).catch(function(error) {
       // Handle Errors here.
@@ -86,61 +84,6 @@ export default class SignUp extends React.Component {
       const credential = error.credential;
       // ...
     });
-  }
-
-  // initGoogleSignUpUi = () => {
-  //   const { firebase, currentUser, addNewUser } = this.props.firebaseClass;
-  //   this.ui.start('#firebaseui-auth-container', {
-  //     signInOptions: [
-  //       {
-  //         provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  //         providerName: 'MyOIDCProvider',
-  //         buttonColor: '#2F2F2F',
-  //         iconUrl: '<icon-url-of-sign-in-button>',
-  //         customParameters: {
-  //           OIDCSupportedParameter: 'value'
-  //         }
-  //       },
-  //       {
-  //         iconUrl: fbLogo,
-  //         buttonColor: '#2F2F2F',
-  //         provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-  //         scopes :[
-  //           'public_profile',
-  //           'email',
-  //           'user_likes',
-  //           'user_friends'
-  //         ],
-  //       },
-  //       // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  //       // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-  //     ],
-  //     callbacks: {
-  //       signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-  //         const { given_name, family_name, email, picture } = authResult.additionalUserInfo.profile;
-  //         const { uid, displayName, refreshToken, phoneNumber, photoURL } = authResult.user;
-  //         const { accessToken, idToken, signInMethod, providerId, operationType } = authResult.credential;
-  //         if (authResult.additionalUserInfo.isNewUser) {
-  //           addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
-  //         }
-  //         return false;
-  //       },
-  //     },
-  //     signInFlow: 'popup',
-  //     // signInSuccessUrl: '<url-to-redirect-to-on-success>',
-  //   });
-  // }
-
-  componentDidMount() {
-    // const { currentUser, getCurrentUser } = this.props.firebaseClass;
-  //   this.initGoogleSignUpUi();
-  //   window.addEventListener("load", function(event) {
-  //     const socialIcons =  document.getElementsByClassName('firebaseui-idp-icon');
-  //     console.log('socialIcons:', socialIcons[0].src)
-  //     console.log('google:', googleLogo)
-  //     socialIcons[0].src = `${googleLogo}`;
-  //     socialIcons[1].src = `${fbLogo}`;
-  // });
   }
 
   render() {
