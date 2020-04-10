@@ -8,19 +8,37 @@ class Home extends React.Component {
     constructor() {
         super();
         const params = this.getHashParams(); 
-        const token = params.access_token
-        console.log(token)
-        if (token) {
-            spotifyWebApi.setAccessToken(token)
+        this.token = params.access_token
+        if (this.token) {
+            spotifyWebApi.setAccessToken(this.token)
         }
-        this.state ={
-            loggedIn: token ? true : false,
+        this.state = {
+            loggedIn: this.token ? true : false,
             nowPlaying: {
                 name: 'Not Checked',
                 image: ''
             },
-            lastSongs: []
+            lastSongs: [],
+            searchTracks: [],
+            isSearching: false,
+            value: '',
         }
+    }
+
+    handleChange = (e) => {
+        /*  const types = ['album', 'artist', 'track', 'playlist']; */
+            const types = ['album', 'artist', 'track'];
+            this.search(e.target.value, types);
+            this.setState({
+                value: e.target.value,
+            });
+        }
+
+    clearInput = () => {
+        this.setState({
+            value: '',
+            isSearching: false,
+        });
     }
 
     getHashParams() {
@@ -54,16 +72,43 @@ class Home extends React.Component {
             })
         })
     }
+
+    search = (query, types) => {
+        spotifyWebApi.search(query, types)
+            .then((response) => {
+                console.log(response.tracks.items.slice(0, 10))
+                this.setState({
+                    searchTracks: response.tracks.items.slice(0, 10),
+                    isSearching: true,
+                })
+            })
+    }
+
     componentDidMount() {
         this.recentTracks();
     }
 
     render() {
+        if (this.token) {
+            return (
+                <>
+                    <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
+                        lastSongs={this.state.lastSongs} searchFunction={this.search}
+                        isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
+                        handleChange={this.handleChange}
+                        value={this.state.value}
+                        clearInput={this.clearInput}
+                    />
+                </>
+            );
+        }
         return (
-            <>
-                <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} lastSongs={this.state.lastSongs} />
-            </>
-        );
+            <div>
+                <a href="http://localhost:8888/spotify-login">
+                    <button>Login in with spotify</button>
+                </a>
+            </div>
+        )
     }
 }
 
