@@ -25,7 +25,6 @@ export default class App extends React.Component {
     const { theme } = this.state;
     document.documentElement.classList.add("color-theme-in-transition");
     const newTheme = theme === 'dark' ? 'light' : 'dark'  ;
-    console.log('newTheme:', newTheme)
     this.setState({
       theme: newTheme,
     });
@@ -42,7 +41,7 @@ export default class App extends React.Component {
         <div>
           <nav>
             <ul>
-              <li className='un'>
+              <li>
                 <Link to='/'>Home</Link>
               </li>
               <li>

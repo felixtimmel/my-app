@@ -1,3 +1,4 @@
-a {
-  color: var(--btn-color);
+body {
+  /* to uncomment after we're done with the NavBar*/
+  /* background-color: var(--bg-color); */
 }

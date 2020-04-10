@@ -1,7 +1,21 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import googleLogo from '../_assets/Insciption_2/google-icon.svg';
+import fbLogo from '../_assets/Insciption_2/facebook-2.svg';
+import eyeLogo from '../_assets/Page_connexion/grey_eye.svg';
 
+
+const PasswordInput = ({field, form, ...props}) => {
+  return (
+    <div className='input-container'>
+      <input {...field} {...props} />
+      <span onClick={() => props.onShowPassword(field)}>
+        <img src={eyeLogo} alt='password logo'/>
+      </span>
+    </div>
+  );
+}
 
 const basicSignUpSchema = Yup.object().shape({
   email: Yup.string().required('Email requis'),
@@ -15,13 +29,28 @@ const basicSignUpSchema = Yup.object().shape({
   firstName: Yup.string().required('Prénom requis'),
 })
 
-const SocialSignUp = () =>
-  <div className='social'>
-      <div id='firebaseui-auth-container'></div>
+const SocialSignUp = (onSignUpWithGoogle, onSignUpWithFacebook) =>
+  <div className='signup__social'>
+    <div className='signup__social-btn facebook'>
+      <button onClick={() => onSignUpWithFacebook()}>
+        <span>
+          <img src={fbLogo} alt="google logo"/>
+        </span>
+      </button>
+      <span>Facebook</span>
+    </div>
+    <div className='signup__social-btn google'>
+      <button onClick={() => onSignUpWithGoogle()}>
+        <span>
+          <img src={googleLogo} alt="google logo"/>
+        </span>
+      </button>
+      <span>Google</span>
+    </div>
   </div>
 
-const BasicSignUp = (onSignUpWithEmail) =>
-  <div className='basic-signup'>
+const BasicSignUp = (onSignUpWithEmail, onShowPassword, isPassVisible, isConfirmedPassVisible) =>
+  <div className='signup__basic'>
     <Formik
       initialValues={{
         email: '',
@@ -37,25 +66,53 @@ const BasicSignUp = (onSignUpWithEmail) =>
       }}
     >
       {({ errors }) => (
-        <Form>
+        <Form className='signup__basic-form'>
           <Field name='lastName' placeholder='Nom'/>
-          <ErrorMessage name='lastName'/>
+          <div className="signup__basic-form-error">
+            <ErrorMessage name='lastName'/>
+          </div>
           <Field  name='firstName' placeholder='Prénom'/>
-          <ErrorMessage name='firstName'/>
+          <div className="signup__basic-form-error">
+            <ErrorMessage name='firstName'/>
+          </div>
           <Field type='email' name='email' placeholder='Email'/>
-          <ErrorMessage name='email'/>
-          <Field type='password' name='password' placeholder='Mot de passe'/>
-          <ErrorMessage name='password'/>
-          <Field name='confirmed_pass' type='password' placeholder='Confirmer mot de passe'/>
-          <ErrorMessage name='confirmed_pass'/>
+          <div className="signup__basic-form-error">
+            <ErrorMessage name='Email'/>
+          </div>
+          <Field
+            type={isPassVisible ? 'text': 'password'}
+            name='password'
+            placeholder='Mot de passe'
+            component={PasswordInput}
+            onShowPassword={onShowPassword}/>
+          <div className="signup__basic-form-error">
+            <ErrorMessage name='password'/>
+          </div>
+          <Field
+            name='confirmed_pass'
+            type={isConfirmedPassVisible ? 'text': 'password'}
+            placeholder='Confirmer mot de passe'
+            component={PasswordInput}
+            onShowPassword={onShowPassword}/>
+          <div className="signup__basic-form-error">
+            <ErrorMessage name='confirmed_pass'/>
+          </div>
           <button type='submit'>S'inscrire</button>
       </Form>
       )}
     </Formik>
   </div>
 
-export const SignUpView = ({ onSignUpWithEmail }) =>
-  <>
-    <h1>SignUp</h1>
-    {BasicSignUp(onSignUpWithEmail)}
-  </>
+
+export const SignUpView = ({ onSignUpWithEmail, onSignUpWithGoogle, onSignUpWithFacebook, onShowPassword, isPassVisible, isConfirmedPassVisible }) =>
+  <div className='signup'>
+    <div className='signup__title'>
+      <h2>Bienvenue !</h2>
+      <h2>Créez votre Compte !</h2>
+    </div>
+    {BasicSignUp(onSignUpWithEmail, onShowPassword, isPassVisible, isConfirmedPassVisible)}
+    <div className="signup__separator">
+      <h5>Ou inscrivez-vous avec</h5>
+    </div>
+    {SocialSignUp(onSignUpWithGoogle, onSignUpWithFacebook)}
+  </div>
