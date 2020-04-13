@@ -6,37 +6,52 @@
     padding: 0 20px;
 
     .title {
-        padding: 20px;
+        padding: 30px;
+        @media(min-width: 768px) {
+            padding: 60px;
+        }
     }
 
     .description {
         margin: 20px 10px;
     }
 
-    .signup-btn{
-        padding: 12px;
-        border-radius: 15px;
-        border: solid 2px var(--text-color);
-        
+    .landing-btn {
+        margin: auto;
+        margin-top: 50px ;
+        @media(min-width: 450px) {
+            width: 70%;
+          }
+          @media(min-width: 768px) {
+            width: 60%;
+            margin-top: 80px;
+          }
+          @media(min-width: 1200px) {
+            width: 40%;
+            margin-top: 100px;
+          }
+
         a {
             color: var(--text-color);
             font-size: 14px;
-        }
-    }
-
-    .landing-btn {
-        margin-top: 50px;
-
-        .login-btn{
-            padding: 12px;
-            border-radius: 15px;
-            background-color: var(--primary-color);
-            border: solid 2px var(--primary-color);
-            margin-top: 20px;
             
-            a {
-                color: var(--text-color);
-                font-size: 14px;
+            .signup-btn{
+                padding: 12px;
+                border-radius: 15px;
+                border: solid 2px var(--text-color);
+            }
+        }
+            
+        a {
+            color: var(--text-color);
+            font-size: 14px;
+
+            .login-btn{
+                padding: 12px;
+                border-radius: 15px;
+                background-color: var(--primary-color);
+                border: solid 2px var(--primary-color);
+                margin-top: 20px;
             }
         }
     }
