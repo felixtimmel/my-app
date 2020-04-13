@@ -3,3 +3,7 @@ body {
   font-style: normal;
   font-weight: 900;
 }
+
+a {
+  text-decoration: none;
+}
