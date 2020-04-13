@@ -2,6 +2,8 @@ import React from 'react'
 import HomepageView from './HomeView'
 import Spotify from 'spotify-web-api-js';
 
+require('./Home.scss');
+
 const spotifyWebApi = new Spotify();
 
 class Home extends React.Component {
@@ -16,12 +18,14 @@ class Home extends React.Component {
 			loggedIn: this.token ? true : false,
 			userInfo: {
 				username: '',
+				avatar: '',
 			},
 			nowPlaying: {
 				name: 'Not Checked',
 				image: ''
 			},
 			lastSongs: [],
+			userTopTracks: [],
 			searchTracks: [],
 			isSearching: false,
 			value: '',
@@ -70,19 +74,30 @@ class Home extends React.Component {
 	getUserInfo = () => {
 		spotifyWebApi.getMe()
 			.then((response) => {
+				console.log(response)
 				this.setState({
 					userInfo: {
-						username: response.display_name
+						username: response.display_name,
+						avatar: response.images[0].url
 					}
 				})
 			})
+	}
+
+	topTracks = () => {
+		spotifyWebApi.getMyTopTracks()
+		.then((response) => {
+			this.setState({
+				userTopTracks: response.items
+			})
+		})
 	}
 
 	recentTracks = () => {
 		spotifyWebApi.getMyRecentlyPlayedTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items.slice(0, 10)
+						lastSongs: response.items.slice(0, 10).map((item) => item.track)
 				})
 		})
 	}
@@ -101,13 +116,14 @@ class Home extends React.Component {
 		this.recentTracks();
 		if (this.token) {
 			this.getUserInfo();
+			this.topTracks();
 		}
 	}
 
 	render() {
 		if (this.token) {
 				return (
-					<>
+					<div className="homepage-container">
 						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
 							lastSongs={this.state.lastSongs} searchFunction={this.search}
 							isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
@@ -115,8 +131,9 @@ class Home extends React.Component {
 							value={this.state.value}
 							clearInput={this.clearInput}
 							userInfo={this.state.userInfo}
+							topTracks={this.state.userTopTracks}
 						/>
-					</>
+					</div>
 				);
 		}
 		return (

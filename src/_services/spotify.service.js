@@ -25,14 +25,14 @@ class SpotifyClass {
     .catch(err => console.log(err))
   }
 
-  recentTracks = () => {
+	recentTracks = () => {
 		spotifyWebApi.getMyRecentlyPlayedTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items
+						lastSongs: response.items.slice(0, 10).map((item) => item.track)
 				})
 		})
-  }
+	}
 
   search = (query, types) => {
 		spotifyWebApi.search(query, types)
@@ -44,6 +44,29 @@ class SpotifyClass {
       })
     });
   }
+
+  getUserInfo = () => {
+		spotifyWebApi.getMe()
+			.then((response) => {
+				console.log(response)
+				this.setState({
+					userInfo: {
+						username: response.display_name,
+						avatar: response.images[0].url
+					}
+				})
+			})
+	}
+
+	topTracks = () => {
+		spotifyWebApi.getMyTopTracks()
+		.then((response) => {
+			console.log(response.items)
+			this.setState({
+				topTracks: response.items
+			})
+		})
+	}
 
   onLoginToSpotify = () => {
     window.open('http://localhost:8888/spotify-login', '_self')

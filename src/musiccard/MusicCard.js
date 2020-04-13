@@ -1,5 +1,7 @@
 import React from 'react';
-import MusicCardView from './MusicCardView'
+import MusicCardView from './MusicCardView';
+
+require('./MusicCard.scss')
 
 const MusicCard = ({name, artist, image}) => {
     return (
