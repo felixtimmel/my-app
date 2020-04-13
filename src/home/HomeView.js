@@ -10,11 +10,12 @@ const HomepageView = ({
     isSearching,
     searchTracks,
     handleChange,
-    clearInput
+    clearInput,
+    userInfo
     }) => {    
     return (
         <>
-            <h2>Bonjour</h2>
+            <h2>Bonjour {userInfo.username}</h2>
             <div>
                 {<SearchBar clearInput={clearInput} handleChange={handleChange} search={searchFunction} isSearching={isSearching}/>}
             </div>

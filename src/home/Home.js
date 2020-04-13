@@ -14,6 +14,9 @@ class Home extends React.Component {
 		}
 		this.state = {
 			loggedIn: this.token ? true : false,
+			userInfo: {
+				username: '',
+			},
 			nowPlaying: {
 				name: 'Not Checked',
 				image: ''
@@ -64,11 +67,22 @@ class Home extends React.Component {
 			.catch(err => console.log(err))
 	}
 
+	getUserInfo = () => {
+		spotifyWebApi.getMe()
+			.then((response) => {
+				this.setState({
+					userInfo: {
+						username: response.display_name
+					}
+				})
+			})
+	}
+
 	recentTracks = () => {
 		spotifyWebApi.getMyRecentlyPlayedTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items
+						lastSongs: response.items.slice(0, 10)
 				})
 		})
 	}
@@ -76,7 +90,6 @@ class Home extends React.Component {
 	search = (query, types) => {
 		spotifyWebApi.search(query, types)
 			.then((response) => {
-				console.log(response.tracks.items.slice(0, 10))
 				this.setState({
 					searchTracks: response.tracks.items.slice(0, 10),
 					isSearching: true,
@@ -85,7 +98,10 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.recentTracks();
+		this.recentTracks();
+		if (this.token) {
+			this.getUserInfo();
+		}
 	}
 
 	render() {
@@ -98,6 +114,7 @@ class Home extends React.Component {
 							handleChange={this.handleChange}
 							value={this.state.value}
 							clearInput={this.clearInput}
+							userInfo={this.state.userInfo}
 						/>
 					</>
 				);
