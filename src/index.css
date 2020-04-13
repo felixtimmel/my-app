@@ -5,3 +5,7 @@ body {
   background-color: var(--bg-color);
   color: #fff;
 }
+
+a {
+  text-decoration: none;
+}
