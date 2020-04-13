@@ -66,7 +66,7 @@ export default class App extends React.Component {
   
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
-          {/* <Switch>
+          <Switch>
             <Route path='/login'>
               <Login firebaseClass={firebaseClass} />
             </Route>
@@ -79,8 +79,8 @@ export default class App extends React.Component {
             <Route path='/'>
               <Home />
             </Route>
-          </Switch> */}
-          <SpotifyConnection SpotifyClass={SpotifyClass}/>
+          </Switch>
+{/*           <SpotifyConnection SpotifyClass={SpotifyClass}/> */}
         </div>
       </Router>
     );

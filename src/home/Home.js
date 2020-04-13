@@ -2,6 +2,8 @@ import React from 'react'
 import HomepageView from './HomeView'
 import Spotify from 'spotify-web-api-js';
 
+require('./Home.scss');
+
 const spotifyWebApi = new Spotify();
 
 class Home extends React.Component {
@@ -14,11 +16,16 @@ class Home extends React.Component {
 		}
 		this.state = {
 			loggedIn: this.token ? true : false,
+			userInfo: {
+				username: '',
+				avatar: '',
+			},
 			nowPlaying: {
 				name: 'Not Checked',
 				image: ''
 			},
 			lastSongs: [],
+			userTopTracks: [],
 			searchTracks: [],
 			isSearching: false,
 			value: '',
@@ -64,11 +71,33 @@ class Home extends React.Component {
 			.catch(err => console.log(err))
 	}
 
+	getUserInfo = () => {
+		spotifyWebApi.getMe()
+			.then((response) => {
+				console.log(response)
+				this.setState({
+					userInfo: {
+						username: response.display_name,
+						avatar: response.images[0].url
+					}
+				})
+			})
+	}
+
+	topTracks = () => {
+		spotifyWebApi.getMyTopTracks()
+		.then((response) => {
+			this.setState({
+				userTopTracks: response.items
+			})
+		})
+	}
+
 	recentTracks = () => {
 		spotifyWebApi.getMyRecentlyPlayedTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items
+						lastSongs: response.items.slice(0, 10).map((item) => item.track)
 				})
 		})
 	}
@@ -76,7 +105,6 @@ class Home extends React.Component {
 	search = (query, types) => {
 		spotifyWebApi.search(query, types)
 			.then((response) => {
-				console.log(response.tracks.items.slice(0, 10))
 				this.setState({
 					searchTracks: response.tracks.items.slice(0, 10),
 					isSearching: true,
@@ -85,21 +113,27 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		// this.recentTracks();
+		this.recentTracks();
+		if (this.token) {
+			this.getUserInfo();
+			this.topTracks();
+		}
 	}
 
 	render() {
 		if (this.token) {
 				return (
-					<>
+					<div className="homepage-container">
 						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
 							lastSongs={this.state.lastSongs} searchFunction={this.search}
 							isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
 							handleChange={this.handleChange}
 							value={this.state.value}
 							clearInput={this.clearInput}
+							userInfo={this.state.userInfo}
+							topTracks={this.state.userTopTracks}
 						/>
-					</>
+					</div>
 				);
 		}
 		return (

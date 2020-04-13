@@ -1,11 +1,21 @@
 body {
   font-family: 'Montserrat';
   font-style: normal;
-  font-weight: 900;
+  font-weight: 400;
   background-color: var(--bg-color);
   color: #fff;
 }
 
 a {
   text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+p {
+  margin: 0;
 }
