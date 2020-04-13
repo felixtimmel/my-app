@@ -3,6 +3,8 @@ import Login from './login/Login'
 import Home from './home/Home'
 import LandingView from './landing/LandingView';
 import Signup from './signup/SignUp';
+import SpotifyConnection from './spotify_connexion/connection/Connection';
+
 
 /* import logo from './logo.svg'; */
 import './App.css';
@@ -12,6 +14,8 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Spotify from './_services/spotify.service';
+const SpotifyClass = new Spotify();
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,6 +39,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log('&&&&&&&&&', SpotifyClass)
     const { firebaseClass } = this.props;
     return (
       <Router>
@@ -61,7 +66,7 @@ export default class App extends React.Component {
   
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
-          <Switch>
+          {/* <Switch>
             <Route path='/login'>
               <Login firebaseClass={firebaseClass} />
             </Route>
@@ -74,7 +79,8 @@ export default class App extends React.Component {
             <Route path='/'>
               <Home />
             </Route>
-          </Switch>
+          </Switch> */}
+          <SpotifyConnection SpotifyClass={SpotifyClass}/>
         </div>
       </Router>
     );
