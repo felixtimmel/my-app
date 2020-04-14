@@ -102,7 +102,6 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		if (this.token) {
-			console.log(this.token)
 			this.recentTracks();
 			this.getUserInfo();
 			this.topTracks();

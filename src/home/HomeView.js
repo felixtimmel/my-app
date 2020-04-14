@@ -10,6 +10,7 @@ const HomepageView = ({
 	lastSongs,
 	searchFunction,
 	isSearching,
+	value,
 	searchTracks,
 	handleChange,
 	clearInput,
@@ -32,7 +33,8 @@ const HomepageView = ({
 			
 			<div className="searchbar">
 				<img src={Loupe} alt="search" className="searchbar__loupe"/>
-				{<SearchBar clearInput={clearInput} 
+				{<SearchBar clearInput={clearInput}
+										value={value} 
 										handleChange={handleChange} 
 										search={searchFunction} 
 										isSearching={isSearching}
