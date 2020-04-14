@@ -15,62 +15,46 @@ class SpotifyClass {
 
   getNowPlaying = () => {
 		return spotifyWebApi.getMyCurrentPlaybackState()
-    .then((response) => response)
+    .then((response) => {
+      return {
+        name: response.item.name,
+        image: response.item.album.images[0].url
+      }
+    })
     .catch(err => console.log(err))
   }
 
 	recentTracks = () => {
-		spotifyWebApi.getMyRecentlyPlayedTracks()
-		.then((response) => {
-				this.setState({
-						lastSongs: response.items.slice(0, 10).map((item) => item.track)
-				})
-		})
+		return spotifyWebApi.getMyRecentlyPlayedTracks()
+    .then((response) => response.items.slice(0, 10).map((item) => item.track))
 	}
 
-  search = (query, types) => {
-		spotifyWebApi.search(query, types)
-    .then((response) => {
-      console.log(response.tracks.items.slice(0, 10))
-      this.setState({
-        searchTracks: response.tracks.items.slice(0, 10),
-        isSearching: true,
-      })
-    });
+  getUser = () => {
+    return spotifyWebApi.getMe()
+    .then(res => res)
   }
 
-	clearInput = () => {
-		this.setState({
-			value: '',
-			isSearching: false,
-		});
-	}
+  search = (query, types) => {
+		return spotifyWebApi.search(query, types)
+    .then((response) => response.tracks.items.slice(0, 10));
+  }
 
-  getUserInfo = () => {
-		spotifyWebApi.getMe()
-			.then((response) => {
-				console.log(response)
-				this.setState({
-					userInfo: {
-						username: response.display_name,
-						avatar: response.images[0].url
-					}
-				})
-			})
-	}
+  setToken = () => {
+    const tokens = this.getHashParams();
+    return spotifyWebApi.setAccessToken(tokens.access_token);
+  }
 
 	topTracks = () => {
-		spotifyWebApi.getMyTopTracks()
+		return spotifyWebApi.getMyTopTracks()
 		.then((response) => {
-			console.log(response.items)
-			this.setState({
+			return {
 				topTracks: response.items
-			})
+			}
 		})
 	}
 
   onLoginToSpotify = () => {
-    window.open('http://localhost:8888/spotify-login', '_self')
+    window.open('http://localhost:8888/spotify-login', '_self');
   }
 }
 

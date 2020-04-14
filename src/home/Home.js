@@ -10,6 +10,7 @@ class Home extends React.Component {
 		const params = this.props.spotifyClass.getHashParams(); 
 		this.token = params.access_token
 		if (this.token) {
+			this.props.spotifyClass.setToken();
 		}
 		this.state = {
 			loggedIn: this.token ? true : false,
@@ -53,14 +54,14 @@ class Home extends React.Component {
 		.then((response) =>
 			this.setState({
 				nowPlaying: {
-					name: response.item.name,
-					image: response.item.album.images[0].url
+					name: response.name,
+					image: response.image
 				}
 			}))
 	}
 
 	getUserInfo = () => {
-		this.props.spotifyClass.getUserInfo()
+		this.props.spotifyClass.getUser()
 			.then((response) => {
 				this.setState({
 					userInfo: {
@@ -75,7 +76,7 @@ class Home extends React.Component {
 		this.props.spotifyClass.topTracks()
 		.then((response) => {
 			this.setState({
-				userTopTracks: response.items
+				userTopTracks: response.topTracks
 			})
 		})
 	}
@@ -84,16 +85,16 @@ class Home extends React.Component {
 		this.props.spotifyClass.recentTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items.slice(0, 10).map((item) => item.track)
+						lastSongs: response
 				})
 		})
 	}
 
-	search = () => {
-		this.props.spotifyClass.search()
+	search = (query, types) => {
+		this.props.spotifyClass.search(query, types)
 			.then((response) => {
 				this.setState({
-					searchTracks: response.tracks.items.slice(0, 10),
+					searchTracks: response,
 					isSearching: true,
 				})
 			});
@@ -101,6 +102,7 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		if (this.token) {
+			console.log(this.token)
 			this.recentTracks();
 			this.getUserInfo();
 			this.topTracks();
@@ -111,12 +113,12 @@ class Home extends React.Component {
 		if (this.token) {
 				return (
 					<div className="homepage-container">
-						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying()} 
-							lastSongs={this.state.lastSongs} searchFunction={this.search()}
+						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
+							lastSongs={this.state.lastSongs} searchFunction={this.search}
 							isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
-							handleChange={this.handleChange()}
+							handleChange={this.handleChange}
 							value={this.state.value}
-							clearInput={this.clearInput()}
+							clearInput={this.clearInput}
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
 						/>
