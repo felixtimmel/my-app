@@ -4,7 +4,7 @@ const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-require('dotenv').config()
+require('dotenv').config();
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
@@ -109,7 +109,7 @@ app.get('/callback', function(req, res) {
 
         const access_token = body.access_token;
         const refresh_token = body.refresh_token;
-
+        // SpotifyClass.setToken(access_token, refresh_token);
         const options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
@@ -122,7 +122,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect(`${clientUrl}/#` +
+        res.redirect(`${clientUrl}/loged_in_spotify#` +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token

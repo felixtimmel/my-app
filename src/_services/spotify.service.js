@@ -15,12 +15,10 @@ class SpotifyClass {
   getNowPlaying = () => {
 		spotifyWebApi.getMyCurrentPlaybackState()
     .then((response) => {
-      this.setState({
-        nowPlaying: {
-            name: response.item.name,
-            image: response.item.album.images[0].url
-        }
-      })
+      return {
+        name: response.item.name,
+        image: response.item.album.images[0].url
+      }
     })
     .catch(err => console.log(err))
   }
@@ -34,6 +32,11 @@ class SpotifyClass {
 		})
   }
 
+  getUser = () => {
+    return spotifyWebApi.getMe()
+    .then(res => res)
+  }
+
   search = (query, types) => {
 		spotifyWebApi.search(query, types)
     .then((response) => {
@@ -45,8 +48,13 @@ class SpotifyClass {
     });
   }
 
+  setToken = () => {
+    const tokens = this.getHashParams();
+    spotifyWebApi.setAccessToken(tokens.access_token);
+  }
+
   onLoginToSpotify = () => {
-    window.open('http://localhost:8888/spotify-login', '_self')
+    window.open('http://localhost:8888/spotify-login', '_self');
   }
 }
 
