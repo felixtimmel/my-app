@@ -2,6 +2,10 @@ import Spotify from 'spotify-web-api-js';
 const spotifyWebApi = new Spotify();
 
 class SpotifyClass {
+	constructor() {
+		this.access_token = null;
+		this.refresh_token = null;
+	}
 
   getHashParams() {
     var hashParams = {};
@@ -40,7 +44,9 @@ class SpotifyClass {
   }
 
   setToken = () => {
-    const tokens = this.getHashParams();
+		const tokens = this.getHashParams();
+		this.access_token = tokens.access_token;
+		this.refresh_token = tokens.refresh_token;
     return spotifyWebApi.setAccessToken(tokens.access_token);
   }
 

@@ -7,11 +7,7 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		console.log('&&&&&&&&&', this.props)
-		const params = this.props.spotifyClass.getHashParams(); 
-		this.token = params.access_token
-		if (this.token) {
-			this.props.spotifyClass.setToken();
-		}
+		this.token = this.props.spotifyClass.access_token
 		this.state = {
 			loggedIn: this.token ? true : false,
 			userInfo: {
