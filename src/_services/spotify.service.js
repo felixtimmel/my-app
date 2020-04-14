@@ -23,14 +23,14 @@ class SpotifyClass {
     .catch(err => console.log(err))
   }
 
-  recentTracks = () => {
+	recentTracks = () => {
 		spotifyWebApi.getMyRecentlyPlayedTracks()
 		.then((response) => {
 				this.setState({
-						lastSongs: response.items
+						lastSongs: response.items.slice(0, 10).map((item) => item.track)
 				})
 		})
-  }
+	}
 
   getUser = () => {
     return spotifyWebApi.getMe()
@@ -52,6 +52,16 @@ class SpotifyClass {
     const tokens = this.getHashParams();
     spotifyWebApi.setAccessToken(tokens.access_token);
   }
+
+	topTracks = () => {
+		spotifyWebApi.getMyTopTracks()
+		.then((response) => {
+			console.log(response.items)
+			this.setState({
+				topTracks: response.items
+			})
+		})
+	}
 
   onLoginToSpotify = () => {
     window.open('http://localhost:8888/spotify-login', '_self');

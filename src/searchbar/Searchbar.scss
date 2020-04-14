@@ -1,0 +1,20 @@
+#searchBar {
+  border-radius: 4px;
+  padding: 8px;
+  border: none;
+  width: 100%;
+  flex-shrink: 1;
+
+  &:focus {
+    outline: none;
+  }
+
+}
+
+.searchBar__cancel-btn {
+  border: none;
+  background-color: var(--text-color);
+  color: var(--grey-color);
+  padding-right: 12px;
+  font-size: small;
+}
