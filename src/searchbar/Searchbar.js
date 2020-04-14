@@ -5,7 +5,7 @@ require('./Searchbar.scss')
 class SearchBar extends Component {
   render () {
     return (
-      <div>
+      <>
         <input 
           id="searchBar"
           type="text"
@@ -15,9 +15,9 @@ class SearchBar extends Component {
           onChange={(e) => this.props.handleChange(e)}
         />
         {this.props.isSearching &&
-          <button onClick={() => this.props.clearInput()}>annuler</button> 
+          <button onClick={() => this.props.clearInput()} className="searchBar__cancel-btn">annuler</button> 
         }
-      </div>
+      </>
     )
   }
 }
