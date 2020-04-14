@@ -2,6 +2,7 @@ import Spotify from 'spotify-web-api-js';
 const spotifyWebApi = new Spotify();
 
 class SpotifyClass {
+
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -13,7 +14,7 @@ class SpotifyClass {
   }
 
   getNowPlaying = () => {
-		spotifyWebApi.getMyCurrentPlaybackState()
+		return spotifyWebApi.getMyCurrentPlaybackState()
     .then((response) => {
       return {
         name: response.item.name,
@@ -24,12 +25,8 @@ class SpotifyClass {
   }
 
 	recentTracks = () => {
-		spotifyWebApi.getMyRecentlyPlayedTracks()
-		.then((response) => {
-				this.setState({
-						lastSongs: response.items.slice(0, 10).map((item) => item.track)
-				})
-		})
+		return spotifyWebApi.getMyRecentlyPlayedTracks()
+    .then((response) => response.items.slice(0, 10).map((item) => item.track))
 	}
 
   getUser = () => {
@@ -38,28 +35,21 @@ class SpotifyClass {
   }
 
   search = (query, types) => {
-		spotifyWebApi.search(query, types)
-    .then((response) => {
-      console.log(response.tracks.items.slice(0, 10))
-      this.setState({
-        searchTracks: response.tracks.items.slice(0, 10),
-        isSearching: true,
-      })
-    });
+		return spotifyWebApi.search(query, types)
+    .then((response) => response.tracks.items.slice(0, 10));
   }
 
   setToken = () => {
     const tokens = this.getHashParams();
-    spotifyWebApi.setAccessToken(tokens.access_token);
+    return spotifyWebApi.setAccessToken(tokens.access_token);
   }
 
 	topTracks = () => {
-		spotifyWebApi.getMyTopTracks()
+		return spotifyWebApi.getMyTopTracks()
 		.then((response) => {
-			console.log(response.items)
-			this.setState({
+			return {
 				topTracks: response.items
-			})
+			}
 		})
 	}
 

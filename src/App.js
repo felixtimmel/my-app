@@ -83,7 +83,7 @@ export default class App extends React.Component {
               <LandingView />
             </Route>
             <Route path='/'>
-              <Home />
+              <Home spotifyClass={SpotifyClass}/>
             </Route>
           </Switch>
         </div>
