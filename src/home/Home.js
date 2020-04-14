@@ -1,18 +1,15 @@
 import React from 'react'
 import HomepageView from './HomeView'
-import Spotify from 'spotify-web-api-js';
 
 require('./Home.scss');
 
-const spotifyWebApi = new Spotify();
-
 class Home extends React.Component {
-	constructor() {
-		super();
-		const params = this.getHashParams(); 
+	constructor(props) {
+		super(props);
+		console.log('&&&&&&&&&', this.props)
+		const params = this.props.spotifyClass.getHashParams(); 
 		this.token = params.access_token
 		if (this.token) {
-			spotifyWebApi.setAccessToken(this.token)
 		}
 		this.state = {
 			loggedIn: this.token ? true : false,
@@ -32,15 +29,6 @@ class Home extends React.Component {
 		}
 	}
 
-	handleChange = (e) => {
-		/*  const types = ['album', 'artist', 'track', 'playlist']; */
-		const types = ['album', 'artist', 'track'];
-		this.search(e.target.value, types);
-		this.setState({
-			value: e.target.value,
-		});
-	}
-
 	clearInput = () => {
 		this.setState({
 				value: '',
@@ -48,33 +36,32 @@ class Home extends React.Component {
 		});
 	}
 
+	handleChange = (e) => {
+		const types = ['album', 'artist', 'track'];
+		this.search(e.target.value, types);
+		this.setState({
+			value: e.target.value,
+		});
+	}
+
 	getHashParams() {
-			var hashParams = {};
-			var e, r = /([^&;=]+)=?([^&;]*)/g,
-					q = window.location.hash.substring(1);
-			while ( e = r.exec(q)) {
-					hashParams[e[1]] = decodeURIComponent(e[2]);
-			}
-			return hashParams;
+		this.props.spotifyClass.getHashParams()
 	}
 
 	getNowPlaying = () => {
-		spotifyWebApi.getMyCurrentPlaybackState()
-			.then((response) => {
-					this.setState({
-							nowPlaying: {
-									name: response.item.name,
-									image: response.item.album.images[0].url
-							}
-					})
-			})
-			.catch(err => console.log(err))
+		this.props.spotifyClass.getNowPlaying()
+		.then((response) =>
+			this.setState({
+				nowPlaying: {
+					name: response.item.name,
+					image: response.item.album.images[0].url
+				}
+			}))
 	}
 
 	getUserInfo = () => {
-		spotifyWebApi.getMe()
+		this.props.spotifyClass.getUserInfo()
 			.then((response) => {
-				console.log(response)
 				this.setState({
 					userInfo: {
 						username: response.display_name,
@@ -85,7 +72,7 @@ class Home extends React.Component {
 	}
 
 	topTracks = () => {
-		spotifyWebApi.getMyTopTracks()
+		this.props.spotifyClass.topTracks()
 		.then((response) => {
 			this.setState({
 				userTopTracks: response.items
@@ -94,7 +81,7 @@ class Home extends React.Component {
 	}
 
 	recentTracks = () => {
-		spotifyWebApi.getMyRecentlyPlayedTracks()
+		this.props.spotifyClass.recentTracks()
 		.then((response) => {
 				this.setState({
 						lastSongs: response.items.slice(0, 10).map((item) => item.track)
@@ -102,8 +89,8 @@ class Home extends React.Component {
 		})
 	}
 
-	search = (query, types) => {
-		spotifyWebApi.search(query, types)
+	search = () => {
+		this.props.spotifyClass.search()
 			.then((response) => {
 				this.setState({
 					searchTracks: response.tracks.items.slice(0, 10),
@@ -113,8 +100,8 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		this.recentTracks();
 		if (this.token) {
+			this.recentTracks();
 			this.getUserInfo();
 			this.topTracks();
 		}
@@ -124,12 +111,12 @@ class Home extends React.Component {
 		if (this.token) {
 				return (
 					<div className="homepage-container">
-						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
-							lastSongs={this.state.lastSongs} searchFunction={this.search}
+						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying()} 
+							lastSongs={this.state.lastSongs} searchFunction={this.search()}
 							isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
-							handleChange={this.handleChange}
+							handleChange={this.handleChange()}
 							value={this.state.value}
-							clearInput={this.clearInput}
+							clearInput={this.clearInput()}
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
 						/>

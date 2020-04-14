@@ -2,6 +2,7 @@ import Spotify from 'spotify-web-api-js';
 const spotifyWebApi = new Spotify();
 
 class SpotifyClass {
+
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -13,15 +14,8 @@ class SpotifyClass {
   }
 
   getNowPlaying = () => {
-		spotifyWebApi.getMyCurrentPlaybackState()
-    .then((response) => {
-      this.setState({
-        nowPlaying: {
-            name: response.item.name,
-            image: response.item.album.images[0].url
-        }
-      })
-    })
+		return spotifyWebApi.getMyCurrentPlaybackState()
+    .then((response) => response)
     .catch(err => console.log(err))
   }
 
@@ -44,6 +38,13 @@ class SpotifyClass {
       })
     });
   }
+
+	clearInput = () => {
+		this.setState({
+			value: '',
+			isSearching: false,
+		});
+	}
 
   getUserInfo = () => {
 		spotifyWebApi.getMe()
