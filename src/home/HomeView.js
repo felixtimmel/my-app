@@ -1,6 +1,8 @@
 import React from 'react';
 import MusicCardList from '../musiccard/MusicCardList';
 import SearchBar from '../searchbar/Searchbar';
+import Loupe from '../_assets/4_HOME/loupe.svg';
+import SpotifyLogo from '../_assets/4_HOME/Image 3.svg';
 
 const HomepageView = ({
 	nowPlaying,
@@ -22,10 +24,14 @@ const HomepageView = ({
 					<span style={{fontSize: "16px", fontWeight: 400}}>Bonjour,</span><br/> 
 					{userInfo.username}
 				</h2>
-				<img src={userInfo.avatar} className="homeGreeting__avatar"/>
+				<div className="homeGreeting__avatar">
+					<img src={userInfo.avatar} className="homeGreeting__avatar-profil"/>
+					<img src={SpotifyLogo} className="homeGreeting__spotify-logo"/>
+				</div>
 			</div>
 			
 			<div className="searchbar">
+				<img src={Loupe} alt="search" className="searchbar__loupe"/>
 				{<SearchBar clearInput={clearInput} 
 										handleChange={handleChange} 
 										search={searchFunction} 
@@ -40,11 +46,11 @@ const HomepageView = ({
 			{ !isSearching &&
 				<>
 					<div className="lastlistenning">
-						<p><strong>Vos dernières écoutes</strong></p>
+						<p className="homepage__subtitles">Vos dernières écoutes</p>
 						<MusicCardList lastSongs={lastSongs} isSearching={isSearching}/>
 					</div>
 					<div className="topTracks">
-						<p><strong>Vos top Tracks</strong></p>
+						<p className="homepage__subtitles">Vos top Tracks</p>
 						<MusicCardList topTracks={topTracks} isSearching={isSearching}/>
 					</div>
 					{/* <div>
@@ -52,7 +58,7 @@ const HomepageView = ({
 								<button>Login in with spotify</button>
 						</a>
 					</div> */}
-					<div>
+					{/* <div>
 						Now playing : { nowPlaying.name }
 					</div>
 					<div>
@@ -60,7 +66,7 @@ const HomepageView = ({
 					</div>
 					<button onClick={ () => getNowPlaying() }>
 						Check Now playing
-					</button>
+					</button> */}
 				</>
 			}
 		</>
