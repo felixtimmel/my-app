@@ -39,13 +39,13 @@ export const LoginView = (props) => {
 			</div>
 			<div className="signIn__social">
 				<div className='signIn__social-btn'>
-					<button /* onClick={() => onSignUpWithFacebook()} */>
+					<button onClick={props.facebookSignIn}>
 							<img src={fblogo} alt="google logo"/>
 					</button>
       		<p>Facebook</p>
    			</div>
 				<div className='signIn__social-btn'>
-					<button /* onClick={() => onSignUpWithGoogle()} */>
+					<button onClick={props.googleSignIn}>
 							<img src={googlelogo} alt="google logo"/>
 					</button>
 					<p>Google</p>

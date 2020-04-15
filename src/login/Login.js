@@ -20,22 +20,68 @@ class Login extends React.Component {
         })
       }
 
+    googleSignIn = () => {
+        const { firebase } = this.props.firebaseClass;
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(googleProvider).then(function(result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            console.log(token)
+            console.log(user)
+            // ...
+          }).catch(function(error) {
+            // Handle Errors here.
+            console.log(error.code);
+            console.log(error.message);
+            // The email of the user's account used.
+            console.log(error.email);
+            // The firebase.auth.AuthCredential type that was used.
+            console.log(error.credential);
+            // ...
+          });
+    }
+
+    facebookSignIn = () => {
+        const { firebase } = this.props.firebaseClass;
+        const provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            console.log(token)
+            console.log(user)
+            // ...       
+          }).catch(function(error) {
+            // Handle Errors here.
+            console.log(error.code);
+            console.log(error.message);
+            // The email of the user's account used.
+            console.log(error.email);
+            // The firebase.auth.AuthCredential type that was used.
+            console.log(error.credential);
+            // ...
+          });
+    }
+
     signInsubmit = () => {
         const elements = document.querySelectorAll('.signIn__form_input');
         const email = elements[0].value
         const password = elements[1].value
-        const firebase = this.props.firebaseClass
         this.setState({
             email: email,
             password: password
         })
         /* console.log(firebase) */
+        const firebase = this.props.firebaseClass
         firebase.auth.signInWithEmailAndPassword(email, password)
             .then(cred => {console.log(cred)})
             .catch(function(error) {
+                console.log(error)
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode)
                 console.log(errorMessage)
             })
     }
@@ -54,7 +100,9 @@ class Login extends React.Component {
         <div className="login-container">
             <LoginView 
                 isPassVisible={this.state.isPassVisible}
-                signInsubmit = {this.signInsubmit}    
+                signInsubmit = {this.signInsubmit}
+                googleSignIn = {this.googleSignIn}    
+                facebookSignIn = {this.facebookSignIn}    
             />
             {/* {this.ui && <div id='firebaseui-auth-container'></div> } */}
         </div>
