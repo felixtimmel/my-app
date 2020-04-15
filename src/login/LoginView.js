@@ -20,8 +20,12 @@ export const LoginView = (props) => {
 			<div className="signIn__form">
 				<input placeholder="Email" type="text" className="signIn__form_input"/>
 				<div className="input-container">
-					<input placeholder="Mot de passe" type="text" className="signIn__form_input"/>
-					<span className="password_logo" /* onClick={() => props.onShowPassword(field)} */>
+					<input 
+						placeholder="Mot de passe" 
+						type={props.isPassVisible ? 'text': 'password'} 
+						className="signIn__form_input"
+					/>
+					<span className="password_logo" onClick={props.onShowPassword}>
 						<img src={eyeLogo} alt='password logo' />
 					</span>
 				</div>

@@ -13,12 +13,12 @@ class Login extends React.Component {
         }
     }
 
-    onShowPassword = (field) => {
-        const { isPassVisible } = this.state;
+    onShowPassword = () => {
+        const isPassVisible = this.state.isPassVisible;
         this.setState({
-          isPassVisible: field.name === 'password' ? !isPassVisible : isPassVisible,
+          isPassVisible: !isPassVisible
         })
-      }
+    }
 
     googleSignIn = () => {
         const { firebase } = this.props.firebaseClass;
@@ -100,6 +100,7 @@ class Login extends React.Component {
         <div className="login-container">
             <LoginView 
                 isPassVisible={this.state.isPassVisible}
+                onShowPassword = {this.onShowPassword}
                 signInsubmit = {this.signInsubmit}
                 googleSignIn = {this.googleSignIn}    
                 facebookSignIn = {this.facebookSignIn}    
