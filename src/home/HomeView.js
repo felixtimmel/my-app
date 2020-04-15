@@ -17,7 +17,7 @@ const HomepageView = ({
 	userInfo,
 	topTracks
 	}) => {    
-
+		
 	return (
 		<>
 			<div className="homeGreeting">

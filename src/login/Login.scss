@@ -65,6 +65,21 @@
           margin-bottom: 10px;
         }
     }
+    
+    .signIn__form_submit {
+      text-align: center;
+      
+      .signIn__submit_btn {
+        color: var(--text-color);
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 8px 60px;
+        cursor: pointer;
+        margin-top: 30px;
+      }
+    }
   }
   .signIn__social {
     display: flex;
@@ -90,16 +105,6 @@
     }
   }
 
-  .signIn__submit_btn {
-    color: var(--text-color);
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    padding: 8px 60px;
-    cursor: pointer;
-    margin-top: 30px;
-  }
 }
 
 .signIn__separator {

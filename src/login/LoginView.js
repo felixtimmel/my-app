@@ -18,16 +18,22 @@ export const LoginView = (props) => {
 				Connecter vous à votre compte
 			</h2>
 			<div className="signIn__form">
-				<input placeholder="Email" type="text"/>
+				<input placeholder="Email" type="text" className="signIn__form_input"/>
 				<div className="input-container">
-					<input placeholder="Mot de passe" type="text"/>
+					<input placeholder="Mot de passe" type="text" className="signIn__form_input"/>
 					<span className="password_logo" /* onClick={() => props.onShowPassword(field)} */>
 						<img src={eyeLogo} alt='password logo' />
 					</span>
 				</div>
 				<p>Mot de passe oublié ?</p>
+				<div className="signIn__form_submit">
+					<button type='submit' className="signIn__submit_btn"
+						onClick={props.signInsubmit}
+					>
+						Se connecter
+					</button>
+				</div>
 			</div>
-			<button type='submit' className="signIn__submit_btn">Se connecter</button>
 			<div className="signIn__separator">
 				<h5>Ou connectez-vous avec</h5>
 			</div>

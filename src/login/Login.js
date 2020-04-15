@@ -8,6 +8,8 @@ class Login extends React.Component {
 
         this.state={
             isPassVisible: false,
+            email: '',
+            password: '',
         }
     }
 
@@ -17,6 +19,26 @@ class Login extends React.Component {
           isPassVisible: field.name === 'password' ? !isPassVisible : isPassVisible,
         })
       }
+
+    signInsubmit = () => {
+        const elements = document.querySelectorAll('.signIn__form_input');
+        const email = elements[0].value
+        const password = elements[1].value
+        const firebase = this.props.firebaseClass
+        this.setState({
+            email: email,
+            password: password
+        })
+        /* console.log(firebase) */
+        firebase.auth.signInWithEmailAndPassword(email, password)
+            .then(cred => {console.log(cred)})
+            .catch(function(error) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode)
+                console.log(errorMessage)
+            })
+    }
 
     componentDidMount() {
       /* const { firebase } = this.props.firebaseClass;
@@ -30,7 +52,10 @@ class Login extends React.Component {
     render() {
         return (
         <div className="login-container">
-            <LoginView isPassVisible={this.state.isPassVisible}/>
+            <LoginView 
+                isPassVisible={this.state.isPassVisible}
+                signInsubmit = {this.signInsubmit}    
+            />
             {/* {this.ui && <div id='firebaseui-auth-container'></div> } */}
         </div>
         )
