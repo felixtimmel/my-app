@@ -1,0 +1,130 @@
+.signIn {
+  text-align: center;
+  height: 100vh;
+  margin: auto;
+  width: 90%;
+  @media(min-width: 450px) {
+    width: 70%;
+  }
+  @media(min-width: 768px) {
+    width: 40%;
+    .signIn__logo {
+      margin-bottom: 20px;
+    }
+
+  }
+  @media(min-width: 1200px) {
+    width: 30%;
+  }
+
+  h2 {
+    margin-bottom: 40px;
+  }
+
+  .signIn__logo {
+    width: 200px;
+  }
+
+  .signIn__form {
+    text-align: left;
+
+    p {
+      text-align: right;
+      font-size: 10px;
+      color: var(--grey-color);
+    }
+    input {
+      color: var(--text-color);
+      outline: none;
+      width: 100%;
+      margin-bottom: 15px;
+      border: none;
+      border-bottom: 2px solid var(--grey-color);
+      background-color: var(--bg-color);
+      padding-bottom: 5px;
+      font-size: 16px;
+      
+      &:focus {
+        border-bottom: 2px solid var(--text-color);
+      }
+      
+      &::placeholder {
+        color: var(--text-color);
+      }
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+
+        .password_logo {
+          color: var(--eye-color);
+          border-bottom: 2px solid var(--grey-color);
+          margin-bottom: 10px;
+        }
+    }
+    
+    .signIn__form_submit {
+      text-align: center;
+      
+      .signIn__submit_btn {
+        color: var(--text-color);
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 8px 60px;
+        cursor: pointer;
+        margin-top: 30px;
+      }
+    }
+  }
+  .signIn__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      border: none;
+      background-color: var(--social-btn-bg);
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+
+      img {
+        width: auto;
+      }
+    }
+
+    .signIn__social-btn {
+      margin: 0 20px;
+    }
+  }
+
+}
+
+.signIn__separator {
+  h5 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+  color: var(--grey-color);
+  h5:before,
+  h5:after {
+      content: '';
+      border-top: 2px solid;
+      margin: 0 10px 0 0;
+      flex: 1 0 20px;
+  }
+  
+  h5:after {
+      margin: 0 0 0 10px;
+  }
+}

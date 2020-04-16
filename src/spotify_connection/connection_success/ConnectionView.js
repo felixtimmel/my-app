@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../../_assets/Insciption_2/spotify-2.svg';
-import spotifyLogo from '../../_assets/Insciption_2/spotify-1.svg';
+import logo from '../../_assets/Inscription_2/spotify-2.svg';
+import spotifyLogo from '../../_assets/Inscription_2/spotify-1.svg';
 import ipadImg from '../../_assets/I-3 _Inscription_3/undraw_meditating_0nae.svg';
 import { withRouter } from 'react-router-dom';
 

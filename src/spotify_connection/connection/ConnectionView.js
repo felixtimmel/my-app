@@ -1,7 +1,7 @@
 import React from 'react';
 import musicLogo from '../../_assets/Page_connexion/undraw_compose_music_ovo2.svg';
 import oveoXspotify from '../../_assets/Page_connexion/oveo_X_spotify.svg';
-import spotifyLogo from '../../_assets/Insciption_2/spotify-2.svg';
+import spotifyLogo from '../../_assets/Inscription_2/spotify-2.svg';
 import { withRouter } from 'react-router-dom';
 
 export const ConnectionView = withRouter(({SpotifyClass, history}) => {

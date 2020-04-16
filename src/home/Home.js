@@ -71,6 +71,7 @@ class Home extends React.Component {
 	topTracks = () => {
 		this.props.spotifyClass.topTracks()
 		.then((response) => {
+			console.log(response.topTracks)
 			this.setState({
 				userTopTracks: response.topTracks
 			})
