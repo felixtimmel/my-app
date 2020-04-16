@@ -33,17 +33,13 @@ const SocialSignUp = (onSignUpWithGoogle, onSignUpWithFacebook) =>
   <div className='signup__social'>
     <div className='signup__social-btn facebook'>
       <button onClick={() => onSignUpWithFacebook()}>
-        <span>
-          <img src={fbLogo} alt="google logo"/>
-        </span>
+        <img src={fbLogo} alt="google logo"/>
       </button>
       <span>Facebook</span>
     </div>
     <div className='signup__social-btn google'>
       <button onClick={() => onSignUpWithGoogle()}>
-        <span>
-          <img src={googleLogo} alt="google logo"/>
-        </span>
+        <img src={googleLogo} alt="google logo"/>
       </button>
       <span>Google</span>
     </div>

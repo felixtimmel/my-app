@@ -9,8 +9,12 @@
     background: var(--social-btn-bg);
     border-radius: 5px;
     margin-bottom: 5px;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
+    img {
+      width: auto;
+      height: auto;
+    }
   }
   margin: auto;
   width: 90%;

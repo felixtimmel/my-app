@@ -136,9 +136,7 @@ const About = () =>
       {buttons.map((btn, id) => (
         <div key={id} className='params_about-logos-btn'>
           <button onClick={() => window.open(btn.link)}>
-            <span>
-              <img src={btn.logo} alt={btn.title}/>
-            </span>
+            <img src={btn.logo} alt={btn.title}/>
           </button>
           <span>{btn.title}</span>
         </div>
