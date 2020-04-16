@@ -1,8 +1,8 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import googleLogo from '../_assets/Insciption_2/google-icon.svg';
-import fbLogo from '../_assets/Insciption_2/facebook-2.svg';
+import googleLogo from '../_assets/Inscription_2/google-icon.svg';
+import fbLogo from '../_assets/Inscription_2/facebook-2.svg';
 import eyeLogo from '../_assets/Page_connexion/grey_eye.svg';
 
 
