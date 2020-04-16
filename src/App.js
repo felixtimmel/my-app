@@ -5,6 +5,7 @@ import LandingView from './landing/LandingView';
 import Signup from './signup/SignUp';
 import SpotifyConnection from './spotify_connection/connection/Connection';
 import SuccessConnection from './spotify_connection/connection_success/Connection';
+import Params from './parameters/Params';
 
 
 /* import logo from './logo.svg'; */
@@ -59,6 +60,9 @@ export default class App extends React.Component {
                 <Link to='/landing'>Landing</Link>
               </li>
               <li>
+                <Link to='/params'>Parameters</Link>
+              </li>
+              <li>
                 <button onClick={() => this.toggleTheme()}>Change Theme</button>
               </li>
             </ul>
@@ -67,6 +71,9 @@ export default class App extends React.Component {
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
+          <Route path='/params'>
+              <Params SpotifyClass={SpotifyClass}/>
+          </Route>
           <Route path='/loged_in_spotify'>
               <SuccessConnection SpotifyClass={SpotifyClass}/>
             </Route>
