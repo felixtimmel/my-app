@@ -1,0 +1,156 @@
+.params-container {
+  @mixin btn {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--social-btn-bg);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    width: 40px;
+    height: 40px;
+  }
+  margin: auto;
+  width: 90%;
+  height: 90%;
+  @media(min-width: 1200px) {
+    width: 50%;
+  }
+  .params {
+    .title {
+      text-align: center;
+      h5 {
+        color: var(--params-info-color);
+      }
+    }
+    &_account {
+      &-main {
+        h4 {
+          color: var(--primary-color);
+          font-style: italic;
+        }
+        div {
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          margin-bottom: 5px;
+          .left {
+            color: var(--params-text-color);
+          }
+          .right{
+            color: var(--params-info-color);
+            text-align: end;
+            background: none;
+            border: none;
+          }
+        }
+        &-password {
+          span {
+            width: 100%;
+            text-align: end;
+            color: var(--primary-color);
+          }
+        } 
+      }
+    }
+    &_about {
+      margin-bottom: 10px;
+      &-logos {
+        display: flex;  
+        align-items: center;
+        justify-content: space-evenly;
+        font-size: 12px;
+        text-align: center;
+        line-height: 100%;
+        vertical-align: middle;
+        &-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          button {
+            @include btn;
+          }
+        }
+      }
+    }
+    &_deactivate {
+      border-top: 2px solid var(--separator-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0 0 0;
+      button {
+        color: var(--text-color);
+        background: none;
+        border: 1px solid var(--text-color);
+        padding: 6px 16px;
+      }
+    }
+  }
+}
+.react-responsive-modal-overlay {
+  display: flex;
+  align-items: flex-start;
+  padding: 0;
+  .react-responsive-modal-modal {
+    background: unset;
+    padding: 0;
+    .newpassword {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      height: 50vh;
+      padding: 1.2rem;
+      font-size: 14px;
+      h4 {
+        margin-top: 0;
+      }
+      background-color: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      color: var(--text-color);
+      input {
+        width: 100%;
+        background: #F0F0F0;
+        color: black;
+        border-radius: 3px;
+        border: none;
+        outline: none;
+        height:60%;
+      }
+      div {
+        width: 100%;
+      }
+      &_btns {
+        display: flex;
+        justify-content: space-between;
+        padding-top:5px;
+        button {
+          width: 45%;
+          padding: 8px 16px;
+          outline: none;
+          cursor: pointer;
+        }
+        &-cancel {
+          background: inherit;
+          color: var(--text-color);
+          border: 1px solid var(--grey-color);
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 100;
+        }
+        &-confirm {
+          background: var(--primary-color);
+          color: var(--text-color);
+          border: none;
+          border-radius: 3px;
+          font-size: 16px;
+          font-weight: 100
+        }
+      }
+    }
+  }
+}
