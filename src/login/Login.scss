@@ -65,6 +65,7 @@
           margin-bottom: 10px;
         }
     }
+
     
     .signIn__form_submit {
       text-align: center;
@@ -81,6 +82,21 @@
       }
     }
   }
+
+  .signIn__error {
+    border: solid 1px var(--text-error-color);
+    padding: 12px 4px;
+    margin-bottom: 20px;
+
+    p {
+      font-size: 12px;
+
+      i {
+        color: var(--text-error-color);
+      }
+    }
+  }
+
   .signIn__social {
     display: flex;
     align-items: center;
