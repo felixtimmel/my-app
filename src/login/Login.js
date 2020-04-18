@@ -1,5 +1,6 @@
 import React from 'react'
 import LoginView from './LoginView'
+import {Redirect} from 'react-router-dom';
 
 class Login extends React.Component {
 	constructor(props) {
@@ -7,6 +8,7 @@ class Login extends React.Component {
 		this.ui = this.props.firebaseClass.getFirebaseUi();
 
 		this.state={
+			registered: false,
 			isPassVisible: false,
 			email: '',
 			password: '',
@@ -78,7 +80,12 @@ class Login extends React.Component {
 		/* console.log(firebase) */
 		const firebase = this.props.firebaseClass
 		firebase.auth.signInWithEmailAndPassword(email, password)
-		.then(cred => {console.log(cred)})
+		.then(cred => {
+			console.log(cred);
+			this.setState({
+				registered: true
+			})
+		})
 		.catch((error) => {
 			this.setState({
 					signInError: error
@@ -86,16 +93,13 @@ class Login extends React.Component {
 			})
 	}
 
-	componentDidMount() {
-		/* const { firebase } = this.props.firebaseClass;
-			this.ui.start('#firebaseui-auth-container', {
-					signInOptions: [
-							firebase.auth.EmailAuthProvider.PROVIDER_ID
-					],
-					// Other config options...
-			}); */
-	}
 	render() {
+		const { firebase } = this.props.firebaseClass;
+		console.log(firebase.auth().currentUser)
+		console.log(this.state.registered)
+		if (this.state.registered) {
+			return <Redirect to='/' />
+		}
 		return (
 			<div className="login-container">
 					<LoginView 

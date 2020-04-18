@@ -71,7 +71,13 @@ class Firebase {
     }
   
     getCurrentUser = () => {
-      this.auth.onAuthStateChanged(user => user ? console.log('user is signed', user) : console.log('NO USER'))
+      return this.auth.onAuthStateChanged(function(user) {
+        if (user) {
+          window.user = user
+        } else {
+          console.log('no user')
+        }
+      });
     }
 
     signOut = () => this.auth.signOut();

@@ -15,7 +15,8 @@ const HomepageView = ({
 	handleChange,
 	clearInput,
 	userInfo,
-	topTracks
+	topTracks,
+	getMusicInfo
 	}) => {    
 		
 	return (
@@ -42,18 +43,18 @@ const HomepageView = ({
 			</div>
 			{isSearching && 
 				<div className="musicCard">
-						<MusicCardList searchTracks={searchTracks} isSearching={isSearching}/>
+						<MusicCardList searchTracks={searchTracks} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
 				</div>
 			}
 			{ !isSearching &&
 				<>
 					<div className="lastlistenning">
 						<p className="homepage__subtitles">Vos dernières écoutes</p>
-						<MusicCardList lastSongs={lastSongs} isSearching={isSearching}/>
+						<MusicCardList lastSongs={lastSongs} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
 					</div>
 					<div className="topTracks">
 						<p className="homepage__subtitles">Vos top Tracks</p>
-						<MusicCardList topTracks={topTracks} isSearching={isSearching}/>
+						<MusicCardList topTracks={topTracks} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
 					</div>
 					{/* <div>
 						<a href="http://localhost:8888/spotify-login">

@@ -1,5 +1,6 @@
 import React from 'react'
 import HomepageView from './HomeView'
+import {Redirect} from 'react-router-dom';
 
 require('./Home.scss');
 
@@ -9,6 +10,7 @@ class Home extends React.Component {
 		console.log('&&&&&&&&&', this.props)
 		this.token = this.props.spotifyClass.access_token
 		this.state = {
+			registered: '',
 			loggedIn: this.token ? true : false,
 			userInfo: {
 				username: '',
@@ -24,6 +26,20 @@ class Home extends React.Component {
 			isSearching: false,
 			value: '',
 		}
+	}
+
+	getCurrentUser = () => {
+		const { firebase } = this.props.firebaseClass;
+		const user = firebase.auth().currentUser
+		user ? this.setState({registered: true}) : this.setState({registered: false})
+		/* this.props.firebaseClass.getCurrentUser()
+		.then((response) => {
+			if (response.user) {
+				this.setState({
+					registered: true
+				})
+			} 
+		}) */
 	}
 
 	clearInput = () => {
@@ -97,7 +113,14 @@ class Home extends React.Component {
 			});
 	}
 
+	getMusicInfo = (item) => {
+		console.log(item.name)
+		console.log(item.artists[0].name)
+		console.log(item.uri)
+	}
+
 	componentDidMount() {
+		this.getCurrentUser();
 		if (this.token) {
 			this.recentTracks();
 			this.getUserInfo();
@@ -117,17 +140,19 @@ class Home extends React.Component {
 							clearInput={this.clearInput}
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
+							getMusicInfo={this.getMusicInfo}
 						/>
 					</div>
 				);
+		} else if (this.state.registered === false) {
+				return (
+					<Redirect to='/login'/>
+				)
+		} else {
+				return (
+					<Redirect to='/connect_to_spotify'/>
+				)
 		}
-		return (
-			<div>
-				<a href="http://localhost:8888/spotify-login">
-						<button>Login in with spotify</button>
-				</a>
-			</div>
-		)
 	}
 }
 

@@ -17,7 +17,6 @@ export const LoginView = (props) => {
 				Bienvenue !<br/>
 				Connecter vous à votre compte
 			</h2>
-			{console.log(props)}
 			{ props.signInError &&
 				<div className="signIn__error">
 						<p><i class="fas fa-times"></i> L'adresse Email ou le mot de passe infiqué n'est pas valide...</p>

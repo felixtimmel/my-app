@@ -90,7 +90,7 @@ export default class App extends React.Component {
               <LandingView />
             </Route>
             <Route path='/'>
-              <Home spotifyClass={SpotifyClass}/>
+              <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass}/>
             </Route>
           </Switch>
         </div>
