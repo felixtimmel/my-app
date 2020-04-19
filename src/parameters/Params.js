@@ -35,6 +35,7 @@ export default class Params extends Component {
     });
   }
   render() {
+    console.log(this.props.location)
     const {
       isModalOpen,
       musicPush,

@@ -1,6 +1,7 @@
 import React from 'react'
 import HomepageView from './HomeView'
 import {Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 require('./Home.scss');
 
@@ -9,6 +10,7 @@ class Home extends React.Component {
 		super(props);
 		console.log('&&&&&&&&&', this.props)
 		this.token = this.props.spotifyClass.access_token
+		console.log('&&&&&&&&&', this.token)
 		this.state = {
 			registered: '',
 			loggedIn: this.token ? true : false,
@@ -114,13 +116,15 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
-		console.log(item.name)
-		console.log(item.artists[0].name)
-		console.log(item.uri)
+		const musicName = item.name;
+		const musicArtist = item.artists[0].name;
+		const musicUri = item.uri;
+		
+		this.props.history.push("/params", { name: 'musicName' })
 	}
 
 	componentDidMount() {
-		this.getCurrentUser();
+		this.getCurrentUser();	
 		if (this.token) {
 			this.recentTracks();
 			this.getUserInfo();
@@ -156,4 +160,4 @@ class Home extends React.Component {
 	}
 }
 
-export default Home;
+export default withRouter(Home);
