@@ -1,5 +1,7 @@
 import React from 'react'
 import HomepageView from './HomeView'
+import {Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 require('./Home.scss');
 
@@ -8,7 +10,9 @@ class Home extends React.Component {
 		super(props);
 		console.log('&&&&&&&&&', this.props)
 		this.token = this.props.spotifyClass.access_token
+		console.log('&&&&&&&&&', this.token)
 		this.state = {
+			registered: this.props.user,
 			loggedIn: this.token ? true : false,
 			userInfo: {
 				username: '',
@@ -18,6 +22,11 @@ class Home extends React.Component {
 				name: 'Not Checked',
 				image: ''
 			},
+			/* musicInfo: {
+				name: '',
+				artist: '',
+				uri: ''
+			}, */
 			lastSongs: [],
 			userTopTracks: [],
 			searchTracks: [],
@@ -97,7 +106,27 @@ class Home extends React.Component {
 			});
 	}
 
+	getMusicInfo = (item) => {
+		/* const musicName = item.name;
+		const musicArtist = item.artists[0].name;
+		const musicUri = item.uri; */
+		const musicInfo = [item.name, item.artists[0].name, item.uri]
+		
+		/* this.setState({
+			musicInfo: {
+				name: musicName,
+				artist: musicArtist,
+				uri: musicUri
+			}
+		}) */
+			this.props.history.push({
+				pathname: '/params',
+				state: { musicInfo: musicInfo }
+			})
+	}
+
 	componentDidMount() {
+		console.log(this.state.registered)
 		if (this.token) {
 			this.recentTracks();
 			this.getUserInfo();
@@ -117,18 +146,24 @@ class Home extends React.Component {
 							clearInput={this.clearInput}
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
+							getMusicInfo={this.getMusicInfo}
+							musicInfo={this.state.musicInfo}
 						/>
 					</div>
 				);
-		}
-		return (
-			<div>
-				<a href="http://localhost:8888/spotify-login">
-						<button>Login in with spotify</button>
-				</a>
-			</div>
-		)
+			}
+			return (
+				<Redirect to='/connect_to_spotify'/>
+			)
+		/* } else if (!this.state.registered) {
+				return (
+					<Redirect to='/login'/>
+				)
+		} else {
+				return (
+					<Redirect to='/connect_to_spotify'/>
+				) */
 	}
 }
 
-export default Home;
+export default withRouter(Home);
