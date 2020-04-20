@@ -12,7 +12,7 @@ class Home extends React.Component {
 		this.token = this.props.spotifyClass.access_token
 		console.log('&&&&&&&&&', this.token)
 		this.state = {
-			registered: '',
+			registered: this.props.user,
 			loggedIn: this.token ? true : false,
 			userInfo: {
 				username: '',
@@ -22,26 +22,17 @@ class Home extends React.Component {
 				name: 'Not Checked',
 				image: ''
 			},
+			musicInfo: {
+				name: '',
+				artist: '',
+				uri: ''
+			},
 			lastSongs: [],
 			userTopTracks: [],
 			searchTracks: [],
 			isSearching: false,
 			value: '',
 		}
-	}
-
-	getCurrentUser = () => {
-		const { firebase } = this.props.firebaseClass;
-		const user = firebase.auth().currentUser
-		user ? this.setState({registered: true}) : this.setState({registered: false})
-		/* this.props.firebaseClass.getCurrentUser()
-		.then((response) => {
-			if (response.user) {
-				this.setState({
-					registered: true
-				})
-			} 
-		}) */
 	}
 
 	clearInput = () => {
@@ -120,11 +111,21 @@ class Home extends React.Component {
 		const musicArtist = item.artists[0].name;
 		const musicUri = item.uri;
 		
-		this.props.history.push("/params", { name: 'musicName' })
+		this.setState({
+			musicInfo: {
+				name: musicName,
+				artist: musicArtist,
+				uri: musicUri
+			}
+		})
+		this.props.history.push({
+			pathname: '/params',
+			state: { detail: this.state.musicInfo }
+		})
 	}
 
 	componentDidMount() {
-		this.getCurrentUser();	
+		console.log(this.state.registered)
 		if (this.token) {
 			this.recentTracks();
 			this.getUserInfo();
@@ -145,18 +146,22 @@ class Home extends React.Component {
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
 							getMusicInfo={this.getMusicInfo}
+							musicInfo={this.state.musicInfo}
 						/>
 					</div>
 				);
-		} else if (this.state.registered === false) {
+			}
+			return (
+				<Redirect to='/connect_to_spotify'/>
+			)
+		/* } else if (!this.state.registered) {
 				return (
 					<Redirect to='/login'/>
 				)
 		} else {
 				return (
 					<Redirect to='/connect_to_spotify'/>
-				)
-		}
+				) */
 	}
 }
 

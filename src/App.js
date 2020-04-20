@@ -24,7 +24,19 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       theme: 'dark',
+      user: {}
     }
+  }
+
+  authListener() {
+    const { firebase } = this.props.firebaseClass
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+        this.setState({ user })
+			} else {
+				this.setState({ user: null })
+			}
+		});
   }
 
   toggleTheme = () => {
@@ -40,8 +52,13 @@ export default class App extends React.Component {
     }, 1000);
   }
 
+  componentDidMount() {
+    this.authListener();
+  }
+
   render() {
     const { firebaseClass } = this.props;
+    console.log(firebaseClass)
     return (
       <Router>
         <div>
@@ -64,6 +81,9 @@ export default class App extends React.Component {
               </li>
               <li>
                 <button onClick={() => this.toggleTheme()}>Change Theme</button>
+              </li>
+              <li>
+                <button onClick={() => firebaseClass.signOut()}>Log out</button>
               </li>
             </ul>
           </nav>
@@ -90,7 +110,10 @@ export default class App extends React.Component {
               <LandingView />
             </Route>
             <Route path='/'>
-              <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass}/>
+              {this.state.user 
+              ? <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass} user={this.state.user}/>
+              : <Login firebaseClass={firebaseClass} />
+            }
             </Route>
           </Switch>
         </div>

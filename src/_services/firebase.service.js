@@ -43,6 +43,11 @@ class Firebase {
     this.auth = firebase.auth();
     this.currentUser = firebase.auth().currentUser;
     this.db = firebase.firestore();
+    this.state = {
+      user: {},
+      signInError: false,
+    }
+    console.log(this.state)
   }
   
   getFirebaseUi = () => firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(this.auth);
@@ -69,18 +74,15 @@ class Firebase {
       .then(docRef => console.log(`Document was created with the uid: ${docRef.id}`))
       .catch(err => {console.log(`There was an error: ${err}`)})
     }
-  
-    getCurrentUser = () => {
-      return this.auth.onAuthStateChanged(function(user) {
-        if (user) {
-          window.user = user
-        } else {
-          console.log('no user')
-        }
-      });
+
+    signInwithEmail = (email, password) => {
+      return this.auth.signInWithEmailAndPassword(email, password)
     }
 
-    signOut = () => this.auth.signOut();
+    signOut = () => {
+      this.auth.signOut();
+      console.log('&&& -- user sign out')
+    }
 }
 
 export default Firebase;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ParamsView from './ParamsView';
+import {withRouter} from 'react-router-dom';
 
 require('./params.scss');
 require('./toggle.scss');
@@ -7,6 +8,7 @@ require('./toggle.scss');
 export default class Params extends Component {
   constructor() {
     super();
+    console.log('&&&&&&&&&', this.props)
     this.state={
       isModalOpen: false,
       musicPush: false,
