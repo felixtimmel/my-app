@@ -92,7 +92,9 @@ export default class App extends React.Component {
               renders the first one that matches the current URL. */}
           <Switch>
           <Route path='/params'>
-              <Params SpotifyClass={SpotifyClass}/>
+            {this.state.user
+            ? <Params SpotifyClass={SpotifyClass} />
+            : <Login firebaseClass={firebaseClass} />}
           </Route>
           <Route path='/loged_in_spotify'>
               <SuccessConnection SpotifyClass={SpotifyClass}/>
