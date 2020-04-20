@@ -22,11 +22,11 @@ class Home extends React.Component {
 				name: 'Not Checked',
 				image: ''
 			},
-			musicInfo: {
+			/* musicInfo: {
 				name: '',
 				artist: '',
 				uri: ''
-			},
+			}, */
 			lastSongs: [],
 			userTopTracks: [],
 			searchTracks: [],
@@ -107,21 +107,22 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
-		const musicName = item.name;
+		/* const musicName = item.name;
 		const musicArtist = item.artists[0].name;
-		const musicUri = item.uri;
+		const musicUri = item.uri; */
+		const musicInfo = [item.name, item.artists[0].name, item.uri]
 		
-		this.setState({
+		/* this.setState({
 			musicInfo: {
 				name: musicName,
 				artist: musicArtist,
 				uri: musicUri
 			}
-		})
-		this.props.history.push({
-			pathname: '/params',
-			state: { detail: this.state.musicInfo }
-		})
+		}) */
+			this.props.history.push({
+				pathname: '/params',
+				state: { musicInfo: musicInfo }
+			})
 	}
 
 	componentDidMount() {

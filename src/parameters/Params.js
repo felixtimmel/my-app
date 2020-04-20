@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
 require('./params.scss');
 require('./toggle.scss');
 
-export default class Params extends Component {
+class Params extends React.Component {
   constructor() {
     super();
     console.log('&&&&&&&&&', this.props)
@@ -59,3 +59,5 @@ export default class Params extends Component {
     )
   }
 }
+
+export default withRouter(Params)
