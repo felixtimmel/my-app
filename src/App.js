@@ -48,7 +48,7 @@ export default class App extends React.Component {
           <nav>
             <ul>
               <li>
-                <Link to='/'>Home</Link>
+                <Link to='/home'>Home</Link>
               </li>
               <li>
                 <Link to='/login'>Login</Link>
@@ -57,7 +57,7 @@ export default class App extends React.Component {
                 <Link to='/signup'>Sign up</Link>
               </li>
               <li>
-                <Link to='/landing'>Landing</Link>
+                <Link to='/'>Landing</Link>
               </li>
               <li>
                 <Link to='/params'>Parameters</Link>
@@ -71,10 +71,10 @@ export default class App extends React.Component {
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
-          <Route path='/params'>
+            <Route path='/params'>
               <Params SpotifyClass={SpotifyClass}/>
-          </Route>
-          <Route path='/loged_in_spotify'>
+            </Route>
+            <Route path='/loged_in_spotify'>
               <SuccessConnection SpotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/connect_to_spotify'>
@@ -86,11 +86,11 @@ export default class App extends React.Component {
             <Route path='/signup'>
               <Signup firebaseClass={firebaseClass} />
             </Route>
-            <Route path='/landing'>
-              <LandingView />
+            <Route path='/home'>
+              <Home spotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/'>
-              <Home spotifyClass={SpotifyClass}/>
+              <LandingView />
             </Route>
           </Switch>
         </div>

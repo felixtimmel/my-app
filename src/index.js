@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './themes.scss';
-import App from './App';
+// import App from './App';
+import Lyrics from './lyrics/Lyrics';
 import * as serviceWorker from './serviceWorker';
 import Firebase  from './_services/firebase.service';
 const firebaseClass = new Firebase();
-
 ReactDOM.render(
-  <React.StrictMode>
-    <App firebaseClass={firebaseClass}/>
-  </React.StrictMode>,
+  <div>
+    {/* <App firebaseClass={firebaseClass}/> */}
+    <Lyrics/>
+  </div>,
   document.getElementById('root')
 );
 

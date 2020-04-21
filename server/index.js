@@ -5,6 +5,7 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
+const { getLyricsUrl, getLyrics } = require('./lyrics');
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
@@ -46,8 +47,8 @@ const app = express();
 // }
 
 app.use(express.static(__dirname + '/public'))
-   .use(cors())
-   .use(cookieParser());
+  .use(cors())
+  .use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
   console.log('process.env.NODE_ENV:&&&&&&&&&&', process.env.NODE_ENV)
@@ -136,6 +137,14 @@ app.get('/callback', function(req, res) {
     });
   }
 });
+
+app.get('/get_lyrics', (req, res) => {
+  const artist = req.query.artist;
+  const song = req.query.song;
+  return getLyricsUrl(song, artist)
+  .then(url => getLyrics(url))
+  .then(lyrics => res.json({ lyrics }));
+})
 
 app.get('/refresh_token', function(req, res) {
 

@@ -1,0 +1,83 @@
+.lyrics-container {
+  .lyrics {
+    &_scroll {
+      height: 90vh;
+      position: relative;
+      overflow-y: scroll;
+      margin-bottom: 10%;
+      &-span{
+        color: red;
+        font-size: 18px;
+      }
+      &-area {
+        height: 5%;
+        width: 100%;
+        position: fixed;
+        top: 50px;
+        left: 0;
+      }
+    }
+    &_player-container {
+      img {
+        width: 32px;
+        height: 32px;
+      }
+      position: relative;
+      margin: 0 auto;
+      width: 200px;
+      text-align: center; // to remove if adding range-input
+      button {
+        padding-left: 0;
+      }
+      .bubble {
+        background: none;
+        color: white;
+        padding: 4px 12px;
+        position: absolute;
+        border-radius: 4px;
+        left: 50%;
+        transform: translate(-50%, -150%);
+      }
+      .bubble::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 2px;  
+        background: none;
+        top: -1px;
+        left: 50%;
+      }
+      input[value]::-webkit-progress-value::before {
+        color: #fff;
+        content: '80%';
+        position: absolute;
+        right: 0;
+        top: -125%;
+      }
+      input[type=range] {
+        -webkit-appearance: none;
+        background: transparent;
+        width: 100%;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        background: #fff;
+        height: 15px;
+        width: 15px;
+        margin-top: -6px;
+        border-radius: 99px;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 300px;
+        height: 4px;
+        background: #ddd;
+      }
+      progress {
+        background: #fff;
+      }
+      .range-max {
+        float: right;
+      }
+    }
+  }
+}
