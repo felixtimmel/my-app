@@ -6,6 +6,7 @@ import Signup from './signup/SignUp';
 import SpotifyConnection from './spotify_connection/connection/Connection';
 import SuccessConnection from './spotify_connection/connection_success/Connection';
 import Params from './parameters/Params';
+import Lyrics from './lyrics/Lyrics';
 
 
 /* import logo from './logo.svg'; */
@@ -65,7 +66,7 @@ export default class App extends React.Component {
           <nav>
             <ul>
               <li>
-                <Link to='/'>Home</Link>
+                <Link to='/home'>Home</Link>
               </li>
               <li>
                 <Link to='/login'>Login</Link>
@@ -74,7 +75,7 @@ export default class App extends React.Component {
                 <Link to='/signup'>Sign up</Link>
               </li>
               <li>
-                <Link to='/landing'>Landing</Link>
+                <Link to='/'>Landing</Link>
               </li>
               <li>
                 <Link to='/params'>Parameters</Link>
@@ -91,6 +92,9 @@ export default class App extends React.Component {
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
+            <Route path='/song'>
+              <Lyrics/>
+            </Route>
           <Route path='/params'>
             {this.state.user
             ? <Params SpotifyClass={SpotifyClass} />
@@ -108,8 +112,8 @@ export default class App extends React.Component {
             <Route path='/signup'>
               <Signup firebaseClass={firebaseClass} />
             </Route>
-            <Route path='/landing'>
-              <LandingView />
+            <Route path='/home'>
+              <Home spotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/'>
               {this.state.user 

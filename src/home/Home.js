@@ -2,6 +2,7 @@ import React from 'react'
 import HomepageView from './HomeView'
 import {Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
+import loadSpotifySdk from '../_services/spotifySdk';
 
 require('./Home.scss');
 
@@ -107,20 +108,15 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
-		/* const musicName = item.name;
-		const musicArtist = item.artists[0].name;
-		const musicUri = item.uri; */
-		const musicInfo = [item.name, item.artists[0].name, item.uri]
-		
-		/* this.setState({
-			musicInfo: {
-				name: musicName,
-				artist: musicArtist,
-				uri: musicUri
-			}
-		}) */
+		const musicInfo = {
+			songName: item.name,
+			artist: item.artists[0].name,
+			spotifyUri: item.uri,
+			imgUrl: item.album.images[0].url,
+			token: this.token
+		};
 			this.props.history.push({
-				pathname: '/params',
+				pathname: '/song',
 				state: { musicInfo: musicInfo }
 			})
 	}
@@ -128,6 +124,7 @@ class Home extends React.Component {
 	componentDidMount() {
 		console.log(this.state.registered)
 		if (this.token) {
+			loadSpotifySdk(this.token);
 			this.recentTracks();
 			this.getUserInfo();
 			this.topTracks();
