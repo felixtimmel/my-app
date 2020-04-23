@@ -1,3 +1,26 @@
+@media(min-width: 768px) {
+    /* width */
+  ::-webkit-scrollbar {
+    height: 4px;
+    width: 0px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: black;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--grey-color);
+  }
+}
+
 .homepage-container {
   margin: 0 10px;
     .homeGreeting {
@@ -57,5 +80,14 @@
       display: flex;
       overflow: auto;
       white-space: nowrap;
+      padding-bottom: 12px;
+    }
+
+    .vertical-music-card_list {
+      @media(min-width: 768px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 5px 45px;
+      }
     }
 }

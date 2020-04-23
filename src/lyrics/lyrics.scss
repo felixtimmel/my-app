@@ -1,4 +1,7 @@
 .lyrics-container {
+  // background-size: contain;
+  background-size: 100% 100%;
+  // background-repeat: no-repeat;
   .lyrics {
     &_scroll {
       height: 90vh;
@@ -6,8 +9,8 @@
       overflow-y: scroll;
       margin-bottom: 10%;
       &-span{
-        color: red;
-        font-size: 18px;
+        // color: red;
+        font-size: 23px;
       }
       &-area {
         height: 5%;

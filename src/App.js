@@ -6,6 +6,7 @@ import Signup from './signup/SignUp';
 import SpotifyConnection from './spotify_connection/connection/Connection';
 import SuccessConnection from './spotify_connection/connection_success/Connection';
 import Params from './parameters/Params';
+import Lyrics from './lyrics/Lyrics';
 
 
 /* import logo from './logo.svg'; */
@@ -24,7 +25,19 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       theme: 'dark',
+      user: {}
     }
+  }
+
+  authListener() {
+    const { firebase } = this.props.firebaseClass
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+        this.setState({ user })
+			} else {
+				this.setState({ user: null })
+			}
+		});
   }
 
   toggleTheme = () => {
@@ -40,8 +53,13 @@ export default class App extends React.Component {
     }, 1000);
   }
 
+  componentDidMount() {
+    this.authListener();
+  }
+
   render() {
     const { firebaseClass } = this.props;
+    console.log(firebaseClass)
     return (
       <Router>
         <div>
@@ -65,16 +83,24 @@ export default class App extends React.Component {
               <li>
                 <button onClick={() => this.toggleTheme()}>Change Theme</button>
               </li>
+              <li>
+                <button onClick={() => firebaseClass.signOut()}>Log out</button>
+              </li>
             </ul>
           </nav>
   
           {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
           <Switch>
-            <Route path='/params'>
-              <Params SpotifyClass={SpotifyClass}/>
+            <Route path='/song'>
+              <Lyrics/>
             </Route>
-            <Route path='/loged_in_spotify'>
+          <Route path='/params'>
+            {this.state.user
+            ? <Params SpotifyClass={SpotifyClass} />
+            : <Login firebaseClass={firebaseClass} />}
+          </Route>
+          <Route path='/loged_in_spotify'>
               <SuccessConnection SpotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/connect_to_spotify'>
@@ -90,7 +116,10 @@ export default class App extends React.Component {
               <Home spotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/'>
-              <LandingView />
+              {this.state.user 
+              ? <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass} user={this.state.user}/>
+              : <Login firebaseClass={firebaseClass} />
+            }
             </Route>
           </Switch>
         </div>

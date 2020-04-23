@@ -1,5 +1,8 @@
 import React from 'react'
 import HomepageView from './HomeView'
+import {Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import loadSpotifySdk from '../_services/spotifySdk';
 
 require('./Home.scss');
 
@@ -8,7 +11,9 @@ class Home extends React.Component {
 		super(props);
 		console.log('&&&&&&&&&', this.props)
 		this.token = this.props.spotifyClass.access_token
+		console.log('&&&&&&&&&', this.token)
 		this.state = {
+			registered: this.props.user,
 			loggedIn: this.token ? true : false,
 			userInfo: {
 				username: '',
@@ -18,6 +23,11 @@ class Home extends React.Component {
 				name: 'Not Checked',
 				image: ''
 			},
+			/* musicInfo: {
+				name: '',
+				artist: '',
+				uri: ''
+			}, */
 			lastSongs: [],
 			userTopTracks: [],
 			searchTracks: [],
@@ -97,8 +107,24 @@ class Home extends React.Component {
 			});
 	}
 
+	getMusicInfo = (item) => {
+		const musicInfo = {
+			songName: item.name,
+			artist: item.artists[0].name,
+			spotifyUri: item.uri,
+			imgUrl: item.album.images[0].url,
+			token: this.token
+		};
+			this.props.history.push({
+				pathname: '/song',
+				state: { musicInfo: musicInfo }
+			})
+	}
+
 	componentDidMount() {
+		console.log(this.state.registered)
 		if (this.token) {
+			loadSpotifySdk(this.token);
 			this.recentTracks();
 			this.getUserInfo();
 			this.topTracks();
@@ -117,18 +143,24 @@ class Home extends React.Component {
 							clearInput={this.clearInput}
 							userInfo={this.state.userInfo}
 							topTracks={this.state.userTopTracks}
+							getMusicInfo={this.getMusicInfo}
+							musicInfo={this.state.musicInfo}
 						/>
 					</div>
 				);
-		}
-		return (
-			<div>
-				<a href="http://localhost:8888/spotify-login">
-						<button>Login in with spotify</button>
-				</a>
-			</div>
-		)
+			}
+			return (
+				<Redirect to='/connect_to_spotify'/>
+			)
+		/* } else if (!this.state.registered) {
+				return (
+					<Redirect to='/login'/>
+				)
+		} else {
+				return (
+					<Redirect to='/connect_to_spotify'/>
+				) */
 	}
 }
 
-export default Home;
+export default withRouter(Home);

@@ -2,15 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import './themes.scss';
-// import App from './App';
+import App from './App';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from 'react-router-dom';
 import Lyrics from './lyrics/Lyrics';
 import * as serviceWorker from './serviceWorker';
 import Firebase  from './_services/firebase.service';
 const firebaseClass = new Firebase();
 ReactDOM.render(
   <div>
-    {/* <App firebaseClass={firebaseClass}/> */}
-    <Lyrics/>
+    <App firebaseClass={firebaseClass}/>
+    {/* <Router>
+      <Route>
+        <Lyrics/>
+      </Route>
+    </Router> */}
   </div>,
   document.getElementById('root')
 );

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import ParamsView from './ParamsView';
+import {withRouter} from 'react-router-dom';
 
 require('./params.scss');
 require('./toggle.scss');
 
-export default class Params extends Component {
+class Params extends React.Component {
   constructor() {
     super();
+    console.log('&&&&&&&&&', this.props)
     this.state={
       isModalOpen: false,
       musicPush: false,
@@ -35,6 +37,7 @@ export default class Params extends Component {
     });
   }
   render() {
+    console.log(this.props.location)
     const {
       isModalOpen,
       musicPush,
@@ -56,3 +59,5 @@ export default class Params extends Component {
     )
   }
 }
+
+export default withRouter(Params)

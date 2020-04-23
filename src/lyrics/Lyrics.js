@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import LyricsView from './LyricsView';
+import {withRouter} from 'react-router-dom';
 
 require('./lyrics.scss');
-export default class Lyrics extends Component {
+class Lyrics extends Component {
   constructor(props) {
     super(props);
     this.getLyrics = this.getLyrics.bind(this);
@@ -13,110 +14,13 @@ export default class Lyrics extends Component {
       lyrics: [],
       inputValue: 0,
       musicLength: 0,
-      isPlayerReady: false,
       bubbleValue: 0,
       musicPosition: 0,
     }
   }
 
-  getMilliToMinutes = (milliSeconds) => {
-    const minutes = Math.floor(milliSeconds / 60000);
-    const seconds = ((milliSeconds % 60000) / 1000).toFixed(0);
-    return `${minutes} : ${seconds < 10 ? 0 : ''} ${seconds}`;
-  }
-
-  getPosition = () => {
-    if (this.currState.paused) {
-      return this.currState.position;
-    }
-    let position = this.currState.position + (performance.now() - this.currState.updateTime) / 1000;
-    console.log('position:', position)
-    return position > this.currState.duration ? this.currState.duration : position;
-  }
-
-  onScriptLoad = () => {
-    const scriptPromise = new Promise((resolve, reject) => {
-      const spotifySDK = document.createElement('script');
-      spotifySDK.setAttribute('src','https://sdk.scdn.co/spotify-player.js');
-      document.body.appendChild(spotifySDK);
-      spotifySDK.onload = () => {
-        resolve()
-      }
-      spotifySDK.onerror = () => {
-        reject();
-      }
-    })
-
-    return scriptPromise
-    .then(() => {
-      console.log('SCRIPT LOADED');
-      window.onSpotifyWebPlaybackSDKReady = () => {
-        const token = 'BQA6bJ_BmUHYyFWRPEQI3Wi8mE_JGboNT8Dd3IxGSaALmBdzoAwKHtQzWFSbp_AxAvFCXXeimUcknxxuv3YxT7oIRXFn70y_oW5CxB3eQT6oljhubxOFx9VGLMWN-Mz4goXw8IKD_ZMHqzFzX6yR1BcawSJIuxDr7WPqX9jAuN7p904Po5D8';
-        this.player = new window.Spotify.Player({
-          name: 'Spotify web player',
-          getOAuthToken: cb => {cb(token); }
-        });
-        // Error handling
-        this.player.addListener('initialization_error', ({ message }) => { console.error('1', message); });
-        this.player.addListener('authentication_error', ({ message }) => { console.error('2', message); });
-        this.player.addListener('account_error', ({ message }) => { console.error('3', message); });
-        this.player.addListener('playback_error', ({ message }) => { console.error('4', message); });
-      
-        // Playback status updates
-        this.player.addListener('player_state_changed', (state) => {
-          console.log('state:', state)
-          /**
-           * duration , position, paused
-           */
-          this.currState.paused = state.paused;
-          this.currState.position = state.position;
-          this.currState.duration = state.duration;
-          this.currState.updateTime = performance.now()
-          if (state.paused) {
-            this.setState({
-              musicPosition:state.position,
-            })
-          }
-          // setInterval(() => {
-            // const bubble = document.querySelector('.bubble');
-            // const positionSeconds = this.getPosition();
-            // const minutes = Math.floor(positionSeconds / 60000);
-            // console.log('minutes:', minutes)
-            // bubble.innerHTML = positionSeconds;
-          // }, 100);
-        });
-      
-        // // Ready
-        this.player.addListener('ready', ({ device_id }) => {
-          console.log('Ready with Device ID', device_id);
-          // play the song you need once the device is initialized
-          this.setState({
-            isPlayerReady: true,
-          }, () => {
-            const range = document.querySelector('.range')
-            const bubble = document.querySelector('.bubble');
-            // this.setBubble(range, bubble);
-          })
-        });
-      
-        // // Not Ready
-        this.player.addListener('not_ready', ({ device_id }) => {
-          console.log('Device ID has gone offline', device_id);
-        });
-      
-        // // Connect to the player!
-        this.player.connect()
-        .then(res => {
-          console.log('ressssssss', res);
-        })
-        .catch(err => console.log(err));
-      };
-    }).catch(() => {
-      console.log('ERRRRRR');
-    })
-  }
-
-  onPlaySong = (uri) => {
+  onPlaySong = () => {
+    const { spotifyUri  } = this.props.location.state.musicInfo;
     const play = ({
       spotify_uri,
       playerInstance: {
@@ -138,11 +42,12 @@ export default class Lyrics extends Component {
       });
     };
     play({
-      playerInstance: this.player,
-      spotify_uri: 'spotify:track:6uVzfibKnRIfDBByubw3bB',
+      playerInstance: window.spotifyPlayer,
+      spotify_uri: spotifyUri,
     });
   }
   onPauseSong = (uri) => {
+    const { spotifyUri  } = this.props.location.state.musicInfo;
     const pause = ({
       spotify_uri,
       playerInstance: {
@@ -164,18 +69,15 @@ export default class Lyrics extends Component {
         });
       });
     };
-    console.log('this.player:', this.player)
     pause({
-      playerInstance: this.player,
-      spotify_uri: 'spotify:track:6uVzfibKnRIfDBByubw3bB',
+      playerInstance: window.spotifyPlayer,
+      spotify_uri: spotifyUri,
     });
   }
 
   getLyrics = async () => {
     try {
       const { lyrics } = await (await fetch(`/get_lyrics?artist=Sexion d'Assaut&song=wati bon son`)).json();
-      // lyrics.split(/\r\n|\r|\n/).length ====> let you count the number of lines
-      console.log('lyrics:', lyrics)
       this.setState({
         lyrics,
       });
@@ -199,53 +101,35 @@ export default class Lyrics extends Component {
       }
     }
   }
-  setBubble = (range, bubble) => {
-    const val = range.value;
-    const min = range.min ? range.min : 0;
-    const max = range.max ? range.max : 100;
-    const newVal = Number(((val - min) * 100) / (max - min));
-    // bubble.innerHTML = val;
-  
-    // Sorta magic numbers based on size of the native UI thumb
-    // bubble.style.left = `0px`;
-    bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
-  }
 
-  handleInput = (e) => {
-    console.log(e.target.value);
-    const buble = document.querySelector('.bubble');
-    this.setBubble(e.target, buble);
-    this.setState({
-      inputValue: e.target.value,
-    })
-  }
 
   async componentDidMount() {
-    this.onScriptLoad();
+    const { songName, artist, imgUrl } = this.props.location.state.musicInfo;
+    document.getElementById('background').style.backgroundImage = `url(${imgUrl})`;
     try {
-      const { lyrics } = await (await fetch(`/get_lyrics?artist=Joe Budden&song=pump it up`)).json();
+      let { lyrics } = await (await fetch(`/get_lyrics?artist=${artist}&song=${songName}`)).json();
+      lyrics = lyrics.split('\n').map(ly => ly.trim()).filter(le => le !== '');
       this.setState({
-        lyrics: lyrics.split('\n'),
+        lyrics: lyrics,
       })
-      return lyrics;
     } catch (err) {
       console.log('There was an error in the getLyrics call:', err)
-      return 'No lyrics found';
+      this.setState({
+        lyrics: 'No lyrics found'.split('\n'),
+      })
     } 
   }
   render() {
-    const { lyrics, inputValue, isPlayerReady, bubbleValue } = this.state;
+    const { lyrics } = this.state;
     return (
-      <div className='lyrics-container'>
+      <div className='lyrics-container' id='background'>
         <LyricsView lyrics={lyrics}
-          handleInput={this.handleInput}
-          inputValue={inputValue}
           onPlaySong={this.onPlaySong}
           onPauseSong={this.onPauseSong}
-          isPlayerReady={isPlayerReady}
-          bubbleValue={bubbleValue}
           handleScroll={this.handleScroll}/>
       </div>
     )
   }
 }
+
+export default withRouter(Lyrics);
