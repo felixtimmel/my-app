@@ -3,6 +3,7 @@
   padding: 8px;
   border: none;
   width: 100%;
+  background: var(--primary-color);
   flex-shrink: 1;
 
   &:focus {
@@ -13,8 +14,12 @@
 
 .searchBar__cancel-btn {
   border: none;
-  background-color: var(--text-color);
-  color: var(--grey-color);
+  background-color: var(--primary-color);
+  color: var(--text-color);
   padding-right: 12px;
   font-size: small;
+
+  &:focus {
+    outline: none;
+  }
 }
