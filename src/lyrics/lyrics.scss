@@ -5,11 +5,10 @@
   .lyrics {
     &_scroll {
       height: 90vh;
-      position: relative;
       overflow-y: scroll;
-      margin-bottom: 10%;
+      width: 95%;
+      margin: 0 auto 10% auto;
       &-span{
-        // color: red;
         font-size: 23px;
       }
       &-area {

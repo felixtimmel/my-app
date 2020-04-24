@@ -46,7 +46,8 @@ class Lyrics extends Component {
       spotify_uri: spotifyUri,
     });
   }
-  onPauseSong = (uri) => {
+
+  onPauseSong = () => {
     const { spotifyUri  } = this.props.location.state.musicInfo;
     const pause = ({
       spotify_uri,

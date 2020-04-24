@@ -10,9 +10,9 @@ require('../signup/signup.scss');
 export const LoginView = (props) => {
 	return (
 		<div className="signIn">
-			<div>
+			{/* <div>
 				<img src={Logo} alt='Oveo logo' className="signIn__logo"/>
-			</div>
+			</div> */}
 			<h2>
 				Bienvenue !<br/>
 				Connecter vous à votre compte
