@@ -30,7 +30,7 @@ class SpotifyClass {
 
 	recentTracks = () => {
 		return spotifyWebApi.getMyRecentlyPlayedTracks()
-    .then((response) => response.items.slice(0, 10).map((item) => item.track))
+    .then((response) => response.items.map((item) => item.track))
 	}
 
   getUser = () => {

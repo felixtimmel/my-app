@@ -23,7 +23,7 @@ const MusicCardList = ({ lastSongs, isSearching, searchTracks, topTracks, getMus
 				? lastSongs.map((item) => 
 					<div className="horizontal-music_card" 
 							onClick={() => getMusicInfo(item) }>
-						<MusicCard  name={item.name} artist={item.artists[0].name} image={item.album.images[0].url} key={item.id}/>
+						<MusicCard  name={item.name} artist={item.artist} image={item.url} key={item.id}/>
 					</div>  
 					)
 				: null}

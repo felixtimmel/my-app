@@ -81,7 +81,6 @@ class Home extends React.Component {
 	topTracks = () => {
 		this.props.spotifyClass.topTracks()
 		.then((response) => {
-			console.log(response.topTracks)
 			this.setState({
 				userTopTracks: response.topTracks
 			})
@@ -91,11 +90,27 @@ class Home extends React.Component {
 	recentTracks = () => {
 		this.props.spotifyClass.recentTracks()
 		.then((response) => {
+			const filteredresponse = []
+			const map = new Map();
+			for (const item of response) {
+				if(!map.has(item.id)) {
+					map.set(item.id, true);
+					filteredresponse.push({
+						id: item.id,
+						name: item.name,
+						artist: item.artists[0].name,
+						url: item.album.images[0].url
+					});
+				}
+			}
+				console.log(filteredresponse)
 				this.setState({
-						lastSongs: response
+						lastSongs: filteredresponse
 				})
 		})
 	}
+
+
 
 	search = (query, types) => {
 		this.props.spotifyClass.search(query, types)
