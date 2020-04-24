@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { SignUpView } from './SignUpView';
-import { Formik } from 'formik';
+import {withRouter} from 'react-router-dom';
 
 require('./signup.scss');
 
 
-export default class SignUp extends React.Component {
-  constructor(props) {
+class SignUp extends React.Component {
+constructor(props) {
     super(props);
     this.ui = this.props.firebaseClass.getFirebaseUi();
     this.state = {
@@ -20,8 +20,8 @@ export default class SignUp extends React.Component {
 
   onSignUpWithEmail = (mail, pass, firstName, lastName) => {
     const { createUserWithEmail } = this.props.firebaseClass;
-    createUserWithEmail(mail, pass, firstName, lastName);
-    // then redirect
+    createUserWithEmail(mail, pass, firstName, lastName)
+    .then(() => this.onRedirect());
   }
 
   onShowPassword = (field) => {
@@ -32,6 +32,8 @@ export default class SignUp extends React.Component {
     })
   }
 
+  onRedirect = () => this.props.history.push({ pathname: '/connect_to_spotify' })
+
   onSignUpWithGoogle = () => {
     const { firebase, addNewUser } = this.props.firebaseClass;
     const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -41,12 +43,12 @@ export default class SignUp extends React.Component {
       const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
       if (result.additionalUserInfo.isNewUser) {
         addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
+        this.onRedirect();
       }
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const token = result.credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      // ...
     }).catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
@@ -68,12 +70,12 @@ export default class SignUp extends React.Component {
       const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
       if (result.additionalUserInfo.isNewUser) {
         addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
+        this.onRedirect();
       }
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const token = result.credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      // ...
     }).catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
@@ -100,3 +102,5 @@ export default class SignUp extends React.Component {
     );
   }
 }
+
+export default withRouter(SignUp);

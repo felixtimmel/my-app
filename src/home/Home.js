@@ -99,12 +99,12 @@ class Home extends React.Component {
 
 	search = (query, types) => {
 		this.props.spotifyClass.search(query, types)
-			.then((response) => {
-				this.setState({
-					searchTracks: response,
-					isSearching: true,
-				})
-			});
+		.then((response) => {
+			this.setState({
+				searchTracks: response,
+				isSearching: true,
+			})
+		});
 	}
 
 	getMusicInfo = (item) => {
@@ -115,10 +115,10 @@ class Home extends React.Component {
 			imgUrl: item.album.images[0].url,
 			token: this.token
 		};
-			this.props.history.push({
-				pathname: '/song',
-				state: { musicInfo: musicInfo }
-			})
+		this.props.history.push({
+			pathname: '/song',
+			state: { musicInfo: musicInfo }
+		})
 	}
 
 	componentDidMount() {
