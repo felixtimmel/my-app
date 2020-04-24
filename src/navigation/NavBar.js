@@ -14,7 +14,7 @@ const Navbar = props => (
       <div className="toolbar__navigation-logo">
         <Link to='/'><img src={logo} alt='Logo prepacours' /></Link>
       </div>
-      <div className="toolbar__navigation-spacer" />
+      {/* <div className="toolbar__navigation-spacer" /> */}
       <div className="toolbar__navigation-items">
         <ul>
           <li>
