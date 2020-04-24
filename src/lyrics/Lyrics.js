@@ -119,6 +119,9 @@ class Lyrics extends Component {
       })
     } 
   }
+  componentWillUnmount(){
+    this.onPauseSong();
+  }
   render() {
     const { lyrics } = this.state;
     return (
