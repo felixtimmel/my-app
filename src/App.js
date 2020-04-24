@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './login/Login'
 import Home from './home/Home'
-import LandingView from './landing/LandingView';
+import Landing from './landing/Landing';
 import Signup from './signup/SignUp';
 import SpotifyConnection from './spotify_connection/connection/Connection';
 import SuccessConnection from './spotify_connection/connection_success/Connection';
@@ -107,11 +107,11 @@ export default class App extends React.Component {
               <Signup firebaseClass={firebaseClass} />
             </Route>
             <Route path='/home'>
-              <Home spotifyClass={SpotifyClass}/>
+              <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass} user={this.state.user}/>
             </Route>
             <Route path='/'>
               {this.state.user 
-              ? <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass} user={this.state.user}/>
+              ? <Landing />
               : <Login firebaseClass={firebaseClass} />
             }
             </Route>
