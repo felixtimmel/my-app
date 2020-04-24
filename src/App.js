@@ -7,6 +7,9 @@ import SpotifyConnection from './spotify_connection/connection/Connection';
 import SuccessConnection from './spotify_connection/connection_success/Connection';
 import Params from './parameters/Params';
 import Lyrics from './lyrics/Lyrics';
+import Backdrop from './backdrop/Backdrop'
+import NavBar from './navigation/NavBar'
+import SideDrawer from './sideDrawer/SideDrawer';
 
 
 /* import logo from './logo.svg'; */
@@ -25,7 +28,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       theme: 'dark',
-      user: {}
+      user: {},
+      sideDrawerOpen: false,
     }
   }
 
@@ -53,54 +57,45 @@ export default class App extends React.Component {
     }, 1000);
   }
 
+  drawerToggleClickHandler = () => {
+    this.setState((prevState) => {
+      return {sideDrawerOpen: !prevState.sideDrawerOpen};
+    });
+  };
+
+  backdropClickHandler = () => {
+    this.setState({
+      sideDrawerOpen: false,
+    });
+  };
+
   componentDidMount() {
     this.authListener();
   }
 
   render() {
+    let backdrop;
+
+    if(this.state.sideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler} />
+    }
     const { firebaseClass } = this.props;
     console.log(firebaseClass)
     return (
-      <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to='/home'>Home</Link>
-              </li>
-              <li>
-                <Link to='/login'>Login</Link>
-              </li>
-              <li>
-                <Link to='/signup'>Sign up</Link>
-              </li>
-              <li>
-                <Link to='/'>Landing</Link>
-              </li>
-              <li>
-                <Link to='/params'>Parameters</Link>
-              </li>
-              <li>
-                <button onClick={() => this.toggleTheme()}>Change Theme</button>
-              </li>
-              <li>
-                <button onClick={() => firebaseClass.signOut()}>Log out</button>
-              </li>
-            </ul>
-          </nav>
-  
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
+      <Router className='test'>
+        <NavBar drawerClickHandler={this.drawerToggleClickHandler}/>
+        <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen}/>
+        {backdrop}
           <Switch>
             <Route path='/song'>
               <Lyrics/>
             </Route>
-          <Route path='/params'>
-            {this.state.user
-            ? <Params SpotifyClass={SpotifyClass} />
-            : <Login firebaseClass={firebaseClass} />}
-          </Route>
-          <Route path='/loged_in_spotify'>
+            <Route path='/params'>
+              {this.state.user
+              ? <Params SpotifyClass={SpotifyClass} />
+              : <Login firebaseClass={firebaseClass} />}
+            </Route>
+            <Route path='/loged_in_spotify'>
               <SuccessConnection SpotifyClass={SpotifyClass}/>
             </Route>
             <Route path='/connect_to_spotify'>
@@ -122,7 +117,6 @@ export default class App extends React.Component {
             }
             </Route>
           </Switch>
-        </div>
       </Router>
     );
   }

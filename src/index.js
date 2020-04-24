@@ -14,14 +14,7 @@ import * as serviceWorker from './serviceWorker';
 import Firebase  from './_services/firebase.service';
 const firebaseClass = new Firebase();
 ReactDOM.render(
-  <div>
-    <App firebaseClass={firebaseClass}/>
-    {/* <Router>
-      <Route>
-        <Lyrics/>
-      </Route>
-    </Router> */}
-  </div>,
+  <App firebaseClass={firebaseClass}/>,
   document.getElementById('root')
 );
 

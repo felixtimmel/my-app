@@ -46,7 +46,8 @@ class Lyrics extends Component {
       spotify_uri: spotifyUri,
     });
   }
-  onPauseSong = (uri) => {
+
+  onPauseSong = () => {
     const { spotifyUri  } = this.props.location.state.musicInfo;
     const pause = ({
       spotify_uri,
@@ -118,6 +119,9 @@ class Lyrics extends Component {
         lyrics: 'No lyrics found'.split('\n'),
       })
     } 
+  }
+  componentWillUnmount(){
+    this.onPauseSong();
   }
   render() {
     const { lyrics } = this.state;

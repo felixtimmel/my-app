@@ -12,7 +12,7 @@ const getLyricsUrl = async(song, artist) => {
     })
     const { hits } = data.response;
     return hits
-      .filter(hit => hit.result.primary_artist.name.replace(/’/g, '') === artist.replace(/'/g, ''))[0]
+      .filter(hit => hit.result.primary_artist.name.toLowerCase().replace(/’/g, '') === artist.toLowerCase().replace(/'/g, ''))[0]
       .result.url;
   } catch(err) {
     console.log('There was an error in the getLyricsUrl call', err)
