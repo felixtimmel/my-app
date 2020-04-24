@@ -5,11 +5,11 @@ import '../sideDrawer/DrawerToggleBtn';
 import "./_navbar.scss";
 import DrawerToggleBtn from "../sideDrawer/DrawerToggleBtn";
 
-const Navbar = props => (
+const Navbar = ({drawerClickHandler, toggleTheme, firebaseClass}) => (
   <header className="toolbar">
     <nav className="toolbar__navigation">
       <div className="toolbar__toggle-btn">
-        <DrawerToggleBtn click={props.drawerClickHandler} />
+        <DrawerToggleBtn click={drawerClickHandler} />
       </div>
       <div className="toolbar__navigation-logo">
         <Link to='/'><img src={logo} alt='Logo prepacours' /></Link>
@@ -17,12 +17,27 @@ const Navbar = props => (
       {/* <div className="toolbar__navigation-spacer" /> */}
       <div className="toolbar__navigation-items">
         <ul>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-          <li>
-            <Link to='/singunp'>Sign Up</Link>
-          </li>
+        <li>
+          <Link to='/home'>Home</Link>
+        </li>
+        <li>
+          <Link to='/login'>Login</Link>
+        </li>
+        <li>
+          <Link to='/signup'>Sign up</Link>
+        </li>
+        <li>
+          <Link to='/'>Landing</Link>
+        </li>
+        <li>
+          <Link to='/params'>Parameters</Link>
+        </li>
+        <li>
+          <button onClick={() => toggleTheme()}>Change Theme</button>
+        </li>
+        <li>
+          <button onClick={() => firebaseClass.signOut()}>Log out</button>
+        </li>
         </ul>
       </div>
     </nav>

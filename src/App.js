@@ -18,7 +18,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from 'react-router-dom';
 import Spotify from './_services/spotify.service';
 const SpotifyClass = new Spotify();
@@ -83,7 +82,7 @@ export default class App extends React.Component {
     console.log(firebaseClass)
     return (
       <Router className='test'>
-        <NavBar drawerClickHandler={this.drawerToggleClickHandler}/>
+        <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
         <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen}/>
         {backdrop}
           <Switch>

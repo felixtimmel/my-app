@@ -5,12 +5,12 @@ import {withRouter} from 'react-router-dom';
 class Login extends React.Component {
 	constructor(props) {
 		super(props);
-		this.ui = this.props.firebaseClass.getFirebaseUi();
-
 		this.state={
 			registered: false,
 			isPassVisible: false,
 			signInError: '',
+			email: '',
+			password: '',
 		}
 	}
 
@@ -22,62 +22,26 @@ class Login extends React.Component {
 	}
 
 	googleSignIn = () => {
-		const { firebase } = this.props.firebaseClass;
-		const googleProvider = new firebase.auth.GoogleAuthProvider();
-		firebase.auth().signInWithPopup(googleProvider).then(function(result) {
-			// This gives you a Google Access Token. You can use it to access the Google API.
-			var token = result.credential.accessToken;
-			// The signed-in user info.
-			var user = result.user;
-			console.log(token)
-			console.log(user)
-			// ...
-		}).catch(function(error) {
-			// Handle Errors here.
-			console.log(error.code);
-			console.log(error.message);
-			// The email of the user's account used.
-			console.log(error.email);
-			// The firebase.auth.AuthCredential type that was used.
-			console.log(error.credential);
-			// ...
-		});
+		const { googleSignIn } = this.props.firebaseClass;
+		googleSignIn(this.props.history)
 	}
 
 	facebookSignIn = () => {
-		const { firebase } = this.props.firebaseClass;
-		const provider = new firebase.auth.FacebookAuthProvider();
-		firebase.auth().signInWithPopup(provider).then(function(result) {
-			// This gives you a Facebook Access Token. You can use it to access the Facebook API.
-			var token = result.credential.accessToken;
-			// The signed-in user info.
-			var user = result.user;
-			console.log(token)
-			console.log(user)
-			// ...       
-			}).catch(function(error) {
-				// Handle Errors here.
-				console.log(error.code);
-				console.log(error.message);
-				// The email of the user's account used.
-				console.log(error.email);
-				// The firebase.auth.AuthCredential type that was used.
-				console.log(error.credential);
-				// ...
-			});
+		const { facebookSignIn } = this.props.firebaseClass;
+		facebookSignIn(this.props.history);
+	}
+
+	handleInput = (e) => {
+		const { name, value } = e.target;
+		this.setState({
+			[name]: value,
+		});
 	}
 
 	signInsubmit = () => {
-		const elements = document.querySelectorAll('.signIn__form_input');
-		const email = elements[0].value
-		const password = elements[1].value
-
+		const { email, password } = this.state;
 		const { signInwithEmail } = this.props.firebaseClass;
-		console.log(this.props.firebaseClass)
-		signInwithEmail(email, password)
-		.then(() => {
-			this.props.history.push('/')
-		})
+		signInwithEmail(email, password, this.props.history)
 		.catch((error) => {
 			this.setState({
 				signInError: error
@@ -86,20 +50,23 @@ class Login extends React.Component {
 	}
 
 	render() {
+		const { isPassVisible,signInError, email, password } = this.state;
 		return (
 			<div className="login-container">
 					<LoginView 
-						isPassVisible={this.state.isPassVisible}
+						isPassVisible={isPassVisible}
+						email={email}
+						password={password}
 						onShowPassword = {this.onShowPassword}
 						signInsubmit = {this.signInsubmit}
-						googleSignIn = {this.googleSignIn}    
-						facebookSignIn = {this.facebookSignIn}    
-						signInError = {this.state.signInError}
+						googleSignIn = {this.googleSignIn}
+						facebookSignIn = {this.facebookSignIn}
+						handleInput={this.handleInput}
+						signInError = {signInError}
 					/>
-					{/* {this.ui && <div id='firebaseui-auth-container'></div> } */}
 			</div>
 		)
 	}
 }
 
-export default Login
+export default withRouter(Login);

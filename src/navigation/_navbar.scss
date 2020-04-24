@@ -5,6 +5,7 @@
   width: 100%;
   background: var(--bg-color);
   height: 56px;
+  z-index: 8000;
 
   &__navigation {
     width: 100vw;
