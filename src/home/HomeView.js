@@ -42,13 +42,13 @@ const HomepageView = ({
 										isSearching={isSearching}
 				/>}
 			</div>
-			{isSearching && 
+			{isSearching && searchTracks.length > 0 &&
 				<div className="musicCard">
 						<MusicCardList searchTracks={searchTracks} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
 				</div>
 			}
-			{ !isSearching &&
-				<>
+			{/* { !isSearching &&
+				<> */}
 					<div className="lastlistenning">
 						<p className="homepage__subtitles">Vos dernières écoutes</p>
 						<MusicCardList lastSongs={lastSongs} isSearching={isSearching} getMusicInfo={getMusicInfo} musicInfo={musicInfo}/>
@@ -66,8 +66,8 @@ const HomepageView = ({
 					<button onClick={ () => getNowPlaying() }>
 						Check Now playing
 					</button> */}
-				</>
-			}
+				{/* </>
+			} */}
 		</>
 	)
 }
