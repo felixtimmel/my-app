@@ -45,7 +45,7 @@ class Firebase {
     this.isAuth = false;
     this.db = firebase.firestore();
   }
-  
+
   getFirebaseUi = () => firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(this.auth);
 
   createUserWithEmail = (email, password, firstName, lastName) =>
@@ -70,6 +70,14 @@ class Firebase {
       })
       .then(docRef => console.log(`Document was created with the uid: ${docRef.id}`))
       .catch(err => {console.log(`There was an error: ${err}`)})
+    }
+
+    updateAccessToken = (uid, access_token) => {
+      this.db.collection('users').doc(uid).update({
+        access_token,
+      })
+      .then(() => console.log('Spotify access_token document successfully updated !'))
+      .catch(err => console.log('Error with the Spotify access_token update: ', err))
     }
 
     signInwithEmail = (email, password, history) => {

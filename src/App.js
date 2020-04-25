@@ -1,4 +1,5 @@
 import React from 'react';
+import ProtectedRoute from './navigation/ProtectedRoute';
 import Login from './login/Login'
 import Home from './home/Home'
 import Landing from './landing/Landing';
@@ -32,17 +33,6 @@ export default class App extends React.Component {
     }
   }
 
-  authListener() {
-    const { firebase } = this.props.firebaseClass
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-        this.setState({ user })
-			} else {
-				this.setState({ user: null })
-			}
-		});
-  }
-
   toggleTheme = () => {
     const { theme } = this.state;
     document.documentElement.classList.add("color-theme-in-transition");
@@ -68,10 +58,6 @@ export default class App extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.authListener();
-  }
-
   render() {
     let backdrop;
 
@@ -79,41 +65,25 @@ export default class App extends React.Component {
       backdrop = <Backdrop click={this.backdropClickHandler} />
     }
     const { firebaseClass } = this.props;
-    console.log(firebaseClass)
     return (
-      <Router className='test'>
+      <Router>
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
         <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen}/>
         {backdrop}
           <Switch>
-            <Route path='/song'>
-              <Lyrics/>
-            </Route>
-            <Route path='/params'>
-              {this.state.user
-              ? <Params SpotifyClass={SpotifyClass} />
-              : <Login firebaseClass={firebaseClass} />}
-            </Route>
-            <Route path='/loged_in_spotify'>
-              <SuccessConnection SpotifyClass={SpotifyClass}/>
-            </Route>
-            <Route path='/connect_to_spotify'>
-              <SpotifyConnection SpotifyClass={SpotifyClass}/>
-            </Route>
+            <Route path='/song' component={ProtectedRoute(Lyrics, {...this.props}, {...this.state})}/>
+            <Route path='/params' component={ProtectedRoute(Params, {...this.props}, {...this.state})}/>
+            <Route path='/loged_in_spotify' component={ProtectedRoute(SuccessConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
+            <Route path='/connect_to_spotify' component={ProtectedRoute(SpotifyConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
+            <Route path='/home' component={ProtectedRoute(Home, {...this.props}, {...this.state}, SpotifyClass)}/>
             <Route path='/login'>
               <Login firebaseClass={firebaseClass} />
             </Route>
             <Route path='/signup'>
-              <Signup firebaseClass={firebaseClass} />
-            </Route>
-            <Route path='/home'>
-              <Home spotifyClass={SpotifyClass} firebaseClass={firebaseClass} user={this.state.user}/>
+            <Signup firebaseClass={firebaseClass} />
             </Route>
             <Route path='/'>
-              {this.state.user 
-              ? <Landing />
-              : <Login firebaseClass={firebaseClass} />
-            }
+              <Landing />
             </Route>
           </Switch>
       </Router>

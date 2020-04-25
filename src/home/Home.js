@@ -9,9 +9,7 @@ require('./Home.scss');
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log('&&&&&&&&&', this.props)
-		this.token = this.props.spotifyClass.access_token
-		console.log('&&&&&&&&&', this.token)
+		this.token = this.props.SpotifyClass.access_token
 		this.state = {
 			registered: this.props.user,
 			loggedIn: this.token ? true : false,
@@ -23,11 +21,6 @@ class Home extends React.Component {
 				name: 'Not Checked',
 				image: ''
 			},
-			/* musicInfo: {
-				name: '',
-				artist: '',
-				uri: ''
-			}, */
 			lastSongs: [],
 			userTopTracks: [],
 			searchTracks: [],
@@ -52,11 +45,11 @@ class Home extends React.Component {
 	}
 
 	getHashParams() {
-		this.props.spotifyClass.getHashParams()
+		this.props.SpotifyClass.getHashParams()
 	}
 
 	getNowPlaying = () => {
-		this.props.spotifyClass.getNowPlaying()
+		this.props.SpotifyClass.getNowPlaying()
 		.then((response) =>
 			this.setState({
 				nowPlaying: {
@@ -67,7 +60,7 @@ class Home extends React.Component {
 	}
 
 	getUserInfo = () => {
-		this.props.spotifyClass.getUser()
+		this.props.SpotifyClass.getUser()
 			.then((response) => {
 				this.setState({
 					userInfo: {
@@ -79,7 +72,7 @@ class Home extends React.Component {
 	}
 
 	topTracks = () => {
-		this.props.spotifyClass.topTracks()
+		this.props.SpotifyClass.topTracks()
 		.then((response) => {
 			this.setState({
 				userTopTracks: response.topTracks
@@ -88,7 +81,7 @@ class Home extends React.Component {
 	}
 
 	recentTracks = () => {
-		this.props.spotifyClass.recentTracks()
+		this.props.SpotifyClass.recentTracks()
 		.then((response) => {
 			const filteredresponse = []
 			const map = new Map();
@@ -113,7 +106,7 @@ class Home extends React.Component {
 
 
 	search = (query, types) => {
-		this.props.spotifyClass.search(query, types)
+		this.props.SpotifyClass.search(query, types)
 		.then((response) => {
 			this.setState({
 				searchTracks: response,
@@ -125,9 +118,9 @@ class Home extends React.Component {
 	getMusicInfo = (item) => {
 		const musicInfo = {
 			songName: item.name,
-			artist: item.artists[0].name,
+			artist: item.artists[0].name || item.artist,
 			spotifyUri: item.uri,
-			imgUrl: item.album.images[0].url,
+			imgUrl: item.album.images[0].url || item.url,
 			token: this.token
 		};
 		this.props.history.push({
@@ -148,33 +141,22 @@ class Home extends React.Component {
 
 	render() {
 		if (this.token) {
-				return (
-					<div className="homepage-container">
-						<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
-							lastSongs={this.state.lastSongs} searchFunction={this.search}
-							isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
-							handleChange={this.handleChange}
-							value={this.state.value}
-							clearInput={this.clearInput}
-							userInfo={this.state.userInfo}
-							topTracks={this.state.userTopTracks}
-							getMusicInfo={this.getMusicInfo}
-							musicInfo={this.state.musicInfo}
-						/>
-					</div>
-				);
-			}
 			return (
-				<Redirect to='/connect_to_spotify'/>
-			)
-		/* } else if (!this.state.registered) {
-				return (
-					<Redirect to='/login'/>
-				)
-		} else {
-				return (
-					<Redirect to='/connect_to_spotify'/>
-				) */
+				<div className="homepage-container">
+					<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
+						lastSongs={this.state.lastSongs} searchFunction={this.search}
+						isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
+						handleChange={this.handleChange}
+						value={this.state.value}
+						clearInput={this.clearInput}
+						userInfo={this.state.userInfo}
+						topTracks={this.state.userTopTracks}
+						getMusicInfo={this.getMusicInfo}
+						musicInfo={this.state.musicInfo}
+					/>
+				</div>
+			);
+		}
 	}
 }
 

@@ -9,7 +9,6 @@ import App from './App';
 //   Route,
 //   Link
 // } from 'react-router-dom';
-import Lyrics from './lyrics/Lyrics';
 import * as serviceWorker from './serviceWorker';
 import Firebase  from './_services/firebase.service';
 const firebaseClass = new Firebase();
