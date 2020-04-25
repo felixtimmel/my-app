@@ -68,7 +68,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
-        <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen}/>
+        <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen} drawerClickHandler={this.drawerToggleClickHandler}/>
         {backdrop}
           <Switch>
             <Route path='/song' component={ProtectedRoute(Lyrics, {...this.props}, {...this.state})}/>
