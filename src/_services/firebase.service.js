@@ -60,7 +60,7 @@ class Firebase {
     });
 
     addNewUser = (uid, firstName, lastName, email, phoneNumber='', picture='') => {
-      this.db.collection('users').add({
+      this.db.collection("users").doc(uid).set({
         firstName,
         lastName,
         email,
@@ -68,13 +68,14 @@ class Firebase {
         picture,
         phoneNumber,
       })
-      .then(docRef => console.log(`Document was created with the uid: ${docRef.id}`))
+      .then(() => console.log(`Document was created with the uid: ${uid}`))
       .catch(err => {console.log(`There was an error: ${err}`)})
     }
 
-    updateAccessToken = (uid, access_token) => {
+    registerToken = (uid, access_token, refresh_token) => {
       this.db.collection('users').doc(uid).update({
         access_token,
+        refresh_token,
       })
       .then(() => console.log('Spotify access_token document successfully updated !'))
       .catch(err => console.log('Error with the Spotify access_token update: ', err))
@@ -95,15 +96,15 @@ class Firebase {
         const { given_name, family_name, email, picture } = result.additionalUserInfo.profile;
         const { uid, displayName, refreshToken, phoneNumber, photoURL } = result.user;
         const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
-        if (result.additionalUserInfo.isNewUser) {
-          this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
-        }
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const token = result.credential.accessToken;
         // The signed-in user info.
         const user = result.user;
         self.isAuth = true;
-        self.onRedirect('/connect_to_spotify', history);
+        console.log('self:', self)
+        console.log('self.isAuth:', self.isAuth)
+          self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+          .then(() => self.onRedirect('/connect_to_spotify', history));
       }).catch(function(error) {
         // Handle Errors here.
         const errorCode = error.code;
@@ -123,6 +124,7 @@ class Firebase {
         const { given_name, family_name, email, picture } = result.additionalUserInfo.profile;
         const { uid, displayName, refreshToken, phoneNumber, photoURL } = result.user;
         const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
+        console.log('result.additionalUserInfo.isNewUser:', result.additionalUserInfo.isNewUser)
         if (result.additionalUserInfo.isNewUser) {
           this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
         }
@@ -131,7 +133,11 @@ class Firebase {
         // The signed-in user info.
         const user = result.user;
         self.isAuth = true;
-        self.onRedirect('/connect_to_spotify', history);
+        // self.onRedirect('/connect_to_spotify', history);
+        console.log('self:', self)
+        console.log('self.isAuth:', self.isAuth)
+        self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+        .then(() => self.onRedirect('/connect_to_spotify', history));
       }).catch(function(error) {
         // Handle Errors here.
         const errorCode = error.code;

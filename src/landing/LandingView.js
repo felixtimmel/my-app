@@ -1,9 +1,6 @@
 import React from 'react';
-import './Landing.scss';
 import Logo from '../_assets/splash_screen/Logo.svg';
 import { Link } from "react-router-dom";
-
-require('./Landing.scss');
 
 const Landing = () => {
 	return (

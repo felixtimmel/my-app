@@ -10,6 +10,7 @@
 
 # production
 /build
+server/dev-bin/music-lyrics-service-account-file.json
 
 # misc
 .DS_Store

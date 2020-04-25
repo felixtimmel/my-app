@@ -15,6 +15,7 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
           self.props.history.push('/login');
         } else {
           console.log('USER CONNECTED');
+          fetch(`/send_uid?uid=${user.uid}`)
           self.setState({
             isLogin: true,
           })
@@ -26,6 +27,7 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
       const { isLogin } = this.state;
       return isLogin ? <WrappedComponent
       {...this.props} {...state}
+      firebaseClass={firebaseClass}
       SpotifyClass={SpotifyClass}
       /> : <div>Loading...</div>;
     }

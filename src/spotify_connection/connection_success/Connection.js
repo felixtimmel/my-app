@@ -14,8 +14,13 @@ export default class Connection extends Component {
   }
   
   async componentDidMount() {
-    const { SpotifyClass } = this.props;
+    const { SpotifyClass, firebaseClass } = this.props;
+    const uid = firebaseClass.auth.currentUser.uid
     SpotifyClass.setToken();
+    const access_token = SpotifyClass.access_token;
+    const refresh_token = SpotifyClass.refresh_token;
+
+    firebaseClass.registerToken(uid, access_token, refresh_token);
     const user = await SpotifyClass.getUser();
     this.setState({
       name: user.display_name,

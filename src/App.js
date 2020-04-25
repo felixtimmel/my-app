@@ -74,7 +74,7 @@ export default class App extends React.Component {
             <Route path='/song' component={ProtectedRoute(Lyrics, {...this.props}, {...this.state})}/>
             <Route path='/params' component={ProtectedRoute(Params, {...this.props}, {...this.state})}/>
             <Route path='/loged_in_spotify' component={ProtectedRoute(SuccessConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
-            <Route path='/connect_to_spotify' component={ProtectedRoute(SpotifyConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
+            <Route path='/connect_to_spotify' component={ProtectedRoute(SpotifyConnection, {...this.props}, {...this.state}, SpotifyClass, firebaseClass)}/>
             <Route path='/home' component={ProtectedRoute(Home, {...this.props}, {...this.state}, SpotifyClass)}/>
             <Route path='/login'>
               <Login firebaseClass={firebaseClass} />

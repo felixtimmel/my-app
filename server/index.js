@@ -4,8 +4,11 @@ const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const cron = require('node-cron');
 require('dotenv').config();
 const { getLyricsUrl, getLyrics } = require('./lyrics');
+const { updateSpotifyToken } = require('./refresh_token_job');
+let uid = null;
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
@@ -138,6 +141,13 @@ app.get('/callback', function(req, res) {
   }
 });
 
+cron.schedule('*/55 * * * *', () => {
+  if (uid) {
+    updateSpotifyToken(uid, client_id, client_secret);
+  }
+  console.log('running a task every 55 minutes');
+});
+
 app.get('/get_lyrics', (req, res) => {
   const artist = req.query.artist;
   const song = req.query.song;
@@ -169,6 +179,11 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+app.get('/send_uid', function (req, res) {
+  uid = req.query.uid;
+  console.log('@@@@@@@@@@@@uid:', uid)
+})
 
 console.log('Listening on 8888');
 app.listen(process.env.PORT || 8888);
