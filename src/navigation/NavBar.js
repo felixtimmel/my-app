@@ -12,7 +12,7 @@ const Navbar = ({drawerClickHandler, toggleTheme, firebaseClass}) => (
         <DrawerToggleBtn click={drawerClickHandler} />
       </div>
       <div className="toolbar__navigation-logo">
-        <Link to='/'><img src={logo} alt='Logo prepacours' /></Link>
+        <Link to={firebaseClass.uid ? '/home' : '/'}><img src={logo} alt='Logo prepacours' /></Link>
       </div>
       {/* <div className="toolbar__navigation-spacer" /> */}
       <div className="toolbar__navigation-items">
