@@ -1,36 +1,22 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
+
 
 const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
   return class ProtectedRoute extends Component {
-    constructor(props) {
-      super(props);
-      this.state = ({
-        isLogin: false,
-      });
-    }
     componentDidMount() {
-      const self = this;
-      firebaseClass.auth.onAuthStateChanged(function(user) {
-        if (!user) {
-          self.props.history.push('/login');
-        } else {
-          console.log('USER CONNECTED');
-          firebaseClass.setUid(user.uid);
-          fetch(`/send_uid?uid=${user.uid}`);
-          self.setState({
-            isLogin: true,
-          })
-        }
-      })
+      if (state.user) {
+          firebaseClass.setUid(state.user.uid);
+          fetch(`/send_uid?uid=${state.user.uid}`);
+      }
     }
 
     render() {
-      const { isLogin } = this.state;
-      return isLogin ? <WrappedComponent
+      return state.user ? <WrappedComponent
       {...this.props} {...state}
       firebaseClass={firebaseClass}
       SpotifyClass={SpotifyClass}
-      /> : <div>Loading...</div>;
+      /> : <Redirect to='/'/>;
     }
   }
 }

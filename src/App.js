@@ -28,7 +28,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       theme: 'dark',
-      user: {},
+      user: null,
       sideDrawerOpen: false,
     }
   }
@@ -58,6 +58,18 @@ export default class App extends React.Component {
     });
   };
 
+  componentDidMount() {
+    const { firebaseClass } = this.props;
+    const self = this;
+    firebaseClass.auth.onAuthStateChanged(function(user) {
+      if (user) {
+        self.setState({
+          user,
+        });
+      }
+    });
+  }
+
   render() {
     let backdrop;
 
@@ -65,12 +77,13 @@ export default class App extends React.Component {
       backdrop = <Backdrop click={this.backdropClickHandler} />
     }
     const { firebaseClass } = this.props;
+    const { user } = this.state;
     return (
       <Router>
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
-        <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen} drawerClickHandler={this.drawerToggleClickHandler}/>
-        {backdrop}
-          <Switch>
+          <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen} drawerClickHandler={this.drawerToggleClickHandler}/>
+            {backdrop}
+            <Switch>
             <Route path='/song' component={ProtectedRoute(Lyrics, {...this.props}, {...this.state})}/>
             <Route path='/params' component={ProtectedRoute(Params, {...this.props}, {...this.state})}/>
             <Route path='/loged_in_spotify' component={ProtectedRoute(SuccessConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
@@ -85,7 +98,7 @@ export default class App extends React.Component {
             <Route path='/'>
               <Landing />
             </Route>
-          </Switch>
+          </Switch> 
       </Router>
     );
   }
