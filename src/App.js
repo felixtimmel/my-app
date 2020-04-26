@@ -62,11 +62,9 @@ export default class App extends React.Component {
     const { firebaseClass } = this.props;
     const self = this;
     firebaseClass.auth.onAuthStateChanged(function(user) {
-      if (user) {
         self.setState({
-          user,
+          user: user ? user : null,
         });
-      }
     });
   }
 
