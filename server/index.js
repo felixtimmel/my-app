@@ -62,6 +62,11 @@ if (process.env.NODE_ENV === 'production') {
   // });
 }
 
+app.get('/send_uid', function (req, res) {
+  uid = req.query.uid;
+  console.log('@@@@@@@@@@@@uid:', uid)
+})
+
 app.get('/spotify-login', function(req, res) {
 
   const state = generateRandomString(16);
@@ -142,6 +147,7 @@ app.get('/callback', function(req, res) {
 });
 
 cron.schedule('*/55 * * * *', () => {
+  // I think this is not a good think to do here for the client but it work for now:
   if (uid) {
     updateSpotifyToken(uid, client_id, client_secret);
   }
@@ -179,11 +185,6 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
-
-app.get('/send_uid', function (req, res) {
-  uid = req.query.uid;
-  console.log('@@@@@@@@@@@@uid:', uid)
-})
 
 console.log('Listening on 8888');
 app.listen(process.env.PORT || 8888);

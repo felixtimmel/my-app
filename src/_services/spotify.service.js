@@ -43,10 +43,16 @@ class SpotifyClass {
     .then((response) => response.tracks.items.slice(0, 10));
   }
 
-  setToken = () => {
-		const tokens = this.getHashParams();
-		this.access_token = tokens.access_token;
-		this.refresh_token = tokens.refresh_token;
+  setToken = (spotifyToken) => {
+    let tokens;
+    if (spotifyToken) {
+      this.access_token = spotifyToken;
+      return spotifyWebApi.setAccessToken(spotifyToken);
+    } else {
+      tokens = this.getHashParams();
+      this.access_token = tokens.access_token;
+      this.refresh_token = tokens.refresh_token;
+    }
     return spotifyWebApi.setAccessToken(tokens.access_token);
   }
 

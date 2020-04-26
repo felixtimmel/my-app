@@ -11,8 +11,7 @@ class Home extends React.Component {
 		super(props);
 		this.token = this.props.SpotifyClass.access_token
 		this.state = {
-			registered: this.props.user,
-			loggedIn: this.token ? true : false,
+			token: null,
 			userInfo: {
 				username: '',
 				avatar: '',
@@ -129,21 +128,39 @@ class Home extends React.Component {
 		})
 	}
 
-	componentDidMount() {
-		console.log(this.state.registered)
-		if (this.token) {
-			loadSpotifySdk(this.token);
-			this.recentTracks();
-			this.getUserInfo();
-			this.topTracks();
+	initHomePage = async() => {
+		const { firebaseClass, SpotifyClass } = this.props;
+		const userUid = firebaseClass.uid;
+		try {
+			const user = await firebaseClass.db.collection('users').doc(userUid).get();
+			if (user.exists) {
+				SpotifyClass.setToken(user.data().access_token);
+				if (!window.isScriptLoaded) {
+					await loadSpotifySdk(user.data().access_token);
+				}
+				this.recentTracks();
+				this.getUserInfo();
+				this.topTracks();
+				window.isScriptLoaded = true;
+				this.setState({
+					token: user.data().access_token,
+				})
+			}
+		} catch(err) {
+			console.log(`There was an error in get getSpotifyToken call: ${err}`);
 		}
 	}
 
+	componentDidMount() {
+		this.initHomePage();
+	}
+
 	render() {
-		if (this.token) {
-			return (
-				<div className="homepage-container">
-					<HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
+		const { token } = this.state;
+		return (
+			<div className="homepage-container">
+			{token && token.length
+				? <HomepageView nowPlaying={ this.state.nowPlaying } getNowPlaying={this.getNowPlaying} 
 						lastSongs={this.state.lastSongs} searchFunction={this.search}
 						isSearching={this.state.isSearching} searchTracks={this.state.searchTracks}
 						handleChange={this.handleChange}
@@ -152,13 +169,10 @@ class Home extends React.Component {
 						userInfo={this.state.userInfo}
 						topTracks={this.state.userTopTracks}
 						getMusicInfo={this.getMusicInfo}
-						musicInfo={this.state.musicInfo}
-					/>
-				</div>
-			);
-		} else {
-			return <div>Logic here to do</div>
-		}
+						musicInfo={this.state.musicInfo}/>
+				: <div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
+			</div>
+		);
 	}
 }
 

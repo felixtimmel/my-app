@@ -44,6 +44,11 @@ class Firebase {
     this.currentUser = firebase.auth().currentUser;
     this.isAuth = false;
     this.db = firebase.firestore();
+    this.uid = null;
+  }
+
+  setUid = (uid) => {
+    this.uid = uid;
   }
 
   getFirebaseUi = () => firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(this.auth);
@@ -79,6 +84,17 @@ class Firebase {
       })
       .then(() => console.log('Spotify access_token document successfully updated !'))
       .catch(err => console.log('Error with the Spotify access_token update: ', err))
+    }
+
+    getSpotifyToken = async(uid) => {
+      try {
+        const user = await this.db.collection('users').doc(uid).get();
+        if (user.exists) {
+          return user.access_token;
+        }
+      } catch(err) {
+        console.log(`There was an error in get getSpotifyToken call: ${err}`);
+      }
     }
 
     signInwithEmail = (email, password, history) => {

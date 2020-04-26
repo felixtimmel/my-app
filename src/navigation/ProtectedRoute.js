@@ -15,7 +15,8 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
           self.props.history.push('/login');
         } else {
           console.log('USER CONNECTED');
-          fetch(`/send_uid?uid=${user.uid}`)
+          firebaseClass.setUid(user.uid);
+          fetch(`/send_uid?uid=${user.uid}`);
           self.setState({
             isLogin: true,
           })
