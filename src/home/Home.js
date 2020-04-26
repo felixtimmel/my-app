@@ -117,9 +117,9 @@ class Home extends React.Component {
 	getMusicInfo = (item) => {
 		const musicInfo = {
 			songName: item.name,
-			artist: item.artists[0].name || item.artist,
+			artist: item.artists && item.artists[0] ? item.artists[0].name : item.artist,
 			spotifyUri: item.uri,
-			imgUrl: item.album.images[0].url || item.url,
+			imgUrl: item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : item.url,
 			token: this.token
 		};
 		this.props.history.push({
@@ -135,9 +135,9 @@ class Home extends React.Component {
 			const user = await firebaseClass.db.collection('users').doc(userUid).get();
 			if (user.exists) {
 				SpotifyClass.setToken(user.data().access_token);
-				if (!window.isScriptLoaded) {
+				// if (!window.isScriptLoaded) {
 					await loadSpotifySdk(user.data().access_token);
-				}
+				// }
 				this.recentTracks();
 				this.getUserInfo();
 				this.topTracks();
