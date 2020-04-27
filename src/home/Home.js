@@ -129,10 +129,9 @@ class Home extends React.Component {
 	}
 
 	initHomePage = async() => {
-		const { firebaseClass, SpotifyClass } = this.props;
-		const userUid = firebaseClass.uid;
+		const { firebaseClass, SpotifyClass, user: { uid } } = this.props;
 		try {
-			const user = await firebaseClass.db.collection('users').doc(userUid).get();
+			const user = await firebaseClass.db.collection('users').doc(uid).get();
 			if (user.exists) {
 				SpotifyClass.setToken(user.data().access_token);
 				// if (!window.isScriptLoaded) {

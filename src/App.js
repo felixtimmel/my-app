@@ -30,6 +30,7 @@ export default class App extends React.Component {
       theme: 'dark',
       user: null,
       sideDrawerOpen: false,
+      initialLoad: true,
     }
   }
 
@@ -64,6 +65,13 @@ export default class App extends React.Component {
     firebaseClass.auth.onAuthStateChanged(function(user) {
         self.setState({
           user: user ? user : null,
+        }, () => {
+          if (user) {
+            firebaseClass.setUid(user.uid);
+          }
+          self.setState({
+            initialLoad: false,
+          })
         });
     });
   }
@@ -75,7 +83,10 @@ export default class App extends React.Component {
       backdrop = <Backdrop click={this.backdropClickHandler} />
     }
     const { firebaseClass } = this.props;
-    const { user } = this.state;
+    const { initialLoad } = this.state;
+    if (initialLoad) {
+      return <div>Loading....</div> // to replace by a component
+    }
     return (
       <Router>
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>

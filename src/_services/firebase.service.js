@@ -103,7 +103,9 @@ class Firebase {
       .then(() => this.onRedirect('/connect_to_spotify', history))
     }
 
-    onRedirect = (pathname, history) => history.push({ pathname: pathname });
+    onRedirect = (pathname, history) => {
+      return history.push({ pathname: pathname })
+    };
 
     onSignUpWithFacebook = (history) => {
       const self = this;
@@ -169,15 +171,19 @@ class Firebase {
     googleSignIn = (history) => {
       const self = this;
       const googleProvider = new firebase.auth.GoogleAuthProvider();
-      this.auth.signInWithPopup(googleProvider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        self.isAuth = true;
-        self.onRedirect('/connect_to_spotify', history);
-        // ...
-      }).catch(function(error) {
+      this.auth.setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return this.auth.signInWithPopup(googleProvider).then(function(result) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          self.isAuth = true;
+          self.onRedirect('/connect_to_spotify', history);
+          // ...
+        })
+      })
+      .catch(function(error) {
         // Handle Errors here.
         console.log(error.code);
         console.log(error.message);

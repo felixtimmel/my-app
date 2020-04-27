@@ -28,14 +28,14 @@ export const LoginView = (props) => {
 					placeholder="Email"
 					type="text"
 					value={props.email}
-					handleInput={(e) => props.handleInput(e)}
+					onChange={(e) => props.handleInput(e)}
 					className="signIn__form_input"/>
 				<div className="input-container">
 					<input
 						name='password'
 						placeholder="Mot de passe" 
 						value={props.password}
-						handleInput={(e) => props.handleInput(e)}
+						onChange={(e) => props.handleInput(e)}
 						type={props.isPassVisible ? 'text': 'password'} 
 						className="signIn__form_input"
 					/>
