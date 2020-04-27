@@ -99,8 +99,7 @@ class Firebase {
 
     signInwithEmail = (email, password, history) => {
       this.isAuth = true;
-      this.auth.signInWithEmailAndPassword(email, password)
-      .then(() => this.onRedirect('/connect_to_spotify', history))
+      return this.auth.signInWithEmailAndPassword(email, password)
     }
 
     onRedirect = (pathname, history) => {
