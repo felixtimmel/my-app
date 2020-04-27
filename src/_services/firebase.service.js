@@ -149,7 +149,8 @@ class Firebase {
           const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
           console.log('result.additionalUserInfo.isNewUser:', result.additionalUserInfo.isNewUser)
           if (result.additionalUserInfo.isNewUser) {
-            this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
+            this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+            .then(() => self.onRedirect('/connect_to_spotify', history));
           }
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           const token = result.credential.accessToken;
@@ -160,6 +161,7 @@ class Firebase {
           console.log('self:', self)
           console.log('self.isAuth:', self.isAuth)
           self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+          .then(() => self.onRedirect('/connect_to_spotify', history));
         })
       })
       .catch(function(error) {
