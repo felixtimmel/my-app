@@ -32,20 +32,22 @@ const HomepageView = ({
 					<img src={SpotifyLogo} alt='img' className="homeGreeting__spotify-logo"/>
 				</div>
 			</div>
-			<div className="searchbar">
-				<img src={Loupe} alt="search" className="searchbar__loupe"/>
-				{<SearchBar clearInput={clearInput}
-					value={value} 
-					handleChange={handleChange} 
-					search={searchFunction} 
-					isSearching={isSearching}
-				/>}
-			</div>
-			{isSearching && searchTracks.length > 0 &&
-				<div className="musicCard">
-					<MusicCardList searchTracks={searchTracks} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
+			<div className='searchbar_part'>
+				<div className="searchbar">
+					<img src={Loupe} alt="search" className="searchbar__loupe"/>
+					{<SearchBar clearInput={clearInput}
+						value={value} 
+						handleChange={handleChange} 
+						search={searchFunction} 
+						isSearching={isSearching}
+					/>}
 				</div>
-			}
+					{isSearching && searchTracks.length > 0 &&
+						<div className="searching_musicCard">
+							<MusicCardList searchTracks={searchTracks} isSearching={isSearching} getMusicInfo={getMusicInfo}/>
+						</div>
+					}
+			</div>
 			<div className="lastlistenning">
 				<p className="homepage__subtitles">Vos dernières écoutes</p>
 				<MusicCardList lastSongs={lastSongs} isSearching={isSearching} getMusicInfo={getMusicInfo} musicInfo={musicInfo}/>

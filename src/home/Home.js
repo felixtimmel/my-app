@@ -169,7 +169,8 @@ class Home extends React.Component {
 						topTracks={this.state.userTopTracks}
 						getMusicInfo={this.getMusicInfo}
 						musicInfo={this.state.musicInfo}/>
-				: <div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
+				: 
+					<div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
 			</div>
 		);
 	}

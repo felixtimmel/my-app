@@ -17,6 +17,8 @@
   .music_card__img {
     img {
       height: 80px;
+      width: 100%;
+      object-fit: cover;
       margin-bottom: 8px;
       border-radius: 8px;
     }
@@ -24,6 +26,9 @@
 
   .music_card__content {
     margin-bottom: 8px;
+    /* position: relative; */
+    overflow: hidden;
+    width: 100%;
   }
 }
 
@@ -54,10 +59,11 @@
   }
 }
 
-.musicCard {
+.searching_musicCard {
   background-color: var(--primary-color);
   position: absolute;
-  width: 94%;
+  width: auto;
+  top: 28px;
   padding: 15px 10px 0 10px;
   border-radius: 0 0 8px 8px;
   .music_card__img {

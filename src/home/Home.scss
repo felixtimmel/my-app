@@ -51,17 +51,20 @@
       font-weight: bold;
     }
     
-    .searchbar {
-      margin-top: 20px;
-      text-align: center;
-      display: flex;
-      background: var(--primary-color);
-      border-radius: 4px;
-      align-items: center;
-
-      .searchbar__loupe {
-        width: 20px;
-        padding: 8px;
+    .searchbar_part {
+      position: relative;
+      .searchbar {
+        margin-top: 20px;
+        text-align: center;
+        display: flex;
+        background: var(--primary-color);
+        border-radius: 4px;
+        align-items: center;
+  
+        .searchbar__loupe {
+          width: 20px;
+          padding: 8px;
+        }
       }
     }
 
@@ -82,7 +85,7 @@
       overflow: auto;
       white-space: nowrap;
       padding-bottom: 12px;
-    }
+      }
 
     .vertical-music-card_list {
       @media(min-width: 768px) {
