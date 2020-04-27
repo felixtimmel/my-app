@@ -42,7 +42,6 @@ class Firebase {
     this.firebase = firebase;
     this.auth = firebase.auth();
     this.currentUser = firebase.auth().currentUser;
-    this.isAuth = false;
     this.db = firebase.firestore();
     this.uid = null;
   }
@@ -98,7 +97,6 @@ class Firebase {
     }
 
     signInwithEmail = (email, password, history) => {
-      this.isAuth = true;
       return this.auth.signInWithEmailAndPassword(email, password)
     }
 
@@ -119,11 +117,10 @@ class Firebase {
           const token = result.credential.accessToken;
           // The signed-in user info.
           const user = result.user;
-          self.isAuth = true;
-          console.log('self:', self)
-          console.log('self.isAuth:', self.isAuth)
+          if (result.additionalUserInfo.isNewUser) {
             self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
-            .then(() => self.onRedirect('/connect_to_spotify', history));
+          }
+          self.onRedirect('/connect_to_spotify', history)
         })
       })
       .catch(function(error) {
@@ -155,11 +152,7 @@ class Firebase {
           const token = result.credential.accessToken;
           // The signed-in user info.
           const user = result.user;
-          self.isAuth = true;
-          // self.onRedirect('/connect_to_spotify', history);
-          console.log('self:', self)
-          console.log('self.isAuth:', self.isAuth)
-          self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+          self.onRedirect('/connect_to_spotify', history);
         })
       })
       .catch(function(error) {
@@ -184,7 +177,7 @@ class Firebase {
           var token = result.credential.accessToken;
           // The signed-in user info.
           var user = result.user;
-          // self.isAuth = true;
+    
           self.onRedirect('/connect_to_spotify', history);
           // ...
         })
@@ -211,7 +204,6 @@ class Firebase {
           var token = result.credential.accessToken;
           // The signed-in user info.
           var user = result.user;
-          self.isAuth = true;
           self.onRedirect('/connect_to_spotify', history);
           // ...       
           })
@@ -230,7 +222,6 @@ class Firebase {
 
     signOut = () => {
       this.auth.signOut();
-      this.isAuth = false;
       console.log('&&& -- user sign out')
     }
 }
