@@ -36,6 +36,11 @@ class SpotifyClass {
   getUser = () => {
     return spotifyWebApi.getMe()
     .then(res => res)
+    .catch(err => {
+      if (err.message === 'The access token expired') {
+        return err;
+      }
+    })
   }
 
   search = (query, types) => {
