@@ -53,12 +53,12 @@ class Firebase {
 
   getFirebaseUi = () => firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(this.auth);
 
-  createUserWithEmail = (email, password, firstName, lastName) =>
+  createUserWithEmail = (email, password, firstName, lastName, history) =>
     this.auth.createUserWithEmailAndPassword(email, password)
     .then(user => {
-      this.addNewUser(user.uid, firstName, lastName, email);
+      this.addNewUser(user.user.uid, firstName, lastName, email);
     })
-    .then(() => this.onRedirect('/connect_to_spotify'))
+    .then(() => this.onRedirect('/connect_to_spotify', history))
     .catch(err => {
       console.log('createUserWithEmailAndPassword error', err.code);
       console.log('createUserWithEmailAndPassword error', err.message);
@@ -99,8 +99,7 @@ class Firebase {
 
     signInwithEmail = (email, password, history) => {
       this.isAuth = true;
-      this.auth.signInWithEmailAndPassword(email, password)
-      .then(() => this.onRedirect('/connect_to_spotify', history))
+      return this.auth.signInWithEmailAndPassword(email, password)
     }
 
     onRedirect = (pathname, history) => {

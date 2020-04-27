@@ -20,7 +20,7 @@ constructor(props) {
 
   onSignUpWithEmail = (mail, pass, firstName, lastName) => {
     const { createUserWithEmail } = this.props.firebaseClass;
-    createUserWithEmail(mail, pass, firstName, lastName)
+    createUserWithEmail(mail, pass, firstName, lastName, this.props.history)
   }
 
   onShowPassword = (field) => {

@@ -42,6 +42,7 @@ class Login extends React.Component {
 		const { email, password } = this.state;
 		const { signInwithEmail } = this.props.firebaseClass;
 		signInwithEmail(email, password, this.props.history)
+		.then(() => this.props.firebaseClass.onRedirect('/home', this.props.history))
 		.catch((error) => {
 			this.setState({
 				signInError: error
