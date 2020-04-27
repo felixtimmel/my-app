@@ -60,20 +60,9 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    const { firebaseClass } = this.props;
-    const self = this;
-    firebaseClass.auth.onAuthStateChanged(function(user) {
-        self.setState({
-          user: user ? user : null,
-        }, () => {
-          if (user) {
-            firebaseClass.setUid(user.uid);
-          }
-          self.setState({
-            initialLoad: false,
-          })
-        });
-    });
+    this.setState({
+      initialLoad: false,
+    })
   }
 
   render() {
@@ -84,7 +73,7 @@ export default class App extends React.Component {
     }
     const { firebaseClass } = this.props;
     const { initialLoad } = this.state;
-    if (initialLoad) {
+    if (initialLoad && !this.state.user) {
       return <div>Loading....</div> // to replace by a component
     }
     return (
@@ -99,10 +88,10 @@ export default class App extends React.Component {
             <Route path='/connect_to_spotify' component={ProtectedRoute(SpotifyConnection, {...this.props}, {...this.state}, SpotifyClass, firebaseClass)}/>
             <Route path='/home' component={ProtectedRoute(Home, {...this.props}, {...this.state}, SpotifyClass)}/>
             <Route path='/login'>
-              <Login firebaseClass={firebaseClass} />
+              <Login firebaseClass={firebaseClass} {...this.state}/>
             </Route>
             <Route path='/signup'>
-            <Signup firebaseClass={firebaseClass} />
+            <Signup firebaseClass={firebaseClass} {...this.state}/>
             </Route>
             <Route path='/'>
               <Landing />

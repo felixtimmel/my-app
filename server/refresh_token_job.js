@@ -19,29 +19,32 @@ const app = admin.initializeApp({
 const db = app.firestore();
 
 const updateSpotifyToken = async(uid, client_id, client_secret) => {
+  console.log('@@@@@@@@@@@@@@@uid: from server', uid)
   let refresh_token;
   try {
     const user = await db.collection('users').doc(uid).get();
     if (user.exists) {
       refresh_token = user.data().refresh_token;
-      const authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-        form: {
-          grant_type: 'refresh_token',
-          refresh_token: refresh_token
-        },
-        json: true
-      };
-    
-      request.post(authOptions, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-          const access_token = body.access_token;
-          db.collection('users').doc(uid).update({
-            access_token,
-          }).then(() => console.log('Spotify access_token document successfully updated !'))
-        }
-      });
+      if (refresh_token) {
+        const authOptions = {
+          url: 'https://accounts.spotify.com/api/token',
+          headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+          form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+          },
+          json: true
+        };
+      
+        request.post(authOptions, function(error, response, body) {
+          if (!error && response.statusCode === 200) {
+            const access_token = body.access_token;
+            db.collection('users').doc(uid).update({
+              access_token,
+            }).then(() => console.log('Spotify access_token document successfully updated !'))
+          }
+        });
+      }
     }
   } catch(err) {
     console.log('ERROR', err);
