@@ -1,16 +1,8 @@
-import React from 'react';
-import ProtectedRoute from './navigation/ProtectedRoute';
-import Login from './login/Login'
-import Home from './home/Home'
-import Landing from './landing/Landing';
-import Signup from './signup/SignUp';
-import SpotifyConnection from './spotify_connection/connection/Connection';
-import SuccessConnection from './spotify_connection/connection_success/Connection';
-import Params from './parameters/Params';
-import Lyrics from './lyrics/Lyrics';
-import Backdrop from './backdrop/Backdrop'
-import NavBar from './navigation/NavBar'
+import React, { Suspense } from 'react';
+import Backdrop from './backdrop/Backdrop';
+import NavBar from './navigation/NavBar';
 import SideDrawer from './sideDrawer/SideDrawer';
+import ProtectedRoute from './navigation/ProtectedRoute';
 
 
 /* import logo from './logo.svg'; */
@@ -21,6 +13,14 @@ import {
   Route,
 } from 'react-router-dom';
 import Spotify from './_services/spotify.service';
+const Login = React.lazy(() => import('./login/Login'));
+const Home = React.lazy(() => import('./home/Home')); 
+const Landing = React.lazy(() => import('./landing/Landing'));
+const Signup = React.lazy(() => import('./signup/SignUp'));
+const SpotifyConnection = React.lazy(() => import('./spotify_connection/connection/Connection'));
+const  SuccessConnection  = React.lazy(() => import('./spotify_connection/connection_success/Connection'));
+const Lyrics = React.lazy(() => import('./lyrics/Lyrics'));
+const Params = React.lazy(() => import('./parameters/Params'));
 const SpotifyClass = new Spotify();
 
 export default class App extends React.Component {
@@ -81,9 +81,10 @@ export default class App extends React.Component {
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
           <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen} drawerClickHandler={this.drawerToggleClickHandler}/>
             {backdrop}
-            <Switch>
+        <Suspense fallback={<div>Loading.....</div>}>
+          <Switch>
             <Route path='/song' component={ProtectedRoute(Lyrics, {...this.props}, {...this.state})}/>
-            <Route path='/params' component={ProtectedRoute(Params, {...this.props}, {...this.state})}/>
+              <Route path='/params' component={ProtectedRoute(Params, {...this.props}, {...this.state})}/>
             <Route path='/loged_in_spotify' component={ProtectedRoute(SuccessConnection, {...this.props}, {...this.state}, SpotifyClass)}/>
             <Route path='/connect_to_spotify' component={ProtectedRoute(SpotifyConnection, {...this.props}, {...this.state}, SpotifyClass, firebaseClass)}/>
             <Route path='/home' component={ProtectedRoute(Home, {...this.props}, {...this.state}, SpotifyClass)}/>
@@ -97,6 +98,7 @@ export default class App extends React.Component {
               <Landing />
             </Route>
           </Switch> 
+        </Suspense>
       </Router>
     );
   }
