@@ -23,6 +23,7 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
         }
       })
     }
+
     render() {
         return this.state.user && !state.initialLoad ? <WrappedComponent
         {...this.props} {...this.state}
