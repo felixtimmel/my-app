@@ -6,7 +6,7 @@ const MusicCardList = ({ lastSongs, isSearching, searchTracks, topTracks, getMus
 	if (isSearching) {
 		return (
 			<>
-			<div className="vertical-music-card_list">
+			<div className="searchbar-music-card_list">
 				{searchTracks && searchTracks.length
 				? searchTracks.map((item) => 
 					<div className="vertical-music_card" onClick={() => getMusicInfo(item)}>

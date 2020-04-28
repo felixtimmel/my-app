@@ -58,13 +58,13 @@
         text-align: center;
         display: flex;
         background: var(--primary-color);
-        border-radius: 4px;
+        border-radius: 16px;
         align-items: center;
-  
-        .searchbar__loupe {
-          width: 20px;
-          padding: 8px;
-        }
+        padding: 8px 0 8px 0;
+
+        i {
+          margin-left: 16px;
+        }       
       }
     }
 

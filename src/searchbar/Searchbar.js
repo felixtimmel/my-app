@@ -10,7 +10,7 @@ class SearchBar extends Component {
           id="searchBar"
           type="text"
           value={this.props.value}
-          placeholder="Titres, artists"
+          placeholder="Titres, artists..."
           className="form-control"
           onChange={(e) => this.props.handleChange(e)}
         />

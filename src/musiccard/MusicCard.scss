@@ -12,7 +12,7 @@
 
 .horizontal-music_card{
   margin-right: 20px;
-  min-width: 130px;
+  min-width: 150px;
 
   .music_card__img {
     img {
@@ -63,12 +63,39 @@
   background-color: var(--primary-color);
   position: absolute;
   width: auto;
-  top: 28px;
+  top: 32px;
   padding: 15px 10px 0 10px;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 16px 16px;
+
+  .searchbar-music-card_list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .vertical-music_card {
+      width: 300px;
+      margin-bottom: 30px;
+    }
+  }
+  
   .music_card__img {
+    margin: 0;
+    margin-right: 5px;
+    width: auto;
     img:first-child {
       width: 40px;
+    }
+  }
+
+  .music_card__content {
+    .song-artist {
+      margin-top: 4px;
+      color: var(--text-color);
+    }
+  }
+
+  .music_card__info{
+    .music_card__play_btn {
+      display: none;
     }
   }
 }

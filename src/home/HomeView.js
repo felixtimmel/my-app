@@ -34,7 +34,8 @@ const HomepageView = ({
 			</div>
 			<div className='searchbar_part'>
 				<div className="searchbar">
-					<img src={Loupe} alt="search" className="searchbar__loupe"/>
+					<i className="fas fa-search"></i>
+					{/* <img src={Loupe} alt="search" className="searchbar__loupe"/> */}
 					{<SearchBar clearInput={clearInput}
 						value={value} 
 						handleChange={handleChange} 

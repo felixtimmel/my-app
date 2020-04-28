@@ -64,6 +64,7 @@ class Firebase {
     });
 
     addNewUser = (uid, firstName, lastName, email, phoneNumber='', picture='') => {
+      console.log(uid, firstName, lastName, email)
       this.db.collection("users").doc(uid).set({
         firstName,
         lastName,
@@ -146,29 +147,19 @@ class Firebase {
           const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
           console.log('result.additionalUserInfo.isNewUser:', result.additionalUserInfo.isNewUser)
           if (result.additionalUserInfo.isNewUser) {
-            this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
-            .then(() => self.onRedirect('/connect_to_spotify', history));
+            self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
           }
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           const token = result.credential.accessToken;
           // The signed-in user info.
           const user = result.user;
-<<<<<<< HEAD
-          self.isAuth = true;
-          // self.onRedirect('/connect_to_spotify', history);
-          console.log('self:', self)
-          console.log('self.isAuth:', self.isAuth)
-          self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
-          .then(() => self.onRedirect('/connect_to_spotify', history));
-=======
           self.onRedirect('/connect_to_spotify', history);
->>>>>>> 5437506f5acfba8e907cf1ec911d074ef6810c5e
         })
       })
       .catch(function(error) {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error.code);
+        console.log(error.message);
         // The email of the user's account used.
         const email = error.email;
         // The firebase.auth.AuthCredential type that was used.
