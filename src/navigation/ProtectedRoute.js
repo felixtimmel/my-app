@@ -7,6 +7,7 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
       super(props);
       this.state = {
         user: null,
+        updatedToken: false,
       }
     }
     componentDidMount() {
@@ -15,10 +16,13 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
         if (!user) {
           self.props.history.push('/')
         } else {
-          firebaseClass.setUid(user.uid);
+          if (!self.state.updatedToken) {
+            firebaseClass.setUid(user.uid);
+          }
           fetch(`/send_uid?uid=${user.uid}`);
           self.setState({
             user,
+            updatedToken: true,
           })
         }
       })

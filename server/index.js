@@ -65,8 +65,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/send_uid', function (req, res) {
-  uid = req.query.uid;
-  updateSpotifyToken(uid, client_id, client_secret);
+  uid = req.query ? req.query.uid : null;
+  if (uid) {
+    updateSpotifyToken(uid, client_id, client_secret);
+  }
 })
 
 app.get('/spotify-login', function(req, res) {

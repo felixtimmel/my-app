@@ -121,7 +121,10 @@ class Lyrics extends Component {
     } 
   }
   componentWillUnmount(){
-    this.onPauseSong();
+    const { spotifyUri  } = this.props.location.state.musicInfo;
+    if (spotifyUri && window.spotifyPlayer) {
+      this.onPauseSong();
+    }
   }
   render() {
     const { lyrics } = this.state;
