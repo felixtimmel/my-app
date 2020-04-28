@@ -91,7 +91,8 @@ class Home extends React.Component {
 						id: item.id,
 						name: item.name,
 						artist: item.artists[0].name,
-						url: item.album.images[0].url
+						url: item.album.images[0].url,
+						uri: item.uri
 					});
 				}
 			}
@@ -115,6 +116,7 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
+		console.log(item)
 		const musicInfo = {
 			songName: item.name,
 			artist: item.artists && item.artists[0] ? item.artists[0].name : item.artist,
@@ -122,6 +124,7 @@ class Home extends React.Component {
 			imgUrl: item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : item.url,
 			token: this.token
 		};
+		console.log(musicInfo);
 		this.props.history.push({
 			pathname: '/song',
 			state: { musicInfo: musicInfo }
@@ -169,7 +172,8 @@ class Home extends React.Component {
 						topTracks={this.state.userTopTracks}
 						getMusicInfo={this.getMusicInfo}
 						musicInfo={this.state.musicInfo}/>
-				: <div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
+				: 
+					<div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
 			</div>
 		);
 	}

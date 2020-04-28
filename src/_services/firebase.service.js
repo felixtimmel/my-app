@@ -64,6 +64,7 @@ class Firebase {
     });
 
     addNewUser = (uid, firstName, lastName, email, phoneNumber='', picture='') => {
+      console.log(uid, firstName, lastName, email)
       this.db.collection("users").doc(uid).set({
         firstName,
         lastName,
@@ -146,7 +147,7 @@ class Firebase {
           const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
           console.log('result.additionalUserInfo.isNewUser:', result.additionalUserInfo.isNewUser)
           if (result.additionalUserInfo.isNewUser) {
-            this.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
+            self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
           }
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           const token = result.credential.accessToken;
@@ -157,8 +158,8 @@ class Firebase {
       })
       .catch(function(error) {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error.code);
+        console.log(error.message);
         // The email of the user's account used.
         const email = error.email;
         // The firebase.auth.AuthCredential type that was used.

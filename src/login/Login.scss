@@ -114,11 +114,18 @@
 
       img {
         width: auto;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
     .signIn__social-btn {
       margin: 0 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
