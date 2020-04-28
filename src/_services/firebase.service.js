@@ -120,8 +120,9 @@ class Firebase {
           const user = result.user;
           if (result.additionalUserInfo.isNewUser) {
             self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
+            self.onRedirect('/connect_to_spotify', history)
           }
-          self.onRedirect('/connect_to_spotify', history)
+          self.onRedirect('/home', history)
         })
       })
       .catch(function(error) {
@@ -132,7 +133,6 @@ class Firebase {
         const email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential;
-        // ...
       });
     }
 
@@ -146,14 +146,14 @@ class Firebase {
           const { uid, displayName, refreshToken, phoneNumber, photoURL } = result.user;
           const { accessToken, idToken, signInMethod, providerId, operationType } = result.credential;
           console.log('result.additionalUserInfo.isNewUser:', result.additionalUserInfo.isNewUser)
-          if (result.additionalUserInfo.isNewUser) {
-            self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL)
-          }
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           const token = result.credential.accessToken;
-          // The signed-in user info.
           const user = result.user;
-          self.onRedirect('/connect_to_spotify', history);
+          if (result.additionalUserInfo.isNewUser) {
+            self.addNewUser(uid, given_name, family_name, email, phoneNumber, picture || photoURL);
+            self.onRedirect('/connect_to_spotify', history);
+          }
+          self.onRedirect('/home', history);
         })
       })
       .catch(function(error) {
@@ -164,7 +164,6 @@ class Firebase {
         const email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential;
-        // ...
       });
     }
 
@@ -179,8 +178,7 @@ class Firebase {
           // The signed-in user info.
           var user = result.user;
     
-          self.onRedirect('/connect_to_spotify', history);
-          // ...
+          self.onRedirect('/home', history);
         })
       })
       .catch(function(error) {
@@ -191,7 +189,6 @@ class Firebase {
         console.log(error.email);
         // The firebase.auth.AuthCredential type that was used.
         console.log(error.credential);
-        // ...
       });
     }
 
@@ -205,8 +202,7 @@ class Firebase {
           var token = result.credential.accessToken;
           // The signed-in user info.
           var user = result.user;
-          self.onRedirect('/connect_to_spotify', history);
-          // ...       
+          self.onRedirect('/home', history);
           })
       })
       .catch(function(error) {
@@ -217,7 +213,6 @@ class Firebase {
         console.log(error.email);
         // The firebase.auth.AuthCredential type that was used.
         console.log(error.credential);
-        // ...
       });
     }
 
@@ -228,4 +223,3 @@ class Firebase {
 }
 
 export default Firebase;
-// export default !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();

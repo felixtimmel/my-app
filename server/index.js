@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const cron = require('node-cron');
 require('dotenv').config();
+const compression = require('compression')
 const { getLyricsUrl, getLyrics } = require('./lyrics');
 const { updateSpotifyToken } = require('./refresh_token_job');
 let uid = null;
@@ -48,6 +49,7 @@ const app = express();
 //     }
 //   }
 // }
+app.use(compression())
 
 app.use(express.static(__dirname + '/public'))
   .use(cors())
