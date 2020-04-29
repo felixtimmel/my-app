@@ -96,7 +96,6 @@ class Home extends React.Component {
 					});
 				}
 			}
-				console.log(filteredresponse)
 				this.setState({
 						lastSongs: filteredresponse
 				})
@@ -116,15 +115,14 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
-		console.log(item)
 		const musicInfo = {
 			songName: item.name,
 			artist: item.artists && item.artists[0] ? item.artists[0].name : item.artist,
 			spotifyUri: item.uri,
 			imgUrl: item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : item.url,
-			token: this.token
+			token: this.token,
+			userInfo : this.state.userInfo
 		};
-		console.log(musicInfo);
 		this.props.history.push({
 			pathname: '/song',
 			state: { musicInfo: musicInfo }

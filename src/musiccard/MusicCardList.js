@@ -1,6 +1,7 @@
 import React from 'react';
 import MusicCard from './MusicCard';
 import {Redirect} from 'react-router-dom';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
 const MusicCardList = ({ lastSongs, isSearching, searchTracks, topTracks, getMusicInfo, musicInfo }) => {
 	if (isSearching) {

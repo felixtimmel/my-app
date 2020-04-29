@@ -1,13 +1,78 @@
+.song_background {
+  position: absolute;
+  z-index: -1;
+  filter: blur(5px);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .lyrics-container {
-  // background-size: contain;
-  background-size: 100% 100%;
-  // background-repeat: no-repeat;
+  @media(min-width: 768px) {
+    width: 600px;
+    margin: 0 auto;
+  }
+  margin: 0 10px;
+  .song_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+    i {
+      font-size: 20px;
+    }
+
+    &__avatar-profil {
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .song_intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    
+    &__first-part {
+      display: flex;
+      align-items: center;
+    }
+
+    &__pic {
+      width: 50px;
+      border-radius: 8px;
+      margin-right: 8px;
+    }
+
+    &__description {
+      &_song-name {
+        font-size: 16px;
+        font-weight: bolder;
+        margin-bottom: 4px;
+      }
+      &_song-artist {
+        font-size: 14px;
+        color: var(--grey-color);
+      }
+    }
+
+    i {
+      font-size: 18px;
+      padding: 4px;
+      background: rgba(145, 139, 132, 0.7);
+      border-radius: 50%;
+    }
+  }
+
   .lyrics {
     &_scroll {
-      height: 90vh;
+      height: 50vh;
       overflow-y: scroll;
-      width: 95%;
       margin: 0 auto 10% auto;
+      font-size: 22px;
+
       &-span{
         font-size: 23px;
       }
@@ -24,12 +89,13 @@
         width: 32px;
         height: 32px;
       }
-      position: relative;
       margin: 0 auto;
       width: 200px;
       text-align: center; // to remove if adding range-input
       button {
         padding-left: 0;
+        background: none;
+        border: none;
       }
       .bubble {
         background: none;
@@ -82,4 +148,27 @@
       }
     }
   }
+}
+
+@media(min-width: 768px) {
+  /* width */
+::-webkit-scrollbar {
+  height: 4px;
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--grey-color);
+}
 }

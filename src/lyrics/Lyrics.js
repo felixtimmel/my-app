@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import LyricsView from './LyricsView';
 import {withRouter} from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 require('./lyrics.scss');
+
 class Lyrics extends Component {
   constructor(props) {
     super(props);
@@ -106,7 +108,7 @@ class Lyrics extends Component {
 
   async componentDidMount() {
     const { songName, artist, imgUrl } = this.props.location.state.musicInfo;
-    document.getElementById('background').style.backgroundImage = `url(${imgUrl})`;
+    /* document.getElementById('background').style.backgroundImage = `url(${imgUrl})`; */
     try {
       let { lyrics } = await (await fetch(`/get_lyrics?artist=${artist}&song=${songName}`)).json();
       lyrics = lyrics.split('\n').map(ly => ly.trim()).filter(le => le !== '');
@@ -124,14 +126,21 @@ class Lyrics extends Component {
     this.onPauseSong();
   }
   render() {
+    console.log(this.state)
     const { lyrics } = this.state;
+    const { musicInfo } = this.props.location.state;
     return (
-      <div className='lyrics-container' id='background'>
-        <LyricsView lyrics={lyrics}
-          onPlaySong={this.onPlaySong}
-          onPauseSong={this.onPauseSong}
-          handleScroll={this.handleScroll}/>
-      </div>
+      <>
+        <img src={musicInfo.imgUrl} alt="background_img" className="song_background"/>
+        <div className='lyrics-container' id='background'>
+          <LyricsView lyrics={lyrics}
+            onPlaySong={this.onPlaySong}
+            onPauseSong={this.onPauseSong}
+            handleScroll={this.handleScroll}
+            musicInfo = {musicInfo}
+            />
+        </div>
+      </>
     )
   }
 }
