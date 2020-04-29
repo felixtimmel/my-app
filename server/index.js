@@ -12,10 +12,11 @@ const { updateSpotifyToken } = require('./refresh_token_job');
 let uid = null;
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+let redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 let clientUrl = 'http://localhost:3000';
 if(process.env.NODE_ENV === 'production') {
-  clientUrl = 'http://localhost:8888';
+  clientUrl = 'https://music-lyrics-8b137.firebaseapp.com';
+  redirect_uri = 'https://music-lyrics-8b137.firebaseapp.com/callback';
 }
 
 
@@ -190,5 +191,5 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
+console.log(`Listening on ${process.env.PORT}`);
 app.listen(process.env.PORT || 8888);

@@ -71,7 +71,10 @@ class SpotifyClass {
 	}
 
   onLoginToSpotify = () => {
-    window.open('http://localhost:8888/spotify-login', '_self');
+    if (process.env.NODE_ENV === 'development') {
+      window.open('http://localhost:8888/spotify-login', '_self');
+    }
+    window.open('https://music-lyrics-8b137.firebaseapp.com/spotify-login', '_self');
   }
 }
 

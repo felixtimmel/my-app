@@ -72,6 +72,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log('NODE_ENV', process.env.NODE_ENV)
     let backdrop;
 
     if(this.state.sideDrawerOpen) {
