@@ -1,2 +1,3 @@
 node_modules/
 functions/dev-bin/music-lyrics-service-account-file.json
+*.json
