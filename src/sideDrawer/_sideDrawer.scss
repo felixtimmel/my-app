@@ -4,7 +4,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 70%;
   max-width: 400px;
   z-index: 200;
   background-color: var(--bg-color);
@@ -56,8 +55,8 @@
   transform: translateX(0);
 }
 
-@media (min-width: 769px) {
+/* @media (min-width: 769px) {
   .side-drawer {
     display: none;
-  }
-}
+  } 
+}*/

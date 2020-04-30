@@ -112,7 +112,7 @@ class Lyrics extends Component {
   }
 
   goback = () => {
-    console.log(this.props.history.push('/home'))
+    this.props.history.push('/home')
   }
 
   async componentDidMount() {
