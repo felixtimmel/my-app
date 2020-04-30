@@ -1,5 +1,5 @@
 body {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat' !important;
   font-style: normal;
   font-weight: 400;
   background-color: var(--bg-color);

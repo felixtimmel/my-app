@@ -105,6 +105,15 @@ class Lyrics extends Component {
     }
   }
 
+  millisToMinutesAndSeconds = (millis) => {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
+
+  goback = () => {
+    console.log(this.props.history.push('/home'))
+  }
 
   async componentDidMount() {
     const { songName, artist, imgUrl } = this.props.location.state.musicInfo;
@@ -129,18 +138,22 @@ class Lyrics extends Component {
     }
   }
   render() {
-    console.log(this.state)
-    const { lyrics } = this.state;
+    const { lyrics, musicPosition } = this.state;
     const { musicInfo } = this.props.location.state;
     return (
       <>
+      <div style={{background: 'linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))'}}>
         <img src={musicInfo.imgUrl} alt="background_img" className="song_background"/>
+      </div>
         <div className='lyrics-container' id='background'>
           <LyricsView lyrics={lyrics}
             onPlaySong={this.onPlaySong}
             onPauseSong={this.onPauseSong}
             handleScroll={this.handleScroll}
             musicInfo = {musicInfo}
+            musicPosition = {musicPosition}
+            convertTime = {this.millisToMinutesAndSeconds}
+            goback = {this.goback}
             />
         </div>
       </>

@@ -11,6 +11,7 @@
 }
 
 .horizontal-music_card{
+  padding: 2px;
   margin-right: 20px;
   min-width: 150px;
 
@@ -30,12 +31,19 @@
     overflow: hidden;
     width: 100%;
   }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    cursor: pointer;
+  }
 }
 
 .vertical-music_card{
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  padding: 2px;
 
   .music_card__img {
     width: 80px;
@@ -56,6 +64,12 @@
     .music_card__play_btn {
       flex-shrink: 1;
     }
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    cursor: pointer;
   }
 }
 

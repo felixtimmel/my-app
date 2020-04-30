@@ -92,7 +92,8 @@ class Home extends React.Component {
 						name: item.name,
 						artist: item.artists[0].name,
 						url: item.album.images[0].url,
-						uri: item.uri
+						uri: item.uri,
+						time: item.duration_ms
 					});
 				}
 			}
@@ -115,13 +116,15 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
+		console.log(item)
 		const musicInfo = {
 			songName: item.name,
 			artist: item.artists && item.artists[0] ? item.artists[0].name : item.artist,
 			spotifyUri: item.uri,
 			imgUrl: item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : item.url,
 			token: this.token,
-			userInfo : this.state.userInfo
+			userInfo : this.state.userInfo,
+			time: item.time || item.duration_ms
 		};
 		this.props.history.push({
 			pathname: '/song',
