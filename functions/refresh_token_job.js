@@ -1,25 +1,43 @@
 
 const request = require('request');
 const admin = require('firebase-admin');
+const functions = require('firebase-functions');
 require("firebase/firestore");
 require('dotenv').config();
 
+let functionsConfig;
 
-const app = admin.initializeApp({
-    credential: admin.credential.cert(require('./dev-bin/music-lyrics-service-account-file.json')),
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+if (process.env.NODE_ENV === 'production') {
+  functionsConfig = {
     projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    credential: admin.credential.cert(require('./dev-bin/music-lyrics-service-account-file.json')),
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: process.env.REACT_APP_FIREBASE_MEASURMENT_ID,
-  })
+    apiKey: functions.config().config.api_key,
+    authDomain: functions.config().config.auth_domain,
+    messagingSenderId: functions.config().config.messaging_id,
+    appId: functions.config().config.app_id,
+    measurementId: functions.config().config.measurment_id
+  }
+}
+
+const devConfig = {
+  credential: admin.credential.cert(require('./dev-bin/music-lyrics-service-account-file.json')),
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASURMENT_ID,
+};
+
+
+const app = admin.initializeApp(process.env.NODE_ENV === 'production' ? functionsConfig : devConfig)
 const db = app.firestore();
 
 const updateSpotifyToken = async(uid, client_id, client_secret) => {
-  console.log('@@@@@@@@@@@@@@@uid: from server', uid)
   let refresh_token;
   try {
     const user = await db.collection('users').doc(uid).get();

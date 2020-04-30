@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "music-lyrics-8b137"
+    "default": "music-lyrics-8b137",
+    "prod": "music-lyrics-8b137"
   }
 }

@@ -1,3 +1,4 @@
+const functions = require('firebase-functions');
 const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
 const cors = require('cors');
@@ -10,13 +11,15 @@ const compression = require('compression')
 const { getLyricsUrl, getLyrics } = require('./lyrics');
 const { updateSpotifyToken } = require('./refresh_token_job');
 let uid = null;
-const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
-const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
+let client_id = process.env.REACT_APP_SPOTIFY_CLIENT_KEY; // Your client id
+let client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
 let redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 let clientUrl = 'http://localhost:3000';
 if(process.env.NODE_ENV === 'production') {
+  client_id = functions.config().spotify.client_key;
+  client_secret = functions.config().spotify.secret_key;
   clientUrl = 'https://music-lyrics-8b137.firebaseapp.com';
-  redirect_uri = 'https://music-lyrics-8b137.firebaseapp.com/callback';
+  redirect_uri = `${functions.config().config.api_url}/callback`;
 }
 
 
@@ -39,31 +42,11 @@ const stateKey = 'spotify_auth_state';
 
 const app = express();
 
-// const whitelist = ['https://accounts.spotify.com','http://localhost:3000']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     console.log('@@@@@@@@@@@@@@origin:', origin)
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
 app.use(compression())
 
 app.use(express.static(__dirname + '/public'))
   .use(cors())
   .use(cookieParser());
-
-if (process.env.NODE_ENV === 'production') {
-  console.log('process.env.NODE_ENV:&&&&&&&&&&', process.env.NODE_ENV)
-  app.use(express.static(path.join(__dirname, '..', 'build')));
-  // Handle React routing, return all requests to React app
-  // app.get('/*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, '..', 'build/index.html'));
-  // });
-}
 
 app.get('/send_uid', function (req, res) {
   uid = req.query ? req.query.uid : null;
@@ -191,5 +174,9 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log(`Listening on ${process.env.PORT}`);
-app.listen(process.env.PORT || 8888);
+if(process.env.NODE_ENV === 'development') {
+  console.log(`Listening on ${process.env.NODE_ENV}`);
+  app.listen(process.env.PORT || 8888);
+} else {
+  exports.app = functions.https.onRequest(app);
+}

@@ -36,7 +36,7 @@
     "yup": "^0.28.3"
   },
   "scripts": {
-    "server": "node-env-run server --exec nodemon babel-node",
+    "server": "node-env-run functions --exec nodemon babel-node",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

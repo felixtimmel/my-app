@@ -2,23 +2,13 @@
   "short_name": "Oveo",
   "name": "Oveo lyrics",
   "icons": [
-    // {
-    //   "src": "favicon.ico",
-    //   "sizes": "64x64 32x32 24x24 16x16",
-    //   "type": "image/x-icon"
-    // },
-    // {
-    //   "src": "logo192.png",
-    //   "type": "image/png",
-    //   "sizes": "192x192"
-    // },
     {
       "src": "oveo_logo.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "1116x1116"
     }
   ],
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#21201E",
   "background_color": "#ffffff"

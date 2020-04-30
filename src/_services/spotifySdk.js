@@ -34,6 +34,7 @@ const spotifySDK = (usertoken) => {
       // Playback status updates
       window.spotifyPlayer.addListener('player_state_changed', (state) => {
         console.log('state:', state)
+        window.spotifyMusicPosition = state.position;
         /**
          * duration , position, paused
          */

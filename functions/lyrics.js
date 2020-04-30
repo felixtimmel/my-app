@@ -1,13 +1,19 @@
+const functions = require('firebase-functions');
 const axios = require('axios');
 const cheerio = require('cheerio');
 require('dotenv').config();
+let geniusToken = process.env.REACT_APP_GENIUS_TOKEN;
+if(process.env.NODE_ENV === 'production') {
+  geniusToken = functions.config().genius.token;
+}
+
 
 const getLyricsUrl = async(song, artist) => {
   try {
     const { data } = await axios.get(`https://api.genius.com/search?q=${song}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.REACT_APP_GENIUS_TOKEN}`
+        'Authorization': `Bearer ${geniusToken}`
       },
     })
     const { hits } = data.response;
