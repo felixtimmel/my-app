@@ -6,7 +6,9 @@ export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSon
   return (
     <>  
       <div className='song_header'>
-        <i onClick={() => goback()} className="fas fa-chevron-left"></i>
+        <button onClick={() => goback()} className="song_header-back-btn">
+          <i className="fas fa-chevron-left"></i>
+        </button>
         <img src={musicInfo.userInfo.avatar} alt='img' className="song_header__avatar-profil"/>
       </div>
       <div className='song_intro'>
@@ -23,8 +25,7 @@ export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSon
         <div className="lyrics_scroll" onScroll={(e) => handleScroll(e)}>
           <div className="lyrics_scroll-area"></div>
           {lyrics.map((ly, idx) => (
-            <span key={idx}>{ly} <br/></span>
-            
+            <span key={idx}>{ly} <br/></span>       
           ))}
         </div>
         <div className="lyrics_player-container">
@@ -37,7 +38,7 @@ export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSon
             </button>
           </div>
           <div className="progression-bar">
-            <div className="inside-progression-bar" style={{width: "20%"}}></div> {/* have to be dynamique */}
+            <div className="inside-progression-bar" style={{width: "5%"}}></div> {/* have to be dynamique */}
           </div>
           <p>{convertTime(musicInfo.time)}</p>
         </div>

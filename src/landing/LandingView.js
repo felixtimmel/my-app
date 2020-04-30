@@ -1,12 +1,12 @@
 import React from 'react';
-import Logo from '../_assets/splash_screen/Logo.svg';
+import logo from '../_assets/splash_screen/logo_oveo.png';
 import { Link } from "react-router-dom";
 
 const Landing = () => {
 	return (
 		<div className="landing-container">
 			<div className="title">
-				<img src={Logo} alt='Oveo logo'/>
+				<img src={logo} alt='Oveo logo'/>
 			</div>
 
 			<div className="description">

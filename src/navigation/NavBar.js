@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../_assets/Inscription 1/Logo.svg';
+import logo from '../_assets/splash_screen/logo_oveo.png';
 import { Link } from "react-router-dom";
 import '../sideDrawer/DrawerToggleBtn';
 import "./_navbar.scss";
