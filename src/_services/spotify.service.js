@@ -71,8 +71,9 @@ class SpotifyClass {
 	}
 
   onLoginToSpotify = () => {
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     if (process.env.NODE_ENV === 'development') {
-      window.open('http://localhost:3000/spotify-login', '_self');
+      window.open('http://localhost:8888/spotify-login', '_self');
     } else {
       window.open(`${process.env.REACT_APP_API_URL}/spotify-login`, '_self');
     }

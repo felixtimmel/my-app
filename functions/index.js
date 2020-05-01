@@ -22,7 +22,6 @@ if(process.env.NODE_ENV === 'production') {
   redirect_uri = `${functions.config().config.api_url}/callback`;
 }
 
-
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -56,7 +55,7 @@ app.get('/send_uid', function (req, res) {
 })
 
 app.get('/spotify-login', function(req, res) {
-
+  console.log('@@@@@@@@@@', process.env.NODE_ENV);
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -175,7 +174,7 @@ app.get('/refresh_token', function(req, res) {
 });
 
 if(process.env.NODE_ENV === 'development') {
-  console.log(`Listening on ${process.env.NODE_ENV}`);
+  console.log(`Listening on ${process.env.NODE_ENV} ${process.env.PORT}`);
   app.listen(process.env.PORT || 8888);
 } else {
   exports.app = functions.https.onRequest(app);
