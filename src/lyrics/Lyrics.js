@@ -133,6 +133,7 @@ class Lyrics extends Component {
 
   async componentDidMount() {
     const { songName, artist, imgUrl } = this.props.location.state.musicInfo;
+    window.spotifyMusicPosition = 0;
     try {
       this.loadSpotifyOnRefresh();
       let { lyrics } = await (await fetch(`/get_lyrics?artist=${artist}&song=${songName}`)).json();
@@ -149,6 +150,7 @@ class Lyrics extends Component {
   }
   componentWillUnmount(){
     const { spotifyUri  } = this.props.location.state.musicInfo;
+    console.log('window.spotifyMusicPosition:', window.spotifyMusicPosition)
     if (spotifyUri && window.spotifyPlayer) {
       this.onPauseSong();
     }
