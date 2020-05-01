@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LyricsView from './LyricsView';
 import {withRouter} from 'react-router-dom';
+import loadSpotifySdk from '../_services/spotifySdk';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 require('./lyrics.scss');
@@ -115,10 +116,25 @@ class Lyrics extends Component {
     this.props.history.push('/home')
   }
 
+  loadSpotifyOnRefresh = async() => {
+    const { user: { uid }, firebaseClass, SpotifyClass } = this.props;
+    if (!window.spotifyPlayer) {
+      try {
+        const user = await firebaseClass.db.collection('users').doc(uid).get();
+        if (user.exists) {
+          SpotifyClass.setToken(user.data().access_token);
+          await loadSpotifySdk(user.data().access_token);
+        }
+      } catch(err) {
+        console.log(`There was an error in loadSpotifyOnRefresh call: ${err}`);
+      }
+    }
+  }
+
   async componentDidMount() {
     const { songName, artist, imgUrl } = this.props.location.state.musicInfo;
-    /* document.getElementById('background').style.backgroundImage = `url(${imgUrl})`; */
     try {
+      this.loadSpotifyOnRefresh();
       let { lyrics } = await (await fetch(`/get_lyrics?artist=${artist}&song=${songName}`)).json();
       lyrics = lyrics.split('\n').map(ly => ly.trim()).filter(le => le !== '');
       this.setState({
