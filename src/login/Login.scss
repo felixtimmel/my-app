@@ -33,6 +33,11 @@
       font-size: 10px;
       color: var(--grey-color);
     }
+
+    #signIn__form_email {
+      margin-bottom: 40px;
+    }
+
     input {
       color: var(--text-color);
       outline: none;
@@ -58,11 +63,13 @@
       justify-content: space-between;
       width: 100%;
       align-items: center;
+      position: relative;
 
         .password_logo {
           color: var(--eye-color);
-          border-bottom: 2px solid var(--grey-color);
-          margin-bottom: 10px;
+          position: absolute;
+          padding-bottom: 14px;
+          left: 95%;
         }
     }
 
@@ -138,6 +145,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin: 34px 0;
 }
   color: var(--grey-color);
   h5:before,

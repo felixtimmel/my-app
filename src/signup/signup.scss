@@ -63,13 +63,16 @@
           cursor: pointer;  
         }
         .input-container {
+          position: relative;
           display: flex;
           justify-content: space-between;
           width: 100%;
           align-items: center;
           span {
             color: var(--eye-color);
-            border-bottom: 2px solid var(--grey-color);
+            padding-bottom: 10px;
+            position: absolute;
+            left:92%;
           }
         }
       }
