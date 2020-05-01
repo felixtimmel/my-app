@@ -25,6 +25,7 @@ export const LoginView = (props) => {
 			<div className="signIn__form">
 				<input
 					name='email'
+					id='signIn__form_email'
 					placeholder="Email"
 					type="text"
 					value={props.email}

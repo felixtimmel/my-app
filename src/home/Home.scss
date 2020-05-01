@@ -53,6 +53,7 @@
     
     .searchbar_part {
       position: relative;
+      z-index: 2;
       .searchbar {
         margin-top: 20px;
         text-align: center;
@@ -64,6 +65,7 @@
 
         i {
           margin-left: 16px;
+          z-index: 2;
         }       
       }
     }
