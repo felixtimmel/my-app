@@ -40,7 +40,7 @@
       p {
         color: #F0F0F0;
         font-size: 12px;
-        font-family: 'Montserrat Light';
+        font-weight: lighter;
       }
     }
     &__music-logo {
@@ -68,6 +68,7 @@
       padding: 20px;
       &-spotify {
         @include btn;
+        font-family: 'Montserrat';
         background: var(--primary-color);
         color: var(--text-color);
         img {
@@ -78,6 +79,7 @@
       }
       &-not-now {
         @include btn;
+        font-family: 'Montserrat';
         background-color: var(--bg-color);
         color: var(--primary-color);
         border: 1px solid var(--primary-color);
