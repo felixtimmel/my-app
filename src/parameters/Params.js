@@ -35,14 +35,52 @@ class Params extends React.Component {
       [name]: checked,
     });
   }
+
+  getUserInfo = async() => {
+    const { user: { uid }, firebaseClass, SpotifyClass } = this.props;
+    let userName = '';
+    let email = '';
+    let spotifyUserName = '';
+    let spotifyMembership = '';
+    let addedSpotifyDate = '';
+      try {
+        const user = await firebaseClass.db.collection('users').doc(uid).get();
+        const spotifyUser = await SpotifyClass.getUser();
+        if (user.exists) {
+          userName = `${user.data().firstName} ${user.data().lastName}`;
+          email = user.data().email;
+          spotifyUserName = spotifyUser.display_name
+          spotifyMembership = spotifyUser.product
+          addedSpotifyDate = user.data().addedSpotifyDate || 'to do';
+        }
+        this.setState({
+          userName,
+          email,
+          spotifyUserName,
+          spotifyMembership,
+          addedSpotifyDate,
+        });
+      } catch(err) {
+        console.log(`There was an error in loadSpotifyOnRefresh call: ${err}`);
+      }
+  }
+  componentDidMount() {
+    this.getUserInfo();
+    console.log('&&&', this.props);
+  }
+
   render() {
-    console.log(this.props.location)
     const {
       isModalOpen,
       musicPush,
       musicMail,
       updatePush,
-      updateMail
+      updateMail,
+      userName,
+      email,
+      spotifyUserName,
+      spotifyMembership,
+      addedSpotifyDate,
     } = this.state;
     return (
       <div className='params-container'>
@@ -52,6 +90,11 @@ class Params extends React.Component {
           musicMail={musicMail}
           updatePush={updatePush}
           updateMail={updateMail}
+          userName={userName}
+          email={email}
+          spotifyUserName={spotifyUserName}
+          spotifyMembership={spotifyMembership}
+          addedSpotifyDate={addedSpotifyDate}
           toggleNotifications={this.toggleNotifications}
           isModalOpen={isModalOpen}/>
       </div>

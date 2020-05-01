@@ -97,9 +97,9 @@ class Home extends React.Component {
 					});
 				}
 			}
-				this.setState({
-						lastSongs: filteredresponse
-				})
+			this.setState({
+				lastSongs: filteredresponse
+			})
 		})
 	}
 
@@ -116,7 +116,6 @@ class Home extends React.Component {
 	}
 
 	getMusicInfo = (item) => {
-		console.log(item)
 		const musicInfo = {
 			songName: item.name,
 			artist: item.artists && item.artists[0] ? item.artists[0].name : item.artist,

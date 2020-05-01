@@ -14,6 +14,7 @@ const accounts = [
     Email: 'fadel2603@gmail.com',
     "Mot de passe": 'mylongpasswordwithnosense',
     mdp: true,
+    isAppAccount: true,
   },
   {
     title: 'Compte Spotify',
@@ -56,7 +57,7 @@ const buttons = [
   }
 ];
 
-const Accounts = (toggleModal) =>
+const Accounts = (toggleModal, userName, email, spotifyUserName, spotifyMembership, addedSpotifyDate) =>
   <div className="params_account">
     <div className="title">
       <h3>Compte et sécurité</h3>
@@ -66,17 +67,17 @@ const Accounts = (toggleModal) =>
         <h4>{acc.title}</h4>
         <div>
           <span className="left">{Object.keys(acc)[1]}</span>
-          <span className="right">{acc["Nom d'utilisateur"]}</span>
+          <span className="right">{acc.isAppAccount ? userName : spotifyUserName}</span>
         </div>
         <div>
           <span className="left">{Object.keys(acc)[2]}</span>
-          <span className="right">{acc[Object.keys(acc)[2]]}</span>
+          <span className="right">{acc.isAppAccount ? email : spotifyMembership}</span>
         </div>
         <div>
           <span className="left">{Object.keys(acc)[3]}</span>
           {acc.mdp
           ? <input type='password' value={acc["Mot de passe"]} className="right"></input>
-          : <span className="right">{acc["Date d'ajout"]}</span>}
+          : <span className="right">{addedSpotifyDate}</span>}
         </div>
         <div className='params_account-main-password'>
           {acc.mdp
@@ -180,10 +181,11 @@ export default function ParamsView({
   updatePush,
   updateMail,
   toggleNotifications,
+  userName, email, spotifyUserName, spotifyMembership, addedSpotifyDate
   }) {
   return (
     <div className='params'>
-      {Accounts(toggleModal)}
+      {Accounts(toggleModal, userName, email, spotifyUserName, spotifyMembership, addedSpotifyDate)}
       {Notifications(
         toggleNotifications,
         musicPush,
