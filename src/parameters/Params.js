@@ -61,12 +61,11 @@ class Params extends React.Component {
           addedSpotifyDate,
         });
       } catch(err) {
-        console.log(`There was an error in loadSpotifyOnRefresh call: ${err}`);
+        console.log(`There was an error in getUserInfo call: ${err}`);
       }
   }
   componentDidMount() {
     this.getUserInfo();
-    console.log('&&&', this.props);
   }
 
   render() {
