@@ -71,6 +71,7 @@ class SpotifyClass {
 	}
 
   onLoginToSpotify = () => {
+    console.log('process.env.NODE_ENV:', process.env.NODE_ENV)
     if (process.env.NODE_ENV === 'development') {
       window.open('http://localhost:8888/spotify-login', '_self');
     } else {
