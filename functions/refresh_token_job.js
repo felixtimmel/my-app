@@ -57,7 +57,7 @@ const updateSpotifyToken = async(uid, client_id, client_secret) => {
         request.post(authOptions, function(error, response, body) {
           if (!error && response.statusCode === 200) {
             const access_token = body.access_token;
-            db.collection('users').doc(uid).update({
+            return db.collection('users').doc(uid).update({
               access_token,
             }).then(() => console.log('Spotify access_token document successfully updated !'))
           }
