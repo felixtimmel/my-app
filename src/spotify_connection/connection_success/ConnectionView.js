@@ -30,7 +30,7 @@ export const ConnectionView = withRouter(({SpotifyClass, name, membership, image
         </span>
       </div>
       <div className="connection__button">
-        <button onClick={() => history.push('/home')}>C'est partie !</button>
+        <button onClick={() => history.push('/home')}>C'est parti !</button>
       </div>
     </div>
   );

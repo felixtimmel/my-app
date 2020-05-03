@@ -18,7 +18,7 @@ const WithAuth = (WrappedComponent, {firebaseClass}, state, SpotifyClass) => {
           if (!self.state.updatedToken) {
             firebaseClass.setUid(user.uid);
           }
-          if (!window.updatedToken) {
+          if (!window.updatedToken && !state.initialLoad) {
             fetch(`/send_uid?uid=${user.uid}`);
           }
           window.updatedToken = true;

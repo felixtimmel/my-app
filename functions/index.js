@@ -50,7 +50,10 @@ app.use(express.static(__dirname + '/public'))
 app.get('/send_uid', function (req, res) {
   uid = req.query ? req.query.uid : null;
   if (uid) {
-    updateSpotifyToken(uid, client_id, client_secret);
+    updateSpotifyToken(uid, client_id, client_secret)
+    .then(() => res.send(true));
+  } else {
+    res.send('no uid');
   }
 })
 
@@ -133,13 +136,13 @@ app.get('/callback', function(req, res) {
   }
 });
 
-cron.schedule('*/55 * * * *', () => {
-  // I think this is not a good think to do here for the client but it work for now:
-  if (uid) {
-    updateSpotifyToken(uid, client_id, client_secret);
-  }
-  console.log('running a task every 55 minutes');
-});
+// cron.schedule('*/55 * * * *', () => {
+//   // I think this is not a good think to do here for the client but it work for now:
+//   if (uid) {
+//     updateSpotifyToken(uid, client_id, client_secret);
+//   }
+//   console.log('running a task every 55 minutes');
+// });
 
 app.get('/get_lyrics', (req, res) => {
   const artist = req.query.artist;
