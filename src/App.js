@@ -4,6 +4,7 @@ import NavBar from './navigation/NavBar';
 import SideDrawer from './sideDrawer/SideDrawer';
 import ProtectedRoute from './navigation/ProtectedRoute';
 import { TransitionGroup, CSSTransition, Transition } from "react-transition-group";
+import logo from '../src/_assets/splash_screen/logo_oveo.png';
 
 
 import './App.css';
@@ -75,14 +76,14 @@ export default class App extends React.Component {
     const { firebaseClass } = this.props;
     const { initialLoad } = this.state;
     if (initialLoad && !this.state.user) {
-      return <div>Loading....</div> // to replace by a component
+      return <div className='load_page'><img src={logo} alt="oveo_logo" /></div> // to replace by a component
     }
     return (
       <Router>
         <NavBar firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} drawerClickHandler={this.drawerToggleClickHandler}/>
           <SideDrawer firebaseClass={firebaseClass} toggleTheme={this.toggleTheme} show={this.state.sideDrawerOpen} drawerClickHandler={this.drawerToggleClickHandler}/>
             {backdrop}
-          <Suspense fallback={<div>Loading.....</div>}>
+          <Suspense fallback={<div className='load_page'><img src={logo} alt="oveo_logo" /></div>}>
             <Route render={() => (
               <TransitionGroup >
                 <CSSTransition

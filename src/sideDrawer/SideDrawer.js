@@ -26,10 +26,14 @@ const SideDrawer = ({firebaseClass, show, toggleTheme, drawerClickHandler}) => {
           <Link onClick={() => drawerClickHandler()} to='/params'>Parameters</Link>
         </li>
         <li>
-          <button onClick={() => toggleTheme()}>Change Theme</button>
+          <button onClick={() => toggleTheme()}>
+            <i className="fas fa-toggle-on"></i> Change Theme
+          </button>
         </li>
         <li>
-          <button onClick={() => firebaseClass.signOut()}>Log out</button>
+          <button onClick={() => firebaseClass.signOut()}>
+            <i className="fas fa-sign-out-alt"></i> Log out
+          </button>
         </li>
       </ul>
     </nav>

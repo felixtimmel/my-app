@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import LyricsView from './LyricsView';
 import {withRouter} from 'react-router-dom';
 import loadSpotifySdk from '../_services/spotifySdk';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 require('./lyrics.scss');
 

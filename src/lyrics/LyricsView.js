@@ -1,8 +1,10 @@
 import React from 'react';
 import play from '../_assets/logos/play.svg';
 import pause from '../_assets/logos/pause.svg';
+import logo from '../_assets/splash_screen/logo_oveo.png';
 
 export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSong, musicInfo, convertTime, goback}) {
+  console.log(lyrics)
   return (
     <>  
       <div className='song_header'>
@@ -22,12 +24,17 @@ export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSon
         <i className="fas fa-ellipsis-h"></i>
       </div>
       <div className='lyrics'>
-        <div className="lyrics_scroll" onScroll={(e) => handleScroll(e)}>
-          <div className="lyrics_scroll-area"></div>
-          {lyrics.map((ly, idx) => (
-            <span key={idx}>{ly} <br/></span>       
-          ))}
-        </div>
+        {lyrics === []
+          ? 
+          <div className='load_logo'><img src={logo} alt="oveo_logo" /></div>
+          :
+          <div className="lyrics_scroll" onScroll={(e) => handleScroll(e)}>
+            <div className="lyrics_scroll-area"></div>
+            {lyrics.map((ly, idx) => (
+              <span key={idx}>{ly} <br/></span>       
+            ))}
+          </div>
+        }
         <div className="lyrics_player-container">
           <div className="lyrics_player-container_btns">
             <button onClick={() => onPlaySong()}>
