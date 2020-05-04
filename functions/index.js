@@ -152,7 +152,7 @@ app.get('/get_lyrics', (req, res) => {
   .then(lyrics => res.json({ lyrics }));
 })
 
-app.get('/refresh_token', function(req, res) {
+app.get('/refresh_token', function(req, res) {getLyricsUr
 
   // requesting access token from refresh token
   const refresh_token = req.query.refresh_token;

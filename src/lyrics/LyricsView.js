@@ -1,6 +1,7 @@
 import React from 'react';
 import play from '../_assets/logos/play.svg';
 import pause from '../_assets/logos/pause.svg';
+import logo from '../_assets/splash_screen/logo_oveo.png';
 
 export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSong, musicInfo, convertTime, goback}) {
   return (
@@ -22,18 +23,25 @@ export default function LyricsView({lyrics, handleScroll, onPlaySong, onPauseSon
         <i className="fas fa-ellipsis-h"></i>
       </div>
       <div className='lyrics'>
-        <div className="lyrics_scroll" onScroll={(e) => handleScroll(e)}>
-          <div className="lyrics_scroll-area"></div>
-          {lyrics.map((ly, idx) => (
-            <span key={idx}>{ly} <br/></span>       
-          ))}
-        </div>
+        {lyrics.length <= 10
+          ? 
+          <div className='lyrics__load'>
+            <img src={logo} alt="oveo_logo" className="lyrics__load-logo"/>
+          </div>
+          :
+          <div className="lyrics_scroll" onScroll={(e) => handleScroll(e)}>
+            <div className="lyrics_scroll-area"></div>
+            {lyrics.map((ly, idx) => (
+              <span key={idx}>{ly} <br/></span>       
+            ))}
+          </div>
+        }
         <div className="lyrics_player-container">
           <div className="lyrics_player-container_btns">
-            <button onClick={() => onPlaySong()}>
+            <button onClick={() => onPlaySong()} className="btn-toggle" id="play_btn">
               <img src={play} alt="play/pause"/>
             </button>
-            <button onClick={() => onPauseSong()}>
+            <button onClick={() => onPauseSong() } className="btn-toggle lyrics_player-container_btns-display" id="pause_btn">
               <img src={pause} alt="play/pause"/>
             </button>
           </div>
