@@ -22,6 +22,7 @@ class Lyrics extends Component {
   }
 
   onPlaySong = () => {
+    this.toggleBtn()
     const { spotifyUri  } = this.props.location.state.musicInfo;
     const play = ({
       spotify_uri,
@@ -50,6 +51,7 @@ class Lyrics extends Component {
   }
 
   onPauseSong = () => {
+    this.toggleBtn()
     const { spotifyUri  } = this.props.location.state.musicInfo;
     const pause = ({
       spotify_uri,
@@ -76,6 +78,13 @@ class Lyrics extends Component {
       playerInstance: window.spotifyPlayer,
       spotify_uri: spotifyUri,
     });
+  }
+
+  toggleBtn = () => {
+    const play_btn = document.getElementById('play_btn')
+    const pause_btn = document.getElementById('pause_btn')
+    play_btn.classList.toggle('lyrics_player-container_btns-display')
+    pause_btn.classList.toggle('lyrics_player-container_btns-display')
   }
 
   getLyrics = async () => {
