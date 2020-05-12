@@ -95,7 +95,7 @@ class Lyrics extends Component {
       });
     } catch (err) {
       console.log('There was an error in the getLyrics call:', err)
-      return 'No lyrics found';
+      return "Oups, nous n'avons pas encore ajouté ces paroles , mais nous y travaillons";
     } 
   }
   handleScroll = (e) => {
