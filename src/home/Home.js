@@ -3,6 +3,9 @@ import HomepageView from './HomeView'
 import {Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import loadSpotifySdk from '../_services/spotifySdk';
+import logo from '../_assets/splash_screen/logo_oveo.png';
+
+import '../App.css';
 
 require('./Home.scss');
 
@@ -173,7 +176,7 @@ class Home extends React.Component {
 						getMusicInfo={this.getMusicInfo}
 						musicInfo={this.state.musicInfo}/>
 				: 
-					<div>THERE IS NO TOKEN FOR NOW</div>} {/** To do */}
+					<div className='load_page'><img src={logo} alt="oveo_logo" /></div>}
 			</div>
 		);
 	}

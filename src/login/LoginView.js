@@ -19,7 +19,7 @@ export const LoginView = (props) => {
 			</h2>
 			{ props.signInError &&
 				<div className="signIn__error">
-						<p><i className="fas fa-times"></i> L'adresse Email ou le mot de passe infiqué n'est pas valide...</p>
+						<p><i className="fas fa-times"></i> L'adresse Email ou le mot de passe indiqué n'est pas valide...</p>
 				</div>
 			}
 			<div className="signIn__form">
